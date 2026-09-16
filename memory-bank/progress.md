@@ -1,13 +1,13 @@
 # progress.md — 进度
 
 ## 已实现
-- (暂无,首期任务进行中)
+- (无代码;项目已按用户要求清空,仅保留 md 文件)
 
 ## 待构建
-- 项目脚手架、路由、i18n、design tokens、Navbar/Footer、8 个页面、占位数据、响应式适配
+- 待用户确认方向后重新规划
 
 ## 当前状态
-- 首期初始化任务进行中(见 activeContext.md)
+- 空项目(仅 README.md、AGENTS.md、memory-bank/),工作区干净,与远程一致
 
 ## 已知问题
 - 暂无(详情见 errorlog.md)
