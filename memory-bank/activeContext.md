@@ -1,14 +1,17 @@
 # activeContext.md — 当前上下文
 
 ## 当前焦点(2026-09-16)
-首期初始化已完成:按 AGENTS.md 从零搭建"银凯科技"双语企业官网,build 通过,桌面/移动端预览验证通过。
+品牌化改造完成:官网切换为"上海寅铠精密机械制造有限公司"真实品牌与光伏装备业务定位。
 
 ## 最近变更
-- 建立 Vue3+Vite+Element Plus(按需)项目;8 个页面 + Navbar/Footer/NewsCard;i18n zh/en 完整;design tokens;src/data 占位数据
-- 验证:npm run build 通过;浏览器抽查首页、新闻详情、语言切换(localStorage 持久化)、375px 移动端布局均正常
+- 主色改 logo 绿 #00a651(tokens + Element Plus 变量 + 渐变);导航/页脚换真实 logo 图(src/assets/logo.png)
+- 首页顶部新增 HeroCarousel 全宽轮播(el-carousel,2 张:pv.png「寅领行业，铠创未来」/ 日出图「寅领智造，铠动全球」)
+- 全站 i18n zh/en 与 src/data 按 real 资料改版:2004 年成立、安亭厂区、YK 产线/视觉检测产品、真实联系方式;团队页用岗位型占位
+- P3 验证:build 通过;浏览器确认绿色主题、logo、轮播与文案
 
 ## 下一步
-- 真实内容替换(品牌名、文案、数据);如需部署可配置 GitHub Pages(base 路径)
+- 部署上线(GitHub Pages 需配 base 路径);团队页替换真实人员;补充产品实拍图
 
 ## 决策与考量
-- 主色 #1e6fff;ElMessage 样式手动按需引入;NewsDetail `/news/:id`;表单校验 name/email/message 必填
+- 口号:轮播首屏用用户指定「寅领行业，铠创未来」;其余采用资料推荐「寅领智造，铠动全球」
+- 团队成员无真实资料,用岗位型占位避免虚构人名;新闻混排真实事件与合理演绎,标记可替换

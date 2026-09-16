@@ -3,8 +3,8 @@
     <div class="container footer__grid">
       <div class="footer__brand">
         <div class="footer__logo-row">
-          <span class="footer__logo">银凯</span>
-          <strong>Yinkai Tech</strong>
+          <img src="../assets/logo.png" alt="logo" class="footer__logo-img" />
+          <strong>{{ $t('brand.short') }}</strong>
         </div>
         <p class="footer__slogan">{{ $t('footer.slogan') }}</p>
       </div>
@@ -59,16 +59,11 @@
   font-size: 17px;
 }
 
-.footer__logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.footer__logo-img {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-dark));
-  color: #fff;
-  font-size: 14px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .footer__slogan {

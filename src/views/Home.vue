@@ -1,21 +1,7 @@
 <template>
   <div class="home">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <span class="hero__badge">{{ $t('home.hero.badge') }}</span>
-        <h1>{{ $t('home.hero.title') }}</h1>
-        <p>{{ $t('home.hero.subtitle') }}</p>
-        <div class="hero__actions">
-          <el-button type="primary" size="large" round @click="$router.push('/services')">
-            {{ $t('home.hero.cta') }}
-          </el-button>
-          <el-button size="large" round plain class="hero__ghost" @click="$router.push('/contact')">
-            {{ $t('home.hero.contact') }}
-          </el-button>
-        </div>
-      </div>
-    </section>
+    <!-- Hero 轮播 -->
+    <HeroCarousel />
 
     <!-- 公司简介 + 数据 -->
     <section class="section">
@@ -106,71 +92,28 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
-  Monitor, Cloudy, Cpu, Compass,
+  SetUp, View, Search, OfficeBuilding,
 } from '@element-plus/icons-vue'
 import { services, news } from '../data'
 import { pick } from '../data/lang'
 import NewsCard from '../components/NewsCard.vue'
+import HeroCarousel from '../components/HeroCarousel.vue'
 
 const { locale, t } = useI18n()
 
-const icons = { Monitor, Cloudy, Cpu, Compass }
+const icons = { SetUp, View, Search, OfficeBuilding }
 
 const stats = computed(() => [
-  { value: '10+', label: t('home.intro.stat1') },
-  { value: '500+', label: t('home.intro.stat2') },
-  { value: '70%', label: t('home.intro.stat3') },
-  { value: '98%', label: t('home.intro.stat4') },
+  { value: '20+', label: t('home.intro.stat1') },
+  { value: '200+', label: t('home.intro.stat2') },
+  { value: '10000+', label: t('home.intro.stat3') },
+  { value: '±0.1', label: t('home.intro.stat4') },
 ])
 
 const latestNews = news.slice(0, 3)
 </script>
 
 <style scoped>
-.hero {
-  background:
-    radial-gradient(1000px 400px at 80% -10%, rgba(255, 255, 255, 0.18), transparent),
-    linear-gradient(135deg, #0e2f77 0%, #1e6fff 60%, #4b93ff 100%);
-  color: #fff;
-  text-align: center;
-  padding: 130px 0 110px;
-}
-
-.hero__badge {
-  display: inline-block;
-  font-size: 13px;
-  letter-spacing: 1px;
-  padding: 6px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 999px;
-  margin-bottom: 22px;
-}
-
-.hero h1 {
-  font-size: 44px;
-  line-height: 1.25;
-  margin-bottom: 18px;
-}
-
-.hero p {
-  max-width: 620px;
-  margin: 0 auto 32px;
-  font-size: 17px;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.hero__ghost {
-  background: transparent;
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
-}
-
-.hero__ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: #fff;
-  color: #fff;
-}
-
 .intro {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -258,7 +201,7 @@ const latestNews = news.slice(0, 3)
 }
 
 .cta {
-  background: linear-gradient(135deg, #123a8f 0%, #1e6fff 100%);
+  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
   color: #fff;
   text-align: center;
   padding: 72px 0;
@@ -283,14 +226,6 @@ const latestNews = news.slice(0, 3)
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 80px 0 64px;
-  }
-
-  .hero h1 {
-    font-size: 30px;
-  }
-
   .intro {
     grid-template-columns: 1fr;
     gap: 28px;

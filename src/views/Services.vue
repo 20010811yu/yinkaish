@@ -30,13 +30,13 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
-import { Monitor, Cloudy, Cpu, Compass } from '@element-plus/icons-vue'
+import { SetUp, View, Search, OfficeBuilding } from '@element-plus/icons-vue'
 import { services } from '../data'
 import { pick } from '../data/lang'
 
 const { locale } = useI18n()
 
-const icons = { Monitor, Cloudy, Cpu, Compass }
+const icons = { SetUp, View, Search, OfficeBuilding }
 </script>
 
 <style scoped>

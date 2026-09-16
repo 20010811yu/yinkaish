@@ -2,8 +2,8 @@
   <header class="navbar" :class="{ 'navbar--scrolled': scrolled }">
     <div class="container navbar__inner">
       <router-link to="/" class="navbar__brand">
-        <span class="navbar__logo">银凯</span>
-        <span class="navbar__name">Yinkai Tech</span>
+        <img src="../assets/logo.png" alt="logo" class="navbar__logo-img" />
+        <span class="navbar__name">{{ $t('brand.short') }}</span>
       </router-link>
 
       <nav class="navbar__menu" :class="{ 'navbar__menu--open': menuOpen }">
@@ -95,16 +95,11 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   font-weight: 700;
 }
 
-.navbar__logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.navbar__logo-img {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--c-primary), var(--c-primary-dark));
-  color: #fff;
-  font-size: 14px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .navbar__name {
