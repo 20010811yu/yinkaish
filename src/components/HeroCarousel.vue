@@ -33,7 +33,7 @@ const slides = [
 
 <style scoped>
 .hero-carousel :deep(.el-carousel__container) {
-  height: 520px;
+  height: 780px;
 }
 
 .slide {
@@ -120,7 +120,7 @@ const slides = [
 
 @media (max-width: 768px) {
   .hero-carousel :deep(.el-carousel__container) {
-    height: 320px;
+    height: 480px;
   }
 
   .slide__title {
