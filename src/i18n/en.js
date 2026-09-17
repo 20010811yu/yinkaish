@@ -1,6 +1,7 @@
 export default {
   brand: {
     short: 'YINKAI Precision',
+    full: 'Shanghai Yinkai Precision Machinery',
   },
   nav: {
     home: 'Home',

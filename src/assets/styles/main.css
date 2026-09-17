@@ -10,7 +10,7 @@
   --c-border: #e2efe7;
   --radius: 12px;
   --shadow: 0 8px 30px rgba(0, 166, 81, 0.1);
-  --container: 1200px;
+  --container: 1280px;
 
   /* Element Plus 品牌色覆盖 */
   --el-color-primary: #00a651;
@@ -81,15 +81,15 @@ img {
 }
 
 .section-title {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
 .section-subtitle {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--c-text-secondary);
-  max-width: 640px;
+  max-width: 680px;
 }
 
 .section-head {

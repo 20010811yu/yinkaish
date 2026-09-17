@@ -2,8 +2,8 @@
   <header class="navbar" :class="{ 'navbar--scrolled': scrolled }">
     <div class="container navbar__inner">
       <router-link to="/" class="navbar__brand">
-        <img src="../assets/logo.png" alt="logo" class="navbar__logo-img" />
-        <span class="navbar__name">{{ $t('brand.short') }}</span>
+        <img src="../assets/favicon.ico" alt="logo" class="navbar__logo-img" />
+        <span class="navbar__name">{{ $t('brand.full') }}</span>
       </router-link>
 
       <nav class="navbar__menu" :class="{ 'navbar__menu--open': menuOpen }">
@@ -85,7 +85,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: 72px;
 }
 
 .navbar__brand {
@@ -96,15 +96,17 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__logo-img {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
   object-fit: cover;
 }
 
 .navbar__name {
   color: var(--c-text);
-  font-size: 17px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .navbar__menu {
@@ -113,9 +115,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__link {
-  padding: 8px 14px;
+  padding: 9px 16px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--c-text-secondary);
   transition: color 0.2s, background 0.2s;
 }
@@ -158,7 +160,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   .navbar__menu {
     display: none;
     position: absolute;
-    top: 64px;
+    top: 72px;
     left: 0;
     right: 0;
     flex-direction: column;
