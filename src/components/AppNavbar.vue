@@ -85,7 +85,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 88px;
 }
 
 .navbar__brand {
@@ -96,15 +96,15 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__logo-img {
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
   object-fit: cover;
 }
 
 .navbar__name {
   color: var(--c-text);
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -115,9 +115,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__link {
-  padding: 9px 16px;
+  padding: 10px 18px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--c-text-secondary);
   transition: color 0.2s, background 0.2s;
 }
@@ -160,7 +160,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   .navbar__menu {
     display: none;
     position: absolute;
-    top: 72px;
+    top: 88px;
     left: 0;
     right: 0;
     flex-direction: column;
