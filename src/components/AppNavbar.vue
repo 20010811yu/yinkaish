@@ -104,7 +104,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 .navbar__name {
   color: var(--c-text);
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -117,7 +117,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .navbar__link {
   padding: 10px 18px;
   border-radius: 8px;
-  font-size: 17px;
+  font-size: 19px;
   color: var(--c-text-secondary);
   transition: color 0.2s, background 0.2s;
 }
