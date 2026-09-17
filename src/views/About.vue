@@ -239,6 +239,16 @@ onBeforeUnmount(() => observer?.disconnect())
 
 .vt__row--swap .vt__media {
   transform: translateX(70px);
+  order: 3;
+}
+
+.vt__row--swap .vt__spine {
+  order: 2;
+}
+
+.vt__row--swap .vt__body {
+  order: 1;
+  text-align: right;
 }
 
 .vt__body {
