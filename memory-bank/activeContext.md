@@ -4,6 +4,7 @@
 品牌化改造完成:官网切换为"上海寅铠精密机械制造有限公司"真实品牌与光伏装备业务定位。
 
 ## 最近变更
+- 第一张轮播图重设计:程序化 SVG 主视觉(scripts/gen-hero.cjs 生成 src/assets/hero-tech.svg)——深绿渐变+日出光晕+透视光伏板阵列+电路走线+粒子;标题渐变提亮
 - 轮播文字科技感设计:渐变文字+绿光晕+左侧光柱装饰+入场动画;第二张标语拆两行「光伏边框 / 非标自动化引领者」(i18n 新增 s2sub key)
 - 主色改 logo 绿 #00a651(tokens + Element Plus 变量 + 渐变);导航/页脚换真实 logo 图(src/assets/logo.png)
 - 首页顶部新增 HeroCarousel 全宽轮播(el-carousel,2 张:日出图「寅领智造，铠创未来」/ pv.png「光伏边框——非标自动化引领者」)

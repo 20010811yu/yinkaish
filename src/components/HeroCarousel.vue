@@ -19,7 +19,7 @@
 
 <script setup>
 import bannerPv from '../assets/banner-pv.png'
-import bannerSunrise from '../assets/banner-sunrise.png'
+import bannerSunrise from '../assets/hero-tech.svg'
 
 const slides = [
   { image: bannerSunrise, titleKey: 'home.carousel.s1' },
@@ -73,7 +73,7 @@ const slides = [
   font-weight: 900;
   letter-spacing: 3px;
   line-height: 1.2;
-  background: linear-gradient(105deg, #ffffff 30%, #b9f4d4 65%, #4ade8f 100%);
+  background: linear-gradient(105deg, #ffffff 45%, #c8f7dd 72%, #6ee7a8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
