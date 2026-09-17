@@ -99,15 +99,15 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__logo-img {
-  width: 52px;
-  height: 52px;
+  width: 3.25rem;
+  height: 3.25rem;
   border-radius: 10px;
   object-fit: cover;
 }
 
 .navbar__name {
   color: var(--c-text);
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -121,9 +121,9 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .navbar__link {
-  padding: 10px 12px;
+  padding: 0.625rem 0.75rem;
   border-radius: 8px;
-  font-size: 17px;
+  font-size: 1.0625rem;
   white-space: nowrap;
   color: var(--c-text-secondary);
   transition: color 0.2s, background 0.2s;

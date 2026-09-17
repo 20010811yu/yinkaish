@@ -30,10 +30,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* 弹性字体:根字号随视口宽度流式缩放 */
+  font-size: clamp(13px, 1vw + 3.2px, 19px);
 }
 
 body {
   font-family: 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
   color: var(--c-text);
   background: var(--c-bg);
   line-height: 1.6;
@@ -70,7 +73,7 @@ img {
 
 .section-tag {
   display: inline-block;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--c-primary);
   background: var(--c-primary-light);
@@ -81,13 +84,13 @@ img {
 }
 
 .section-title {
-  font-size: 34px;
+  font-size: 2.125rem;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
 .section-subtitle {
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--c-text-secondary);
   max-width: 680px;
 }
@@ -123,7 +126,7 @@ img {
   }
 
   .section-title {
-    font-size: 26px;
+    font-size: 1.625rem;
   }
 
   .page-hero {

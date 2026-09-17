@@ -72,8 +72,8 @@ const slides = [
 }
 
 .slide__title {
-  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', sans-serif;
-  font-size: 56px;
+  font-family: 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-size: 3.5rem;
   font-weight: 900;
   letter-spacing: 3px;
   line-height: 1.2;
@@ -87,7 +87,7 @@ const slides = [
 .slide__subtitle {
   margin-top: 18px;
   padding-left: 30px;
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 300;
   letter-spacing: 6px;
   color: rgba(255, 255, 255, 0.92);
