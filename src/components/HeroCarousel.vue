@@ -20,10 +20,12 @@
 <script setup>
 import bannerPv from '../assets/banner-pv.png'
 import bannerSunrise from '../assets/hero-tech.svg'
+import heroVision from '../assets/hero-vision.svg'
 
 const slides = [
   { image: bannerSunrise, titleKey: 'home.carousel.s1' },
   { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
+  { image: heroVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
 ]
 </script>
 

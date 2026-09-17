@@ -22,6 +22,8 @@ export default {
       s1: 'Leading Smart Manufacturing, Creating the Future',
       s2: 'PV Frames',
       s2sub: 'Pioneer of Custom Automation',
+      s3: 'Every Millimeter Under Watch',
+      s3sub: 'Every Frame You Can Trust',
     },
     intro: {
       tag: 'About Yinkai',
