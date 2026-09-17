@@ -19,8 +19,8 @@ export default {
   },
   home: {
     carousel: {
-      s1: 'Leading the Industry, Creating the Future',
-      s2: 'Leading Smart Manufacturing, Powering the World',
+      s1: 'Leading Smart Manufacturing, Creating the Future',
+      s2: 'PV Frames — Pioneer of Custom Automation',
     },
     intro: {
       tag: 'About Yinkai',

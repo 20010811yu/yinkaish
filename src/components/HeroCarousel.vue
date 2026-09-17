@@ -19,8 +19,8 @@ import bannerPv from '../assets/banner-pv.png'
 import bannerSunrise from '../assets/banner-sunrise.png'
 
 const slides = [
-  { image: bannerPv, titleKey: 'home.carousel.s1' },
-  { image: bannerSunrise, titleKey: 'home.carousel.s2' },
+  { image: bannerSunrise, titleKey: 'home.carousel.s1' },
+  { image: bannerPv, titleKey: 'home.carousel.s2' },
 ]
 </script>
 
