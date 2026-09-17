@@ -38,8 +38,11 @@ export default {
       stat4: 'mm Machining Precision',
     },
     services: {
-      tag: 'Core Business',
+      tag: 'Core Services',
       title: 'Precision Manufacturing for PV and Automotive Industries',
+    },
+    timeline: {
+      title: 'Our Journey',
     },
     advantages: {
       tag: 'Why Yinkai',

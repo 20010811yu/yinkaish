@@ -41,6 +41,9 @@ export default {
       tag: '核心业务',
       title: '以精密智造驱动光伏与汽车产业',
     },
+    timeline: {
+      title: '发展历程',
+    },
     advantages: {
       tag: '核心优势',
       title: '为什么选择寅铠',

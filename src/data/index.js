@@ -47,6 +47,29 @@ export const milestones = [
   { year: '2026', text: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand the global market for PV frame automation lines.' } },
 ]
 
+// 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
+import imgT2004 from '../assets/timeline/t-2004.jpg'
+import imgT2017 from '../assets/timeline/t-2017.jpg'
+import imgT2019 from '../assets/timeline/t-2019.jpg'
+import imgT2022 from '../assets/timeline/t-2022.jpg'
+import imgCompany from '../assets/banner-company.webp'
+import imgVision from '../assets/banner-vision.png'
+
+export const timeline = [
+  { year: '2004', image: imgT2004, title: { zh: '寅铠成立', en: 'Yinkai Founded' }, desc: { zh: '公司于上海成立，切入汽车白车身焊装装备领域。', en: 'Founded in Shanghai, entering automotive BIW welding equipment.' } },
+  { year: '2005', image: null, title: { zh: 'TÜV 认证', en: 'TÜV Certified' }, desc: { zh: '通过德国莱茵 TÜV 认证，获 ISO9001 质量管理体系认证。', en: 'ISO9001 certified by TÜV Rheinland.' } },
+  { year: '2007-2010', image: null, title: { zh: '快速交付期', en: 'Rapid Delivery' }, desc: { zh: '年均交付 8-10 个项目，绑定主流主机厂配套体系。', en: '8-10 projects per year, tied into major OEM supply chains.' } },
+  { year: '2011', image: imgCompany, title: { zh: '新厂区启用', en: 'New Plant' }, desc: { zh: '迁入嘉定安亭新厂区，厂房面积一万多平方米。', en: 'Relocated to a 10,000+ m² plant in Anting, Jiading.' } },
+  { year: '2014', image: null, title: { zh: '整线交付', en: 'Full-Line Delivery' }, desc: { zh: '交付北汽、华晨白车身焊接生产线等整线项目。', en: 'Delivered full BIW lines for BAIC and Jinbei.' } },
+  { year: '2017', image: imgT2017, title: { zh: 'YK-15 启航', en: 'YK-15 Kickoff' }, desc: { zh: '启动 YK-15 研发，探索非标自动化产品化路径。', en: 'Started YK-15 R&D, moving toward productized automation.' } },
+  { year: '2018-2019', image: imgT2019, title: { zh: '累计破百', en: '100+ Projects' }, desc: { zh: 'YK-2/YK-3/YK-44 相继推出，累计交付项目突破 100。', en: 'YK-2/YK-3/YK-44 released; cumulative projects topped 100.' } },
+  { year: '2020', image: null, title: { zh: 'YK-53 发布', en: 'YK-53 Released' }, desc: { zh: 'YK-53 系列推出，光伏边框产线持续迭代。', en: 'YK-53 series launched, iterating PV frame lines.' } },
+  { year: '2022', image: imgT2022, title: { zh: '2.5 秒节拍', en: '2.5s Cycle' }, desc: { zh: 'YK-5 系列实现 2.5 秒级节拍突破。', en: 'YK-5 series achieved a 2.5-second cycle breakthrough.' } },
+  { year: '2023', image: null, title: { zh: 'YK-62 发布', en: 'YK-62 Released' }, desc: { zh: 'YK-62 新一代机型推出。', en: 'Next-generation YK-62 model introduced.' } },
+  { year: '2024', image: imgVision, title: { zh: '检测+出海', en: 'Inspection & Export' }, desc: { zh: 'YK-OL-2I/YK-OF-3I 视觉检测系统发布，设备出口美国。', en: 'YK-OL-2I/YK-OF-3I vision systems released; exported to the US.' } },
+  { year: '2026', image: null, title: { zh: '面向全球', en: 'Going Global' }, desc: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand PV frame automation worldwide.' } },
+]
+
 // 团队成员(岗位型占位,可替换为真实人员)
 export const team = [
   { id: 1, name: { zh: '总经理', en: 'General Manager' }, title: { zh: '公司创始人', en: 'Founder' }, desc: { zh: '二十年非标自动化行业经验，带领公司从汽车焊装走向光伏装备。', en: 'Two decades in custom automation, leading Yinkai from automotive welding to PV equipment.' } },
