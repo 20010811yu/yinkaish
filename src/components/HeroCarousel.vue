@@ -5,8 +5,11 @@
         <div class="slide" :style="{ backgroundImage: `url(${slide.image})` }">
           <div class="slide__mask" />
           <div class="slide__content container">
-            <h2>{{ $t(slide.titleKey) }}</h2>
-            <p v-if="slide.subtitleKey">{{ $t(slide.subtitleKey) }}</p>
+            <div class="slide__title-row">
+              <span class="slide__bar" />
+              <h2 class="slide__title">{{ $t(slide.titleKey) }}</h2>
+            </div>
+            <p v-if="slide.subtitleKey" class="slide__subtitle">{{ $t(slide.subtitleKey) }}</p>
           </div>
         </div>
       </el-carousel-item>
@@ -20,7 +23,7 @@ import bannerSunrise from '../assets/banner-sunrise.png'
 
 const slides = [
   { image: bannerSunrise, titleKey: 'home.carousel.s1' },
-  { image: bannerPv, titleKey: 'home.carousel.s2' },
+  { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
 ]
 </script>
 
@@ -41,7 +44,7 @@ const slides = [
 .slide__mask {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(6, 44, 24, 0.55) 0%, rgba(6, 44, 24, 0.15) 60%, transparent 100%);
+  background: linear-gradient(75deg, rgba(4, 32, 18, 0.78) 0%, rgba(4, 32, 18, 0.35) 45%, transparent 75%);
 }
 
 .slide__content {
@@ -50,16 +53,64 @@ const slides = [
   color: #fff;
 }
 
-.slide__content h2 {
-  font-size: 46px;
-  letter-spacing: 4px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-  margin-bottom: 14px;
+.slide__title-row {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  animation: rise 0.7s ease both;
 }
 
-.slide__content p {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.92);
+.slide__bar {
+  width: 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #7fe3ae 0%, #00a651 100%);
+  box-shadow: 0 0 18px rgba(0, 166, 81, 0.8);
+}
+
+.slide__title {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1.2;
+  background: linear-gradient(105deg, #ffffff 30%, #b9f4d4 65%, #4ade8f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(0, 166, 81, 0.45));
+}
+
+.slide__subtitle {
+  margin-top: 18px;
+  padding-left: 30px;
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  color: rgba(255, 255, 255, 0.88);
+  position: relative;
+  animation: rise 0.7s 0.2s ease both;
+}
+
+.slide__subtitle::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 30px;
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(90deg, #00a651, transparent);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -67,13 +118,27 @@ const slides = [
     height: 320px;
   }
 
-  .slide__content h2 {
-    font-size: 26px;
+  .slide__title {
+    font-size: 28px;
     letter-spacing: 2px;
   }
 
-  .slide__content p {
+  .slide__bar {
+    width: 5px;
+  }
+
+  .slide__title-row {
+    gap: 12px;
+  }
+
+  .slide__subtitle {
     font-size: 14px;
+    letter-spacing: 4px;
+    padding-left: 17px;
+  }
+
+  .slide__subtitle::before {
+    left: 17px;
   }
 }
 </style>

@@ -20,7 +20,8 @@ export default {
   home: {
     carousel: {
       s1: 'Leading Smart Manufacturing, Creating the Future',
-      s2: 'PV Frames — Pioneer of Custom Automation',
+      s2: 'PV Frames',
+      s2sub: 'Pioneer of Custom Automation',
     },
     intro: {
       tag: 'About Yinkai',

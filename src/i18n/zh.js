@@ -20,7 +20,8 @@ export default {
   home: {
     carousel: {
       s1: '寅领智造，铠创未来',
-      s2: '光伏边框——非标自动化引领者',
+      s2: '光伏边框',
+      s2sub: '非标自动化引领者',
     },
     intro: {
       tag: '关于寅铠',
