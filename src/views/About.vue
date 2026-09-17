@@ -25,12 +25,12 @@
           <h2 class="section-title">{{ $t('about.historyTitle') }}</h2>
         </div>
 
-        <div class="vt">
+        <div ref="vtEl" class="vt">
           <div
             v-for="(item, i) in reversed"
             :key="item.year"
             class="vt__row"
-            :class="{ 'vt__row--swap': i % 2 === 1 }"
+            :class="[{ 'vt__row--swap': i % 2 === 1 }, rowsVisible[i] ? 'vt__row--in' : '']"
           >
             <div class="vt__media">
               <img v-if="item.image" :src="item.image" :alt="item.year" loading="lazy" />
@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Aim, View, Medal } from '@element-plus/icons-vue'
 import { timeline } from '../data'
@@ -86,6 +86,29 @@ const keywords = computed(() => [
   t('about.vision.title'),
   t('about.values.title'),
 ])
+
+// 进入视口切入、离开视口淡出(双向可重复)
+const vtEl = ref(null)
+const rowsVisible = ref(reversed.value.map(() => false))
+let observer = null
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const idx = Number(entry.target.dataset.index)
+        rowsVisible.value[idx] = entry.isIntersecting
+      })
+    },
+    { threshold: 0.25 },
+  )
+  vtEl.value?.querySelectorAll('.vt__row').forEach((el, i) => {
+    el.dataset.index = i
+    observer.observe(el)
+  })
+})
+
+onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <style scoped>
@@ -112,24 +135,24 @@ const keywords = computed(() => [
   font-size: 14px;
 }
 
-/* 纵向图文时间线 */
+/* 纵向图文时间线:整行占屏约 60% */
 .vt {
-  max-width: 960px;
+  max-width: 60vw;
   margin: 0 auto;
 }
 
 .vt__row {
   display: grid;
-  grid-template-columns: 1fr 72px 1fr;
+  grid-template-columns: 1fr 64px 1fr;
   align-items: center;
-  margin-bottom: 36px;
+  margin-bottom: 64px;
 }
 
 .vt__media {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  min-height: 180px;
+  min-height: 320px;
   background: var(--c-primary-light);
   display: flex;
   align-items: center;
@@ -138,13 +161,13 @@ const keywords = computed(() => [
 
 .vt__media img {
   width: 100%;
-  height: 240px;
+  height: 320px;
   object-fit: cover;
   display: block;
 }
 
 .vt__media-year {
-  font-size: 56px;
+  font-size: 72px;
   font-weight: 800;
   color: var(--c-primary);
   opacity: 0.45;
@@ -153,6 +176,7 @@ const keywords = computed(() => [
 .vt__spine {
   position: relative;
   align-self: stretch;
+  min-height: 320px;
 }
 
 .vt__spine::before {
@@ -171,48 +195,60 @@ const keywords = computed(() => [
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #fff;
   border: 4px solid var(--c-primary);
-  box-shadow: 0 0 0 4px var(--c-primary-light);
+  box-shadow: 0 0 0 5px var(--c-primary-light);
 }
 
 .vt__body {
-  padding: 0 28px;
-}
-
-.vt__row--swap .vt__media {
-  order: 3;
-}
-
-.vt__row--swap .vt__spine {
-  order: 2;
-}
-
-.vt__row--swap .vt__body {
-  order: 1;
-  text-align: right;
+  padding: 0 32px;
 }
 
 .vt__year {
   display: inline-block;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 800;
   color: var(--c-primary);
-  margin-bottom: 8px;
-}
-
-.vt__body h3 {
-  font-size: 24px;
   margin-bottom: 10px;
 }
 
+.vt__body h3 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
 .vt__body p {
-  font-size: 17px;
+  font-size: 20px;
   color: var(--c-text-secondary);
   line-height: 1.8;
+}
+
+/* 切入/淡出动画:图从行方向滑入,文淡入上移 */
+.vt__media,
+.vt__body {
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.vt__row .vt__media {
+  transform: translateX(-70px);
+}
+
+.vt__row--swap .vt__media {
+  transform: translateX(70px);
+}
+
+.vt__body {
+  transform: translateY(40px);
+}
+
+.vt__row--in .vt__media,
+.vt__row--in .vt__body {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 .culture__keywords {
@@ -227,13 +263,25 @@ const keywords = computed(() => [
     grid-template-columns: 1fr;
   }
 
+  /* 移动端时间线恢复全宽单列 */
+  .vt {
+    max-width: none;
+  }
+
   .vt__row,
-  .vt__row--reverse {
+  .vt__row--swap {
     grid-template-columns: 28px 1fr;
+    margin-bottom: 40px;
   }
 
   .vt__media {
     display: none;
+  }
+
+  .vt__spine {
+    grid-row: 1;
+    grid-column: 1;
+    min-height: 100%;
   }
 
   .vt__body {
@@ -246,7 +294,7 @@ const keywords = computed(() => [
   }
 
   .vt__year {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   .vt__body h3 {
@@ -255,11 +303,6 @@ const keywords = computed(() => [
 
   .vt__body p {
     font-size: 14px;
-  }
-
-  .vt__spine {
-    grid-row: 1;
-    grid-column: 1;
   }
 }
 </style>

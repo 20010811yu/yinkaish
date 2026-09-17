@@ -53,10 +53,11 @@ import imgT2007 from '../assets/timeline/t-2007.png'
 import imgT2011 from '../assets/timeline/t-2011.png'
 import imgT2014 from '../assets/timeline/t-2014.png'
 import imgT2017 from '../assets/timeline/t-2017.jpg'
-import imgT2019 from '../assets/timeline/t-2019.jpg'
+import imgT2018 from '../assets/timeline/t-2018.png'
 import imgT2022 from '../assets/timeline/t-2022.jpg'
 import imgT2023 from '../assets/timeline/t-2023.png'
 import imgT2024 from '../assets/timeline/t-2024.png'
+import imgT2026 from '../assets/timeline/t-2026.jpg'
 import imgCompany from '../assets/banner-company.webp'
 
 export const timeline = [
@@ -66,12 +67,12 @@ export const timeline = [
   { year: '2011', image: imgT2011, title: { zh: '新厂区启用', en: 'New Plant' }, desc: { zh: '迁入嘉定安亭新厂区，厂房面积一万多平方米。', en: 'Relocated to a 10,000+ m² plant in Anting, Jiading.' } },
   { year: '2014', image: imgT2014, title: { zh: '整线交付', en: 'Full-Line Delivery' }, desc: { zh: '交付北汽、华晨白车身焊接生产线等整线项目。', en: 'Delivered full BIW lines for BAIC and Jinbei.' } },
   { year: '2017', image: imgT2017, title: { zh: 'YK-15 启航', en: 'YK-15 Kickoff' }, desc: { zh: '启动 YK-15 研发，探索非标自动化产品化路径。', en: 'Started YK-15 R&D, moving toward productized automation.' } },
-  { year: '2018-2019', image: imgT2019, title: { zh: '累计破百', en: '100+ Projects' }, desc: { zh: 'YK-2/YK-3/YK-44 相继推出，累计交付项目突破 100。', en: 'YK-2/YK-3/YK-44 released; cumulative projects topped 100.' } },
+  { year: '2018-2019', image: imgT2018, title: { zh: '累计破百', en: '100+ Projects' }, desc: { zh: 'YK-2/YK-3/YK-44 相继推出，累计交付项目突破 100。', en: 'YK-2/YK-3/YK-44 released; cumulative projects topped 100.' } },
   { year: '2020', image: null, title: { zh: 'YK-53 发布', en: 'YK-53 Released' }, desc: { zh: 'YK-53 系列推出，光伏边框产线持续迭代。', en: 'YK-53 series launched, iterating PV frame lines.' } },
   { year: '2022', image: imgT2022, title: { zh: '2.5 秒节拍', en: '2.5s Cycle' }, desc: { zh: 'YK-5 系列实现 2.5 秒级节拍突破。', en: 'YK-5 series achieved a 2.5-second cycle breakthrough.' } },
   { year: '2023', image: imgT2023, title: { zh: 'YK-62 发布', en: 'YK-62 Released' }, desc: { zh: 'YK-62 新一代机型推出。', en: 'Next-generation YK-62 model introduced.' } },
   { year: '2024', image: imgT2024, title: { zh: '检测+出海', en: 'Inspection & Export' }, desc: { zh: 'YK-OL-2I/YK-OF-3I 视觉检测系统发布，设备出口美国。', en: 'YK-OL-2I/YK-OF-3I vision systems released; exported to the US.' } },
-  { year: '2026', image: null, title: { zh: '面向全球', en: 'Going Global' }, desc: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand PV frame automation worldwide.' } },
+  { year: '2026', image: imgT2026, title: { zh: '面向全球', en: 'Going Global' }, desc: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand PV frame automation worldwide.' } },
 ]
 
 // 团队成员(岗位型占位,可替换为真实人员)
