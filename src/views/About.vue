@@ -27,10 +27,10 @@
 
         <div class="vt">
           <div
-            v-for="(item, i) in timeline"
+            v-for="(item, i) in reversed"
             :key="item.year"
             class="vt__row"
-            :class="{ 'vt__row--reverse': i % 2 === 1 }"
+            :class="{ 'vt__row--swap': i % 2 === 1 }"
           >
             <div class="vt__media">
               <img v-if="item.image" :src="item.image" :alt="item.year" loading="lazy" />
@@ -71,6 +71,9 @@ import { timeline } from '../data'
 import { pick } from '../data/lang'
 
 const { locale, t } = useI18n()
+
+// 时间倒序展示(最新在前)
+const reversed = computed(() => [...timeline].reverse())
 
 const mvv = [
   { key: 'mission', icon: Aim },
@@ -180,27 +183,36 @@ const keywords = computed(() => [
   padding: 0 28px;
 }
 
-.vt__row--reverse .vt__body {
+.vt__row--swap .vt__media {
+  order: 3;
+}
+
+.vt__row--swap .vt__spine {
+  order: 2;
+}
+
+.vt__row--swap .vt__body {
+  order: 1;
   text-align: right;
 }
 
 .vt__year {
   display: inline-block;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 800;
   color: var(--c-primary);
-  margin-bottom: 6px;
-}
-
-.vt__body h3 {
-  font-size: 19px;
   margin-bottom: 8px;
 }
 
+.vt__body h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
 .vt__body p {
-  font-size: 14px;
+  font-size: 17px;
   color: var(--c-text-secondary);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .culture__keywords {
@@ -229,8 +241,20 @@ const keywords = computed(() => [
     padding: 0 0 8px 4px;
   }
 
-  .vt__row--reverse .vt__body {
+  .vt__row--swap .vt__body {
     text-align: left;
+  }
+
+  .vt__year {
+    font-size: 24px;
+  }
+
+  .vt__body h3 {
+    font-size: 19px;
+  }
+
+  .vt__body p {
+    font-size: 14px;
   }
 
   .vt__spine {
