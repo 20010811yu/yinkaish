@@ -86,13 +86,16 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   align-items: center;
   justify-content: space-between;
   height: 88px;
+  max-width: none;
+  padding: 0 40px;
 }
 
 .navbar__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-weight: 700;
+  margin-right: auto;
 }
 
 .navbar__logo-img {
