@@ -20,10 +20,12 @@ export default {
   home: {
     carousel: {
       s1: 'Leading Smart Manufacturing, Creating the Future',
-      s2: 'PV Frames',
+      s2: 'PV Frames, Supporting the Light of the World',
       s2sub: 'Pioneer of Custom Automation',
-      s3: 'Every Millimeter Under Watch',
+      s3: 'Vision Inspection with Sharp Insight',
       s3sub: 'Every Frame You Can Trust',
+      s4: 'Yinkai Spirit, Serving the World',
+      s4sub: 'Craftsmanship Forges Quality, Service Wins Trust',
     },
     intro: {
       tag: 'About Yinkai',

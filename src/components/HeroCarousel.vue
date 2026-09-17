@@ -18,14 +18,16 @@
 </template>
 
 <script setup>
+import bannerCompany from '../assets/banner-company.webp'
 import bannerPv from '../assets/banner-pv.png'
-import bannerSunrise from '../assets/hero-tech.svg'
-import heroVision from '../assets/hero-vision.svg'
+import bannerVision from '../assets/banner-vision.png'
+import bannerCooperation from '../assets/banner-cooperation.jpg'
 
 const slides = [
-  { image: bannerSunrise, titleKey: 'home.carousel.s1' },
+  { image: bannerCompany, titleKey: 'home.carousel.s1' },
   { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
-  { image: heroVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
+  { image: bannerVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
+  { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
 ]
 </script>
 
@@ -85,10 +87,11 @@ const slides = [
 .slide__subtitle {
   margin-top: 18px;
   padding-left: 30px;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 300;
-  letter-spacing: 8px;
-  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 6px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
   position: relative;
   animation: rise 0.7s 0.2s ease both;
 }
@@ -134,8 +137,8 @@ const slides = [
   }
 
   .slide__subtitle {
-    font-size: 14px;
-    letter-spacing: 4px;
+    font-size: 17px;
+    letter-spacing: 3px;
     padding-left: 17px;
   }
 
