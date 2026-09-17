@@ -95,32 +95,36 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   align-items: center;
   gap: 12px;
   font-weight: 700;
-  margin-right: auto;
+  margin-left: calc(100vw / 6 - 70px);
 }
 
 .navbar__logo-img {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 10px;
   object-fit: cover;
 }
 
 .navbar__name {
   color: var(--c-text);
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .navbar__menu {
   display: flex;
-  gap: 4px;
+  gap: 2px;
+  margin-left: 40px;
+  margin-right: auto;
 }
 
 .navbar__link {
-  padding: 10px 18px;
+  padding: 10px 12px;
   border-radius: 8px;
-  font-size: 19px;
+  font-size: 17px;
+  white-space: nowrap;
   color: var(--c-text-secondary);
   transition: color 0.2s, background 0.2s;
 }
