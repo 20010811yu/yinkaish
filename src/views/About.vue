@@ -14,6 +14,12 @@
             <span class="section-tag">PROFILE</span>
             <h2 class="section-title">{{ $t('about.profileTitle') }}</h2>
             <p class="profile__lead">{{ $t('about.profileLead') }}</p>
+            <div class="profile__stats">
+              <div v-for="s in stats" :key="s" class="profile__stat">
+                <strong>{{ $t(`about.stats.${s}.value`) }}<span class="profile__stat-suffix">{{ $t(`about.stats.${s}.suffix`) }}</span></strong>
+                <span class="profile__stat-label">{{ $t(`about.stats.${s}.label`) }}</span>
+              </div>
+            </div>
           </div>
           <div class="profile__body">
             <div v-for="(p, i) in intro" :key="i" class="profile__item">
@@ -21,15 +27,6 @@
               <p>{{ pick(p.text, locale) }}</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="stats-band">
-      <div class="container stats-band__grid">
-        <div v-for="s in stats" :key="s" class="stats-band__item">
-          <strong>{{ $t(`about.stats.${s}.value`) }}<span class="stats-band__suffix">{{ $t(`about.stats.${s}.suffix`) }}</span></strong>
-          <span class="stats-band__label">{{ $t(`about.stats.${s}.label`) }}</span>
         </div>
       </div>
     </section>
@@ -148,8 +145,8 @@ const mvv = [
   { key: 'values', icon: Medal },
 ]
 
-// 公司数据带(公司简介正下方)
-const stats = ['s1', 's2', 's3', 's4']
+// 公司数据(公司简介标题下方):第一行成立年份+员工数,第二行合作公司+覆盖城市
+const stats = ['s1', 's3', 's2', 's4']
 
 // 荣誉相册当前索引
 const active = ref(0)
@@ -224,6 +221,35 @@ onBeforeUnmount(() => observer?.disconnect())
   color: var(--c-text-secondary);
 }
 
+/* 公司数据:标题下方 2×2,绿色数字,随 sticky 侧栏一起浮动 */
+.profile__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 16px;
+  margin-top: 30px;
+}
+
+.profile__stat strong {
+  display: block;
+  font-size: clamp(24px, 2vw, 32px);
+  font-weight: 800;
+  color: var(--c-primary);
+  line-height: 1.2;
+}
+
+.profile__stat-suffix {
+  font-size: 0.55em;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.profile__stat-label {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.875rem;
+  color: var(--c-text-secondary);
+}
+
 .profile__body {
   display: grid;
   gap: 28px;
@@ -246,47 +272,6 @@ onBeforeUnmount(() => observer?.disconnect())
   font-size: 15px;
   line-height: 1.9;
   color: var(--c-text);
-}
-
-/* 公司数据带:绿色横幅,公司简介正下方 */
-.stats-band {
-  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
-  color: #fff;
-  padding: clamp(32px, 4vw, 48px) 0;
-}
-
-.stats-band__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-
-.stats-band__item strong {
-  display: block;
-  font-size: clamp(28px, 3.4vw, 44px);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.stats-band__suffix {
-  font-size: 0.55em;
-  font-weight: 700;
-  margin-left: 4px;
-  opacity: 0.9;
-}
-
-.stats-band__label {
-  display: block;
-  margin-top: 8px;
-  font-size: 0.9375rem;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-@media (max-width: 768px) {
-  .stats-band__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px 16px;
-  }
 }
 
 /* 公司宣传片 */
