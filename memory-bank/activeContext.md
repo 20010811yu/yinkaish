@@ -1,36 +1,24 @@
 # activeContext.md — 当前上下文
 
 ## 当前焦点(2026-09-18)
-全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
+业务与产品页按画册设备完成归类重做:6 大类 13 款产品全部图文展示。
 
 ### 最近变更
-- 首页轮播新增第 5 张「现代科技城市」主视觉:scripts/gen-hero-city.cjs 程序化生成 src/assets/hero-city.svg(61.5KB,种子随机可复现)——深绿渐变夜空+日出光晕+三层天际线窗灯+地标塔玻璃幕墙+数据流光柱+电路走线+透视网格地面+前景光伏板阵列;i18n home.carousel.s5「绿色智造，点亮未来之城」中英;追加在轮播末位不打乱原四张叙事
-- 首页轮播首图替换:用户提供 home.jpg(5410×3410)拷入 src/assets/banner-home.jpg,替换原 banner-company.webp;文案不变
-- 轮播主标题光影增强:.slide__title 改三层 drop-shadow(12px 亮绿晕+34px 扩散绿光+8px 深色投影),渐变文字其余不变
-- 导航栏选中项(.navbar__link--active)移除浅绿背景底纹,仅保留绿色加粗作选中指示;hover 浅绿反馈保留
-- 企业精神标题上方新增英文标签 SPIRIT(复用 .section-tag,与 PROFILE 胶囊同款;i18n about.spiritTag 中英同为 'SPIRIT')
-- 企业精神引言移至标题与词条之间(间隔对齐图二参照:标题→小字 12px、小字→词条 30px,与简介侧 title/lead/stats 同款节奏),原词条下方位置撤销
-- 企业精神词条下方曾新增引言「以匠心笃实深耕精工，携创新敬畏智造全球。」(i18n about.spiritLead 中英,17px 灰),本次仅调整位置;企业精神模块 margin-top 48px
-- 企业精神仿截图模块定稿:标题复用 .section-title(与「公司简介」等大 2.125rem),词条 clamp(21px,2vw,32px)(≈数字字号 0.75 档,汉字字形占满 em 而数字仅 0.72em,此档视觉高度与数据数字一致),绿色加粗,三行两列每行两词,行距 20px;i18n about.spiritTitle + about.spirit.i1~i6(中英);随侧栏 sticky 浮动
-- 撤销数据横幅版式:公司数据改为放进公司简介左侧 sticky 栏(profile__side 内、标题+引言下方)——第一行 2004年·成立+150+·员工,第二行 100+·合作+50+·城市,无背景纯绿色数字 clamp(28px,2.6vw,42px)、行距 38px,2×2 grid,随标题同步 sticky 浮动(复用现有 top:120px);i18n key 不变 about.stats.s1~s4,渲染顺序 stats=['s1','s3','s2','s4']
-- About 页公司简介正下方曾加公司数据横幅(.stats-band 绿色渐变),本次撤销改版为上述侧栏样式
-- AGENTS.md §11 新增「弹性布局(硬约束)」6 条: max-width 容器/fr-minmax 列宽/clamp 流式尺寸/img-video 兜底/断点统一/四档自查;版本升 v1.2
-- AppNavbar:品牌区 margin `calc(100vw/6-110px)` → `max(0px, calc(...))`(小屏不再为负);菜单 margin → clamp(16px,5vw,80px);内边距 → clamp(16px,3vw,40px);链接横 padding 0.625rem;**抽屉菜单断点 768→1024**(7 个 nowrap 链接 769-1100px 放不下);768 补品牌名 1rem
-- HeroCarousel:轮播高 780px → clamp(480px,55vw,780px);标题 3.5rem → clamp(1.75rem,1.4rem+2.6vw,3.5rem);装饰线 220px → clamp(120px,30vw,220px);删 768 硬切覆盖
-- About:荣誉大图 560px → clamp(340px,45vw,560px);缩略图列 → minmax(150px,190px);时间线图高/脊线 320px → clamp(220px,30vw,320px);年/题/文 38/28/20px → clamp 流式;1024 断点 .vt 放宽 82vw;mvv 补 1024→2 列
-- About 相册 ERR-002 修复:.gallery__side/.gallery__viewer 加 min-width:0(横向缩略图行 min-content 撑破 1fr 轨道,375px 溢出 386px)
-- main.css:.section/.page-hero 内边距 → clamp;补全局 video max-width:100%;删被 clamp 取代的 768 覆盖块
-- Home:统计数字/CTA 标题 → clamp;CTA 内边距 → clamp;Services 视觉块高 → clamp(130px,18vw,180px);Team 孤例断点 600→768;Careers 补 1024→2 列 + job__meta flex-wrap;NewsDetail 正文加 overflow-wrap:anywhere;Footer px 字号→rem + 1024→2 列
-- 验证:build 通过;1280/1024/768/375 × 8 页面 scrollWidth==clientWidth 零溢出;1024 汉堡菜单生效、轮播 55vw;375 单列正常
+- Services 页重做:数据层新增 productCategories(src/data/index.js,6 分类×双语+13 产品 model/tag/image/desc);页面按分类分节(编号标签+浅底软隔断交替),产品卡片 3:2 白底图+型号+变体标签+参数描述;底部新增选型咨询 CTA 横带(i18n services.ctaTitle/ctaDesc/ctaBtn 中英);弹性合规(3→2→1 列)
+- 归类(依据画册 PDF 设备内容+源站产品目录交叉验证):①光伏边框铝型材自动生产线(YK-6A/6B/6W) ②光伏边框复合材料自动生产线(YK-FC-3C/3D/3J) ③自动码垛机(YK-3E/3F) ④自动上料机(YK-AL-1) ⑤自动视觉检测系统(YK-OL-2I/YK-OF-3I) ⑥汽车轻量化设备(型材拉弯机/自动锁螺母生产线)
+- 产品图 13 张(435×288 PNG)从源站 OSS uploadFiles/Products/ 下载入 src/assets/products/;型号-图片配对以源站命名为准
+- PDF 提取工具链:scripts/extract-pdf-images.cjs(对象级提取,处理 Flate+DCT 双重压缩过滤器链)、scripts/map-pdf-images.cjs(页面对象→图片映射,经裸 Page 对象序);画册 PDF 中文标题不可提取(CID 无 ToUnicode),产品名以源站 yk-*.php 页面为准
+- 验证:build 通过;6 类 13 产品渲染、图全加载(lazy 时序假象已排除)、375 单列零溢出、英文语言正常
+- 首页轮播新增第 5 张「现代科技城市」主视觉(gen-hero-city.cjs 生成 hero-city.svg);首图换 banner-home.jpg;主标题三层光影
+- 企业精神模块定稿:SPIRIT 标签+引言在标题与词条间(12/30px 间隔)+三行两列绿色词条 clamp(21px,2vw,32px)
 
 ## 下一步
-- 部署上线(GitHub Pages 需配 base 路径);团队页替换真实人员;补充产品实拍图
+- 部署上线(GitHub Pages base);团队真实人员;产品实拍高清图替换(现 435×288 偏小,PDF 内嵌原图 800-1000px 可再提取)
 
 ## 决策与考量
-- 抽屉菜单断点提到 1024:实测 7 链接+长品牌名在 769-1100px 客观放不下,平板收汉堡是唯一稳妥解(1080/1024/1280 三点宽度计算+截图验证)
-- 保留 ≤100px 小控件定宽豁免(logo/日期徽章/箭头/二维码 96px),与规则一致
-- 上一任务决策:二维码取自源网站;联系方式「源站信息+保留邮箱」不含网址;版权行不加 ICP 备案号;源站英文页邮箱 lujiacao@yinkaish.com 与本项目 caolujia@yinkaish.cn 不一致,保留后者
+- 型号沿用画册 PDF(YK-6A/FC-3C/3E 系)而非源站导航的新一代(YK-7A/FC-5C/5E):图片文件名与 PDF 型号一一对应,且任务依据为画册内容
+- YK-6E 无独立产品图,并入系列描述不单列;YK-OF-3I 用源站 yk-ol-3i_banner.png(源站命名如此)
+- `services` 数据保留未动:首页业务卡片仍消费它;Services 页改用新 productCategories
 
 ## 上一焦点概要
-- 2026-09-18 页脚改版:绿色渐变主题(#057842→#04512f)/公司全称/源站联系方式(含传真)/公众号+抖音二维码(src/assets/qrcode/,源自源站 OSS);About 企业文化模块移除
-- 2026-09-16~17 品牌化改造与 About 增强:寅铠品牌/绿色主题/轮播/公司简介/宣传片/荣誉相册/纵向时间线;ERR-001 页脚渲染丢失修复;详见 git 历史与 errorlog.md
+- 2026-09-18 页脚改版(绿色主题/全称/源站联系方式/二维码)+企业文化模块移除+全站弹性布局改造(AGENTS.md v1.2);ERR-001/ERR-002 见 errorlog

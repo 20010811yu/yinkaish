@@ -7,22 +7,37 @@
       </div>
     </section>
 
-    <section class="section">
+    <section v-for="cat in productCategories" :key="cat.id" class="section" :class="{ 'section--soft': alt(cat.id) }">
       <div class="container">
-        <div class="svc">
-          <div v-for="(s, i) in services" :key="s.id" class="svc__row" :class="{ 'svc__row--reverse': i % 2 === 1 }">
-            <div class="svc__visual">
-              <el-icon :size="64" color="#fff"><component :is="icons[s.icon]" /></el-icon>
-            </div>
-            <div class="svc__body">
-              <h3>{{ pick(s.name, locale) }}</h3>
-              <p>{{ pick(s.desc, locale) }}</p>
-              <el-button type="primary" text @click="$router.push('/contact')">
-                {{ $t('common.learnMore') }} →
-              </el-button>
-            </div>
-          </div>
+        <div class="section-head">
+          <span class="section-tag">{{ String(indexOf(cat.id) + 1).padStart(2, '0') }}</span>
+          <h2 class="section-title">{{ pick(cat.name, locale) }}</h2>
+          <p class="section-subtitle">{{ pick(cat.desc, locale) }}</p>
         </div>
+        <div class="prods">
+          <article v-for="p in cat.products" :key="p.model" class="prod">
+            <div class="prod__fig">
+              <img :src="p.image" :alt="p.model" loading="lazy" />
+            </div>
+            <div class="prod__body">
+              <div class="prod__title-row">
+                <h3>{{ p.model }}</h3>
+                <span class="prod__tag">{{ pick(p.tag, locale) }}</span>
+              </div>
+              <p>{{ pick(p.desc, locale) }}</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container">
+        <h2>{{ $t('services.ctaTitle') }}</h2>
+        <p>{{ $t('services.ctaDesc') }}</p>
+        <el-button type="primary" size="large" round @click="$router.push('/contact')">
+          {{ $t('services.ctaBtn') }}
+        </el-button>
       </div>
     </section>
   </div>
@@ -30,68 +45,119 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
-import { SetUp, View, Search, OfficeBuilding } from '@element-plus/icons-vue'
-import { services } from '../data'
+import { productCategories } from '../data'
 import { pick } from '../data/lang'
 
 const { locale } = useI18n()
 
-const icons = { SetUp, View, Search, OfficeBuilding }
+// 分类序号(编号标签)
+const indexOf = (id) => productCategories.findIndex((c) => c.id === id)
+// 偶数分类用浅底软隔断,奇数用白底
+const alt = (id) => indexOf(id) % 2 === 0
 </script>
 
 <style scoped>
-.svc {
+.prods {
   display: grid;
-  gap: 56px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
 }
 
-.svc__row {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 40px;
-  align-items: center;
+.prod {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.svc__row--reverse {
-  grid-template-columns: 1.6fr 1fr;
+.prod:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
 }
 
-.svc__row--reverse .svc__visual {
-  order: 2;
+.prod__fig {
+  background: #fff;
+  border-bottom: 1px solid var(--c-border);
+  /* 产品图白底 3:2,等比完整呈现 */
+  aspect-ratio: 3 / 2;
 }
 
-.svc__visual {
+.prod__fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 14px;
+}
+
+.prod__body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.prod__title-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: clamp(130px, 18vw, 180px);
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, #123a8f 0%, #1e6fff 100%);
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.svc__body h3 {
-  font-size: 22px;
-  margin-bottom: 10px;
+.prod__title-row h3 {
+  font-size: 1.25rem;
+  color: var(--c-primary);
+  letter-spacing: 0.5px;
 }
 
-.svc__body p {
+.prod__tag {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  background: var(--c-primary-light);
+  border-radius: 999px;
+  padding: 3px 12px;
+  white-space: nowrap;
+}
+
+.prod__body p {
+  font-size: 0.875rem;
   color: var(--c-text-secondary);
+  line-height: 1.75;
+}
+
+/* 底部咨询横带 */
+.cta-band {
+  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
+  color: #fff;
+  text-align: center;
+  padding: clamp(48px, 6vw, 72px) 0;
+}
+
+.cta-band h2 {
+  font-size: clamp(24px, 2.4vw, 30px);
   margin-bottom: 12px;
 }
 
+.cta-band p {
+  max-width: 560px;
+  margin: 0 auto 26px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 1024px) {
+  .prods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  .svc {
-    gap: 36px;
-  }
-
-  .svc__row,
-  .svc__row--reverse {
+  .prods {
     grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .svc__row--reverse .svc__visual {
-    order: 0;
   }
 }
 </style>

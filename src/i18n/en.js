@@ -97,7 +97,10 @@ export default {
   },
   services: {
     title: 'Services & Products',
-    subtitle: 'Product portfolio covering PV frame automation and automotive welding equipment',
+    subtitle: 'Six product series: PV frame lines, stacking & feeding, vision inspection and automotive lightweight equipment',
+    ctaTitle: 'Get a Tailored Proposal',
+    ctaDesc: 'Tell us your frame specifications and capacity needs — Yinkai engineers will propose the right equipment and line layout.',
+    ctaBtn: 'Request a Proposal',
   },
   team: {
     title: 'Our Team',

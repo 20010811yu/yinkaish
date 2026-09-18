@@ -15,3 +15,4 @@
 
 ## 命令
 - dev:`npm run dev`;build:`npm run build`;preview:`npm run preview`
+- PDF 图片提取:`node scripts/extract-pdf-images.cjs <pdf> <outdir>`(对象级,支持 Flate+DCT 过滤器链);页面-图片映射:`node scripts/map-pdf-images.cjs <pdf>`(裸 Page 对象序即阅读序)

@@ -38,6 +38,201 @@ export const services = [
   },
 ]
 
+// 产品分类(依据企业画册设备内容归类,图片源自官网产品图,双语)
+import yk6aImg from '../assets/products/yk-6a_banner.png'
+import yk6bImg from '../assets/products/yk-6b_banner.png'
+import yk6wImg from '../assets/products/yk-6w_banner.png'
+import ykFc3cImg from '../assets/products/yk-fc-3c_banner.png'
+import ykFc3dImg from '../assets/products/yk-fc-3d_banner.png'
+import ykFc3jImg from '../assets/products/yk-fc-3j_banner.png'
+import yk3eImg from '../assets/products/yk-3e_banner.png'
+import yk3fImg from '../assets/products/yk-3f_banner.png'
+import ykAl1Img from '../assets/products/yk-al-1_banner.png'
+import ykOl2iImg from '../assets/products/yk-ol-2i_banner.png'
+import ykOl3iImg from '../assets/products/yk-ol-3i_banner.png'
+import ykLawanImg from '../assets/products/yk-xingcailawanji_banner.png'
+import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner.png'
+
+export const productCategories = [
+  {
+    id: 'pv-alu',
+    name: { zh: '光伏边框铝型材自动生产线', en: 'PV Frame Aluminium Profile Lines' },
+    desc: {
+      zh: '面向长边/短边铝型材边框的自动冲切、铆接全线装备，自动送料、切割、冲压、铆接、检测全流程覆盖。',
+      en: 'Complete lines for long/short aluminium PV frames covering auto feeding, cutting, stamping, riveting and inspection.',
+    },
+    products: [
+      {
+        model: 'YK-6A',
+        tag: { zh: '立冲长边', en: 'Vertical Punch, Long Edge' },
+        image: yk6aImg,
+        desc: {
+          zh: '适用边框长度 1500-2600mm，节拍 1.8-2.1 秒/支，12 小时产能 18000-20000 支，加工精度 ±0.1mm，稼动率 98%。',
+          en: 'For 1500-2600mm frames at 1.8-2.1s per piece, 18,000-20,000 pcs per 12h, ±0.1mm precision, 98% uptime.',
+        },
+      },
+      {
+        model: 'YK-6B',
+        tag: { zh: '卧冲短边', en: 'Horizontal Punch, Short Edge' },
+        image: yk6bImg,
+        desc: {
+          zh: '适用边框长度 850-1500mm，节拍 1.8-2.1 秒/支，12 小时产能 18000-20000 支，加工精度 ±0.1mm，稼动率 98%。',
+          en: 'For 850-1500mm frames at 1.8-2.1s per piece, 18,000-20,000 pcs per 12h, ±0.1mm precision, 98% uptime.',
+        },
+      },
+      {
+        model: 'YK-6W',
+        tag: { zh: '卧冲长边', en: 'Horizontal Punch, Long Edge' },
+        image: yk6wImg,
+        desc: {
+          zh: '适用边框长度 1500-2600mm，节拍 1.8-2.1 秒/支，加工精度 ±0.1mm，稼动率 98%，装机容量 10.8 吨。',
+          en: 'For 1500-2600mm frames at 1.8-2.1s per piece, ±0.1mm precision, 98% uptime, 10.8t overall weight.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'pv-fc',
+    name: { zh: '光伏边框复合材料自动生产线', en: 'PV Frame Composite Material Lines' },
+    desc: {
+      zh: '复合材料边框长边/短边自动线与角码装配机，精度 ±0.15mm，稼动率 98%。',
+      en: 'Long/short-edge composite frame lines and corner-key assembly machines with ±0.15mm precision and 98% uptime.',
+    },
+    products: [
+      {
+        model: 'YK-FC-3C',
+        tag: { zh: '长边自动线', en: 'Long-Edge Line' },
+        image: ykFc3cImg,
+        desc: {
+          zh: '适用边框长度 1500-2600mm，加工精度 ±0.15mm，45° 切角精度，稼动率 98%。',
+          en: 'For 1500-2600mm composite frames, ±0.15mm precision with 45° mitre accuracy, 98% uptime.',
+        },
+      },
+      {
+        model: 'YK-FC-3D',
+        tag: { zh: '短边自动线', en: 'Short-Edge Line' },
+        image: ykFc3dImg,
+        desc: {
+          zh: '适用边框长度 850-1500mm，结构紧凑，稼动率 98%，装机容量 8.3 吨。',
+          en: 'For 850-1500mm frames in a compact footprint, 98% uptime, 8.3t overall weight.',
+        },
+      },
+      {
+        model: 'YK-FC-3J',
+        tag: { zh: '角码装配机', en: 'Corner-Key Assembly Machine' },
+        image: ykFc3jImg,
+        desc: {
+          zh: '边框角码自动装配，外形 4500×3800×1500mm，装机容量仅 1.5 吨，稼动率 98%。',
+          en: 'Automatic corner-key assembly, footprint 4500×3800×1500mm, only 1.5t overall weight, 98% uptime.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'stacker',
+    name: { zh: '自动码垛机', en: 'Automatic Stacking Machines' },
+    desc: {
+      zh: '长边/短边边框成品自动码垛，替代人工整理，稼动率 98%。',
+      en: 'Automatic stacking of long/short finished frames, replacing manual handling, 98% uptime.',
+    },
+    products: [
+      {
+        model: 'YK-3E',
+        tag: { zh: '长边自动码垛机', en: 'Long-Edge Stacker' },
+        image: yk3eImg,
+        desc: {
+          zh: '适用 1500-2600mm 长边框自动码垛，外形 7000×6300×2500mm，稼动率 98%。',
+          en: 'Automatic stacking for 1500-2600mm long frames, footprint 7000×6300×2500mm, 98% uptime.',
+        },
+      },
+      {
+        model: 'YK-3F',
+        tag: { zh: '短边自动码垛机', en: 'Short-Edge Stacker' },
+        image: yk3fImg,
+        desc: {
+          zh: '适用 850-1500mm 短边框自动码垛，外形 5000×7200×2500mm，稼动率 98%。',
+          en: 'Automatic stacking for 850-1500mm short frames, footprint 5000×7200×2500mm, 98% uptime.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'feeder',
+    name: { zh: '自动上料机', en: 'Automatic Feeding Machine' },
+    desc: {
+      zh: '边框原材料自动上料与缓存，保障深加工设备连续生产。',
+      en: 'Automatic feeding and buffering of frame raw material for continuous downstream production.',
+    },
+    products: [
+      {
+        model: 'YK-AL-1',
+        tag: { zh: '桁架式自动上料', en: 'Gantry-Type Auto Feeding' },
+        image: ykAl1Img,
+        desc: {
+          zh: '适用原料长 3900-7500mm、宽 30-45mm、高 11-35mm；最大承重 3000kg（含托盘），托盘存放 360 支，上料节拍 2 秒/支，缓冲区可存 50 支确保不停机换框，稼动率 ≥85%。',
+          en: 'For raw material 3900-7500mm long, 30-45mm wide, 11-35mm high; 3000kg max load (incl. pallet), 360 pcs per pallet, 2s feeding cycle, 50-pc buffer for non-stop changeover, ≥85% uptime.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'vision',
+    name: { zh: '自动视觉检测系统', en: 'Automatic Vision Inspection' },
+    desc: {
+      zh: '在线/离线视觉检测，十余类瑕疵自动识别分拣，检测数据全程可追溯。',
+      en: 'Inline/offline vision inspection with auto sorting of a dozen-plus defect types and full traceability.',
+    },
+    products: [
+      {
+        model: 'YK-OL-2I',
+        tag: { zh: '在线视觉检测', en: 'Inline Inspection' },
+        image: ykOl2iImg,
+        desc: {
+          zh: '产线在线式全检，外形 3550×2900×2500mm，与生产线节拍同步，自动分拣 OK/NG。',
+          en: 'Inline full inspection synchronized with line cycle, footprint 3550×2900×2500mm, automatic OK/NG sorting.',
+        },
+      },
+      {
+        model: 'YK-OF-3I',
+        tag: { zh: '离线视觉检测', en: 'Offline Inspection' },
+        image: ykOl3iImg,
+        desc: {
+          zh: '离线式检测站，外形 3900×1550×2500mm，全尺寸检测并自动生成可追溯报告。',
+          en: 'Offline inspection station, footprint 3900×1550×2500mm, full-size inspection with traceable reports.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'automotive',
+    name: { zh: '汽车轻量化设备', en: 'Automotive Lightweight Equipment' },
+    desc: {
+      zh: '面向车身轻量化结构件的型材成形与连接装备，支持 FSW 搅拌摩擦焊与 CMT 冷金属过渡焊工艺。',
+      en: 'Forming and joining equipment for lightweight automotive structures, supporting FSW and CMT welding processes.',
+    },
+    products: [
+      {
+        model: '型材拉弯机',
+        tag: { zh: '型材拉弯成形', en: 'Profile Stretch Bending' },
+        image: ykLawanImg,
+        desc: {
+          zh: '适用型材宽度 900-3200mm，拉弯速度 0-100mm/s，成形精度 0.02mm，单件节拍约 40 秒。',
+          en: 'For profiles 900-3200mm wide, bending speed 0-100mm/s, 0.02mm forming precision, ~40s per piece.',
+        },
+      },
+      {
+        model: '自动锁螺母生产线',
+        tag: { zh: '螺母自动压装', en: 'Nut Auto-Insertion Line' },
+        image: ykLuomuImg,
+        desc: {
+          zh: '轻量化结构件螺母自动锁定生产线，配合 FSW/CMT 焊接工艺，服务汽车白车身轻量化制造。',
+          en: 'Automatic nut-insertion line for lightweight structures with FSW/CMT welding, serving BIW lightweight manufacturing.',
+        },
+      },
+    ],
+  },
+]
+
 // 发展历程(真实大事记)
 export const milestones = [
   { year: '2004', text: { zh: '上海寅铠精密机械制造有限公司成立，深耕汽车焊装装备。', en: 'Yinkai founded in Shanghai, focusing on automotive welding equipment.' } },
