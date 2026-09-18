@@ -4,6 +4,7 @@
 品牌化改造完成:官网切换为"上海寅铠精密机械制造有限公司"真实品牌与光伏装备业务定位。
 
 ## 最近变更
+- About 页公司简介下方新增「公司宣传片」区块:introduce.mp4(3:12,存 src/assets/video/)以 16:9 圆角播放器呈现,标题 i18n about.videoTitle
 - About 页新增「公司简介」区块(page-hero 下、使命愿景前):左侧 sticky 标题 + 右侧 5 张双语段落卡(公司概况/深耕汽车焊装/战略转型光伏/核心产品/资质与愿景),内容依据《公司简介.txt》与企业资料;数据在 data/index.js 的 intro 导出
 - 导航调整:「关于我们」→「关于寅铠」,业务与产品与关于寅铠位置互换(导航+页脚快速链接同步)
 - 修复 ERR-001 页脚生产环境渲染丢失(i18n 邮箱 @ 转义),见 errorlog.md;构建改 minify:false 规避 esbuild 压缩变量名冲突;main.js 增加 errorHandler

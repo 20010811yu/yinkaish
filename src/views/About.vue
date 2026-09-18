@@ -28,6 +28,17 @@
     <section class="section section--soft">
       <div class="container">
         <div class="section-head">
+          <h2 class="section-title">{{ $t('about.videoTitle') }}</h2>
+        </div>
+        <div class="video-wrap">
+          <video controls preload="metadata" :src="videoUrl" class="video-player"></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section-head">
           <h2 class="section-title">{{ $t('about.mvvTitle') }}</h2>
         </div>
         <div class="mvv">
@@ -90,6 +101,7 @@ import { useI18n } from 'vue-i18n'
 import { Aim, View, Medal } from '@element-plus/icons-vue'
 import { timeline, intro } from '../data'
 import { pick } from '../data/lang'
+import videoUrl from '../assets/video/introduce.mp4'
 
 const { locale, t } = useI18n()
 
@@ -197,6 +209,22 @@ onBeforeUnmount(() => observer?.disconnect())
   font-size: 15px;
   line-height: 1.9;
   color: var(--c-text);
+}
+
+/* 公司宣传片 */
+.video-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.video-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  background: #000;
 }
 
 /* 纵向图文时间线:整行占屏约 60% */
