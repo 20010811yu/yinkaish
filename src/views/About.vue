@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="profile__spirit">
-              <h4>{{ $t('about.spiritTitle') }}</h4>
+              <h4 class="section-title profile__spirit-title">{{ $t('about.spiritTitle') }}</h4>
               <div class="profile__spirit-grid">
                 <span v-for="i in spirits" :key="i" class="profile__spirit-item">{{ $t(`about.spirit.${i}`) }}</span>
               </div>
@@ -259,26 +259,23 @@ onBeforeUnmount(() => observer?.disconnect())
   color: var(--c-text-secondary);
 }
 
-/* 企业精神:三行两列绿色词条 */
+/* 企业精神:标题与「公司简介」同级,词条与数据数字同档绿色 */
 .profile__spirit {
-  margin-top: 36px;
+  margin-top: 40px;
 }
 
-.profile__spirit h4 {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--c-text-secondary);
-  margin-bottom: 14px;
+.profile__spirit-title {
+  margin-bottom: 18px;
 }
 
 .profile__spirit-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px 12px;
+  gap: 20px 12px;
 }
 
 .profile__spirit-item {
-  font-size: clamp(15px, 1.2vw, 18px);
+  font-size: clamp(28px, 2.6vw, 42px);
   font-weight: 700;
   color: var(--c-primary);
 }

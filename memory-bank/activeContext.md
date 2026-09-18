@@ -4,7 +4,7 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
-- 侧栏新增「企业精神」区块(数据 2×2 正下方):三行两列、每行两个词(精益求精+创新致远/匠心独运+笃实精工/敬畏客户+智造全球),绿色加粗词条 clamp(15px,1.2vw,18px),灰色小标题;i18n about.spiritTitle + about.spirit.i1~i6(中英);随侧栏 sticky 浮动,375 保持 2 列无溢出
+- 企业精神仿截图模块定稿:标题复用 .section-title(与「公司简介」等大 2.125rem),词条 clamp(28px,2.6vw,42px) 与数据数字同档绿色加粗,三行两列每行两词(精益求精+创新致远/匠心独运+笃实精工/敬畏客户+智造全球),行距 20px;i18n about.spiritTitle + about.spirit.i1~i6(中英);随侧栏 sticky 浮动
 - 撤销数据横幅版式:公司数据改为放进公司简介左侧 sticky 栏(profile__side 内、标题+引言下方)——第一行 2004年·成立+150+·员工,第二行 100+·合作+50+·城市,无背景纯绿色数字 clamp(28px,2.6vw,42px)、行距 38px,2×2 grid,随标题同步 sticky 浮动(复用现有 top:120px);i18n key 不变 about.stats.s1~s4,渲染顺序 stats=['s1','s3','s2','s4']
 - About 页公司简介正下方曾加公司数据横幅(.stats-band 绿色渐变),本次撤销改版为上述侧栏样式
 - AGENTS.md §11 新增「弹性布局(硬约束)」6 条: max-width 容器/fr-minmax 列宽/clamp 流式尺寸/img-video 兜底/断点统一/四档自查;版本升 v1.2
