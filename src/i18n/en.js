@@ -65,6 +65,9 @@ export default {
   about: {
     title: 'About Us',
     subtitle: 'The mission, vision and journey of Yinkai Precision',
+    profileTitle: 'Company Profile',
+    profileLead: 'Two decades of industrial automation — from automotive welding to PV smart manufacturing.',
+    mvvTitle: 'Mission, Vision & Values',
     mission: { title: 'Mission', desc: 'Make PV and automotive production more efficient and intelligent through precision manufacturing.' },
     vision: { title: 'Vision', desc: 'To be a world-leading provider of custom automation solutions for PV frames.' },
     values: { title: 'Values', desc: 'Respect customers, innovate for the future; technology has only a starting point, innovation has no end.' },

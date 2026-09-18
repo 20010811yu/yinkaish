@@ -9,6 +9,27 @@
 
     <section class="section">
       <div class="container">
+        <div class="profile">
+          <div class="profile__side">
+            <span class="section-tag">PROFILE</span>
+            <h2 class="section-title">{{ $t('about.profileTitle') }}</h2>
+            <p class="profile__lead">{{ $t('about.profileLead') }}</p>
+          </div>
+          <div class="profile__body">
+            <div v-for="(p, i) in intro" :key="i" class="profile__item">
+              <h3>{{ pick(p.title, locale) }}</h3>
+              <p>{{ pick(p.text, locale) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">{{ $t('about.mvvTitle') }}</h2>
+        </div>
         <div class="mvv">
           <div v-for="m in mvv" :key="m.icon" class="mvv__item">
             <el-icon :size="32" color="var(--c-primary)"><component :is="m.icon" /></el-icon>
@@ -67,7 +88,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Aim, View, Medal } from '@element-plus/icons-vue'
-import { timeline } from '../data'
+import { timeline, intro } from '../data'
 import { pick } from '../data/lang'
 
 const { locale, t } = useI18n()
@@ -133,6 +154,49 @@ onBeforeUnmount(() => observer?.disconnect())
 .mvv__item p {
   color: var(--c-text-secondary);
   font-size: 14px;
+}
+
+/* 公司简介区块 */
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.profile__side {
+  position: sticky;
+  top: 120px;
+}
+
+.profile__lead {
+  margin-top: 12px;
+  font-size: 17px;
+  color: var(--c-text-secondary);
+}
+
+.profile__body {
+  display: grid;
+  gap: 28px;
+}
+
+.profile__item {
+  background: var(--c-bg-soft);
+  border-left: 4px solid var(--c-primary);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+}
+
+.profile__item h3 {
+  font-size: 19px;
+  color: var(--c-primary);
+  margin-bottom: 10px;
+}
+
+.profile__item p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--c-text);
 }
 
 /* 纵向图文时间线:整行占屏约 60% */
@@ -271,6 +335,15 @@ onBeforeUnmount(() => observer?.disconnect())
 @media (max-width: 768px) {
   .mvv {
     grid-template-columns: 1fr;
+  }
+
+  .profile {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .profile__side {
+    position: static;
   }
 
   /* 移动端时间线恢复全宽单列 */

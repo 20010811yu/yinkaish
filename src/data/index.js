@@ -47,6 +47,45 @@ export const milestones = [
   { year: '2026', text: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand the global market for PV frame automation lines.' } },
 ]
 
+// 公司简介(About 页,双语段落)
+export const intro = [
+  {
+    title: { zh: '公司概况', en: 'Company Profile' },
+    text: {
+      zh: '上海寅铠精密机械制造有限公司成立于2004年6月，位于上海市嘉定区安亭镇园区路567号，厂房及工业园占地面积约10000平方米，现有员工150余人，是一家专注于工业自动化装备研发、制造与服务的高新技术企业。公司起步于汽车焊装设备领域，凭借在汽车自动化行业多年积累的设计、制造与集成经验，形成了扎实的技术底蕴和项目管理能力。2005年，公司通过德国莱茵TÜV现场审核，获得ISO9001质量管理体系认证，企业管理与国际先进水平全面接轨。',
+      en: 'Founded in June 2004 in Anting, Jiading, Shanghai, Yinkai operates a plant and industrial park of about 10,000 m² with 150+ employees, dedicated to the R&D, manufacturing and service of industrial automation equipment. Starting from automotive welding equipment, the company built solid technical expertise and project management capabilities. In 2005, it passed the TÜV Rheinland audit and obtained ISO9001 certification.',
+    },
+  },
+  {
+    title: { zh: '深耕汽车焊装', en: 'Automotive Heritage' },
+    text: {
+      zh: '公司成立初期深耕汽车焊装装备领域，主营汽车白车身焊接生产线交钥匙工程，涵盖焊装线、分拼线、工装夹具、检具与输送线及机器人系统集成，先后服务于上海大众、上海通用、上汽、长城、吉利、PSA、华晨、北汽等主流主机厂，并与ABB、KUKA、COMAU、西门子等知名企业长期合作。2007-2019年年均交付8-10个项目，累计超百项；2014年完成北汽、华晨白车身整线项目。2011年迁入新厂区，配备FARO激光跟踪仪等设备，精度控制在±0.1毫米级，为进军光伏领域奠定了坚实基础。',
+      en: 'In its early years, Yinkai specialized in turnkey automotive BIW welding lines — welding, hemming, fixtures, gauges, conveyors and robot integration — serving SVW, SGM, SAIC, Great Wall, Geely, PSA, Jinbei, BAIC and partners such as ABB, KUKA and COMAU. From 2007 to 2019 it delivered 8-10 projects per year, over 100 in total, including full BIW lines for BAIC and Jinbei in 2014. In 2011 the company moved to its new plant with FARO laser trackers, holding precision at ±0.1 mm.',
+    },
+  },
+  {
+    title: { zh: '战略转型光伏', en: 'Strategic PV Expansion' },
+    text: {
+      zh: '2017年，公司成立光伏事业部，正式进入光伏边框自动化设备领域，开启了从汽车自动化向光伏新能源装备的战略拓展。依托汽车行业的丰富经验，公司自主研发、生产并销售优质的光伏边框自动化设备，逐步发展成为国内领先的光伏边框自动化设备制造商，致力于推动光伏边框行业全自动无人化工厂发展。',
+      en: 'In 2017, Yinkai founded its PV division and entered the photovoltaic frame automation field, a strategic expansion from automotive automation. Leveraging its automotive expertise, the company developed high-quality PV frame automation equipment and has become a leading domestic manufacturer, committed to fully-unmanned PV frame factories.',
+    },
+  },
+  {
+    title: { zh: '核心产品', en: 'Core Products' },
+    text: {
+      zh: '公司主要产品涵盖光伏边框铝型材自动化生产线、复合材料自动化生产线、自动码垛机、自动上料机及自动视觉检测系统等，集自动上料、送料、切割、冲孔、铆压于一体，以柔性化、模块化设计为核心。从早期设备到第六代光伏边框自动化生产线，生产节拍和加工精度不断提升；2024年持续推进视觉检测项目的研发与推广。公司光伏业务已服务于爱康集团等客户，并在行业内获得广泛认可。',
+      en: 'Main products cover PV frame aluminum/composite automatic lines, palletizers, feeders and vision inspection systems, integrating feeding, conveying, cutting, punching and riveting with flexible modular design. From early models to the 6th-generation line, cycle time and precision keep improving; in 2024 vision inspection R&D advanced further. PV clients include Akcome and more.',
+    },
+  },
+  {
+    title: { zh: '资质与愿景', en: 'Qualifications & Vision' },
+    text: {
+      zh: '公司拥有多项专利，获得高新技术企业、上海市“专精特新”中小企业、安全生产标准化三级企业等荣誉，并参与国家/行业标准制定，具备从工艺规划、设计、制造到装配调试、售后服务的全流程一体化能力。公司秉持“成为全球工业自动化产业的一流供应商”的愿景，以“寅领行业，铠创未来”为使命，坚持“敬畏客户、勇于创新、尊重个人、结果导向”的核心价值观，持续为全球客户提供智能、可靠、高效的自动化解决方案。',
+      en: 'Yinkai holds multiple patents and honors including National High-Tech Enterprise and Shanghai "Specialized & Innovative" SME, and participates in national/industry standard setting, offering full-process capabilities from planning and design to manufacturing, commissioning and after-sales service. With the vision of becoming a first-class global supplier of industrial automation, the mission of "Leading the industry, Creating the future", and values of customer respect, innovation, individual respect and result orientation, Yinkai keeps delivering intelligent, reliable and efficient automation solutions worldwide.',
+    },
+  },
+]
+
 // 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
 import imgT2004 from '../assets/timeline/t-2004.jpg'
 import imgT2007 from '../assets/timeline/t-2007.png'
