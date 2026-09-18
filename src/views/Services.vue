@@ -7,26 +7,59 @@
       </div>
     </section>
 
-    <section v-for="cat in productCategories" :key="cat.id" class="section" :class="{ 'section--soft': alt(cat.id) }">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-tag">{{ String(indexOf(cat.id) + 1).padStart(2, '0') }}</span>
-          <h2 class="section-title">{{ pick(cat.name, locale) }}</h2>
-          <p class="section-subtitle">{{ pick(cat.desc, locale) }}</p>
-        </div>
-        <div class="prods">
-          <article v-for="p in cat.products" :key="p.model" class="prod">
-            <div class="prod__fig">
-              <img :src="p.image" :alt="p.model" loading="lazy" />
+    <section class="section section--soft">
+      <div class="container svc-layout">
+        <!-- 左侧:产品列表栏(桌面常开,手机手风琴) -->
+        <aside class="svc-side">
+          <div v-for="cat in productCategories" :key="cat.id" class="svc-group" :class="{ 'svc-group--open': isCatOpen(cat.id) }">
+            <button class="svc-group__head" type="button" @click="toggleCat(cat.id)">
+              <span>{{ pick(cat.name, locale) }}</span>
+              <span class="svc-group__count">{{ cat.products.length }}</span>
+            </button>
+            <ul class="svc-group__list">
+              <li v-for="prod in cat.products" :key="prod.model">
+                <button
+                  class="svc-item"
+                  :class="{ 'svc-item--active': selected.model === prod.model }"
+                  type="button"
+                  @click="select(cat, prod)"
+                >
+                  <span class="svc-item__model">{{ prod.model }}</span>
+                  <span class="svc-item__tag">{{ pick(prod.tag, locale) }}</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- 右侧:产品详情(大图 + 简介 + 参数表格) -->
+        <div class="svc-detail">
+          <div class="detail-fig">
+            <img :src="selectedProd.image" :alt="selectedProd.model" />
+          </div>
+          <div class="detail-head">
+            <span class="detail-cat">{{ pick(selectedCat.name, locale) }}</span>
+            <div class="detail-title-row">
+              <h2>{{ selectedProd.model }}</h2>
+              <span class="detail-tag">{{ pick(selectedProd.tag, locale) }}</span>
             </div>
-            <div class="prod__body">
-              <div class="prod__title-row">
-                <h3>{{ p.model }}</h3>
-                <span class="prod__tag">{{ pick(p.tag, locale) }}</span>
-              </div>
-              <p>{{ pick(p.desc, locale) }}</p>
+            <p class="detail-desc">{{ pick(selectedProd.desc, locale) }}</p>
+          </div>
+
+          <div class="detail-params">
+            <div class="params-head">
+              <span>{{ $t('services.paramsTitle') }}</span>
+              <span class="params-head__en">EQUIPMENT PARAMETERS</span>
             </div>
-          </article>
+            <table class="params-table">
+              <tbody>
+                <tr v-for="(row, i) in currentParams" :key="i">
+                  <th>{{ pick(row.label, locale) }}</th>
+                  <td>{{ pick(row.value, locale) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -44,120 +77,268 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { productCategories } from '../data'
+import { productCategories, productParams } from '../data'
 import { pick } from '../data/lang'
 
 const { locale } = useI18n()
 
-// 分类序号(编号标签)
-const indexOf = (id) => productCategories.findIndex((c) => c.id === id)
-// 偶数分类用浅底软隔断,奇数用白底
-const alt = (id) => indexOf(id) % 2 === 0
+const selected = ref({ catId: productCategories[0].id, model: productCategories[0].products[0].model })
+// 手机手风琴:默认展开选中分类,桌面端该状态无效果(样式常开)
+const openCat = ref(productCategories[0].id)
+
+const selectedCat = computed(() => productCategories.find((c) => c.id === selected.value.catId))
+const selectedProd = computed(() => selectedCat.value.products.find((x) => x.model === selected.value.model))
+const currentParams = computed(() => productParams[selectedProd.value.model.replaceAll('-', '')] ?? productParams[selectedProd.value.model] ?? [])
+
+const select = (cat, prod) => {
+  selected.value = { catId: cat.id, model: prod.model }
+  openCat.value = cat.id
+}
+const toggleCat = (id) => {
+  openCat.value = openCat.value === id ? '' : id
+}
+const isCatOpen = (id) => openCat.value === id
 </script>
 
 <style scoped>
-.prods {
+.svc-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
+  grid-template-columns: 300px 1fr;
+  gap: 36px;
+  align-items: start;
 }
 
-.prod {
+/* ---------- 左侧列表栏 ---------- */
+.svc-side {
+  position: sticky;
+  top: 108px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.svc-group {
   background: #fff;
   border: 1px solid var(--c-border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.prod:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-
-.prod__fig {
-  background: #fff;
-  border-bottom: 1px solid var(--c-border);
-  /* 产品图白底 3:2,等比完整呈现 */
-  aspect-ratio: 3 / 2;
-}
-
-.prod__fig img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 14px;
-}
-
-.prod__body {
-  padding: 18px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
-
-.prod__title-row {
+.svc-group__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  flex-wrap: wrap;
+  width: 100%;
+  padding: 13px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--c-text);
+  text-align: left;
 }
 
-.prod__title-row h3 {
-  font-size: 1.25rem;
+.svc-group__count {
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--c-primary);
-  letter-spacing: 0.5px;
+  background: var(--c-primary-light);
+  border-radius: 999px;
+  padding: 1px 9px;
 }
 
-.prod__tag {
+.svc-group__list {
+  display: none;
+  flex-direction: column;
+  padding: 0 8px 8px;
+}
+
+.svc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--c-text-secondary);
+  transition: background 0.15s, color 0.15s;
+}
+
+.svc-item:hover {
+  background: var(--c-bg-soft);
+  color: var(--c-primary);
+}
+
+.svc-item--active {
+  background: var(--c-primary-light);
+  color: var(--c-primary);
+  font-weight: 700;
+}
+
+.svc-item__model {
+  font-size: 0.9375rem;
+}
+
+.svc-item__tag {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* ---------- 右侧详情 ---------- */
+.svc-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.detail-fig {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.detail-fig img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  padding: 28px;
+  display: block;
+}
+
+.detail-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-cat {
+  align-self: flex-start;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--c-primary);
   background: var(--c-primary-light);
   border-radius: 999px;
-  padding: 3px 12px;
-  white-space: nowrap;
+  padding: 3px 14px;
 }
 
-.prod__body p {
+.detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.detail-title-row h2 {
+  font-size: clamp(24px, 2.4vw, 32px);
+  color: var(--c-primary);
+  letter-spacing: 1px;
+}
+
+.detail-tag {
   font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  border: 1px solid var(--c-primary);
+  border-radius: 999px;
+  padding: 3px 14px;
+}
+
+.detail-desc {
   color: var(--c-text-secondary);
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-/* 底部咨询横带 */
-.cta-band {
-  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
+/* ---------- 参数表格 ---------- */
+.params-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  background: linear-gradient(90deg, var(--c-primary-dark), var(--c-primary));
   color: #fff;
-  text-align: center;
-  padding: clamp(48px, 6vw, 72px) 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 12px 18px;
+  font-size: 1.0625rem;
+  font-weight: 700;
 }
 
-.cta-band h2 {
-  font-size: clamp(24px, 2.4vw, 30px);
-  margin-bottom: 12px;
+.params-head__en {
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.75;
+  letter-spacing: 1px;
 }
 
-.cta-band p {
-  max-width: 560px;
-  margin: 0 auto 26px;
-  color: rgba(255, 255, 255, 0.85);
+.params-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  .prods {
-    grid-template-columns: repeat(2, 1fr);
+.params-table th,
+.params-table td {
+  padding: 10px 18px;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.params-table tr:nth-child(odd) {
+  background: var(--c-bg-soft);
+}
+
+.params-table th {
+  width: 42%;
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.params-table td {
+  color: var(--c-text-secondary);
+}
+
+/* ---------- 手风琴(≤768px):分类可折叠,列表在上 ---------- */
+@media (max-width: 768px) {
+  .svc-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .svc-side {
+    position: static;
+  }
+
+  .svc-group--open .svc-group__list {
+    display: flex;
   }
 }
 
-@media (max-width: 768px) {
-  .prods {
-    grid-template-columns: 1fr;
+/* ---------- 平板收窄 ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .svc-layout {
+    grid-template-columns: 250px 1fr;
+    gap: 24px;
+  }
+}
+
+/* 桌面端列表常开 */
+@media (min-width: 769px) {
+  .svc-group__list {
+    display: flex;
   }
 }
 </style>
