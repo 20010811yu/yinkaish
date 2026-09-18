@@ -225,13 +225,13 @@ onBeforeUnmount(() => observer?.disconnect())
 .profile__stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px 16px;
+  gap: 38px 16px;
   margin-top: 30px;
 }
 
 .profile__stat strong {
   display: block;
-  font-size: clamp(24px, 2vw, 32px);
+  font-size: clamp(28px, 2.6vw, 42px);
   font-weight: 800;
   color: var(--c-primary);
   line-height: 1.2;
