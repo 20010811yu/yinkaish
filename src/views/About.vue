@@ -20,6 +20,12 @@
                 <span class="profile__stat-label">{{ $t(`about.stats.${s}.label`) }}</span>
               </div>
             </div>
+            <div class="profile__spirit">
+              <h4>{{ $t('about.spiritTitle') }}</h4>
+              <div class="profile__spirit-grid">
+                <span v-for="i in spirits" :key="i" class="profile__spirit-item">{{ $t(`about.spirit.${i}`) }}</span>
+              </div>
+            </div>
           </div>
           <div class="profile__body">
             <div v-for="(p, i) in intro" :key="i" class="profile__item">
@@ -148,6 +154,9 @@ const mvv = [
 // 公司数据(公司简介标题下方):第一行成立年份+员工数,第二行合作公司+覆盖城市
 const stats = ['s1', 's3', 's2', 's4']
 
+// 企业精神:三行两列,每行两个词
+const spirits = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6']
+
 // 荣誉相册当前索引
 const active = ref(0)
 const step = (dir) => {
@@ -248,6 +257,30 @@ onBeforeUnmount(() => observer?.disconnect())
   margin-top: 5px;
   font-size: 0.875rem;
   color: var(--c-text-secondary);
+}
+
+/* 企业精神:三行两列绿色词条 */
+.profile__spirit {
+  margin-top: 36px;
+}
+
+.profile__spirit h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+  margin-bottom: 14px;
+}
+
+.profile__spirit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 12px;
+}
+
+.profile__spirit-item {
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 700;
+  color: var(--c-primary);
 }
 
 .profile__body {
