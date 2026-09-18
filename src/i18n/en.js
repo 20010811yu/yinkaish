@@ -74,6 +74,7 @@ export default {
       s4: { value: '50', suffix: '+', label: 'Cities Covered' },
     },
     spiritTitle: 'Enterprise Spirit',
+    spiritLead: 'With craftsmanship and steadfast precision we cultivate excellence; with innovation and respect we smart-manufacture for the world.',
     spirit: {
       i1: 'Excellence',
       i2: 'Innovation Forward',

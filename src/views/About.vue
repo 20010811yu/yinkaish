@@ -25,6 +25,7 @@
               <div class="profile__spirit-grid">
                 <span v-for="i in spirits" :key="i" class="profile__spirit-item">{{ $t(`about.spirit.${i}`) }}</span>
               </div>
+              <p class="profile__spirit-lead">{{ $t('about.spiritLead') }}</p>
             </div>
           </div>
           <div class="profile__body">
@@ -259,9 +260,9 @@ onBeforeUnmount(() => observer?.disconnect())
   color: var(--c-text-secondary);
 }
 
-/* 企业精神:标题与「公司简介」同级,词条与数据数字同档绿色 */
+/* 企业精神:标题与「公司简介」同级,词条与数据数字视觉等大 */
 .profile__spirit {
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 .profile__spirit-title {
@@ -279,6 +280,12 @@ onBeforeUnmount(() => observer?.disconnect())
   font-size: clamp(21px, 2vw, 32px);
   font-weight: 700;
   color: var(--c-primary);
+}
+
+.profile__spirit-lead {
+  margin-top: 16px;
+  font-size: 17px;
+  color: var(--c-text-secondary);
 }
 
 .profile__body {

@@ -74,6 +74,7 @@ export default {
       s4: { value: '50', suffix: '+', label: '业务覆盖城市' },
     },
     spiritTitle: '企业精神',
+    spiritLead: '以匠心笃实深耕精工，携创新敬畏智造全球。',
     spirit: {
       i1: '精益求精',
       i2: '创新致远',
