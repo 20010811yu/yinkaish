@@ -4,6 +4,7 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
+- About 页公司简介正下方新增公司数据横幅(.stats-band):2004年·公司成立/100+·合作公司/150+·公司员工/50+·业务覆盖城市,主题绿渐变全宽横幅;i18n about.stats.s1~s4(value/suffix/label 中英);数字 clamp(28px,3.4vw,44px),≤768 降 2×2
 - AGENTS.md §11 新增「弹性布局(硬约束)」6 条: max-width 容器/fr-minmax 列宽/clamp 流式尺寸/img-video 兜底/断点统一/四档自查;版本升 v1.2
 - AppNavbar:品牌区 margin `calc(100vw/6-110px)` → `max(0px, calc(...))`(小屏不再为负);菜单 margin → clamp(16px,5vw,80px);内边距 → clamp(16px,3vw,40px);链接横 padding 0.625rem;**抽屉菜单断点 768→1024**(7 个 nowrap 链接 769-1100px 放不下);768 补品牌名 1rem
 - HeroCarousel:轮播高 780px → clamp(480px,55vw,780px);标题 3.5rem → clamp(1.75rem,1.4rem+2.6vw,3.5rem);装饰线 220px → clamp(120px,30vw,220px);删 768 硬切覆盖

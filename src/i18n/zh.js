@@ -67,6 +67,12 @@ export default {
     subtitle: '了解寅铠的使命、愿景与成长历程',
     profileTitle: '公司简介',
     profileLead: '从汽车焊装到光伏智造，二十年深耕工业自动化。',
+    stats: {
+      s1: { value: '2004', suffix: '年', label: '公司成立' },
+      s2: { value: '100', suffix: '+', label: '合作公司' },
+      s3: { value: '150', suffix: '+', label: '公司员工' },
+      s4: { value: '50', suffix: '+', label: '业务覆盖城市' },
+    },
     mvvTitle: '使命、愿景与价值观',
     honorsTitle: '公司荣誉',
     honorsSubtitle: '资质与认可，见证寅铠的专业与可靠',

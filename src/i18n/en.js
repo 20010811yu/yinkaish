@@ -67,6 +67,12 @@ export default {
     subtitle: 'The mission, vision and journey of Yinkai Precision',
     profileTitle: 'Company Profile',
     profileLead: 'Two decades of industrial automation — from automotive welding to PV smart manufacturing.',
+    stats: {
+      s1: { value: '2004', suffix: '', label: 'Company Founded' },
+      s2: { value: '100', suffix: '+', label: 'Partner Companies' },
+      s3: { value: '150', suffix: '+', label: 'Employees' },
+      s4: { value: '50', suffix: '+', label: 'Cities Covered' },
+    },
     mvvTitle: 'Mission, Vision & Values',
     honorsTitle: 'Company Honors',
     honorsSubtitle: 'Qualifications and recognitions of Yinkai',

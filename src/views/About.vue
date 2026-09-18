@@ -25,6 +25,15 @@
       </div>
     </section>
 
+    <section class="stats-band">
+      <div class="container stats-band__grid">
+        <div v-for="s in stats" :key="s" class="stats-band__item">
+          <strong>{{ $t(`about.stats.${s}.value`) }}<span class="stats-band__suffix">{{ $t(`about.stats.${s}.suffix`) }}</span></strong>
+          <span class="stats-band__label">{{ $t(`about.stats.${s}.label`) }}</span>
+        </div>
+      </div>
+    </section>
+
     <section class="section section--soft">
       <div class="container">
         <div class="section-head">
@@ -139,6 +148,9 @@ const mvv = [
   { key: 'values', icon: Medal },
 ]
 
+// 公司数据带(公司简介正下方)
+const stats = ['s1', 's2', 's3', 's4']
+
 // 荣誉相册当前索引
 const active = ref(0)
 const step = (dir) => {
@@ -234,6 +246,47 @@ onBeforeUnmount(() => observer?.disconnect())
   font-size: 15px;
   line-height: 1.9;
   color: var(--c-text);
+}
+
+/* 公司数据带:绿色横幅,公司简介正下方 */
+.stats-band {
+  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
+  color: #fff;
+  padding: clamp(32px, 4vw, 48px) 0;
+}
+
+.stats-band__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.stats-band__item strong {
+  display: block;
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.stats-band__suffix {
+  font-size: 0.55em;
+  font-weight: 700;
+  margin-left: 4px;
+  opacity: 0.9;
+}
+
+.stats-band__label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@media (max-width: 768px) {
+  .stats-band__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 16px;
+  }
 }
 
 /* 公司宣传片 */
