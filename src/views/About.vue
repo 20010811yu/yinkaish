@@ -22,10 +22,10 @@
             </div>
             <div class="profile__spirit">
               <h4 class="section-title profile__spirit-title">{{ $t('about.spiritTitle') }}</h4>
+              <p class="profile__spirit-lead">{{ $t('about.spiritLead') }}</p>
               <div class="profile__spirit-grid">
                 <span v-for="i in spirits" :key="i" class="profile__spirit-item">{{ $t(`about.spirit.${i}`) }}</span>
               </div>
-              <p class="profile__spirit-lead">{{ $t('about.spiritLead') }}</p>
             </div>
           </div>
           <div class="profile__body">
@@ -266,13 +266,15 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .profile__spirit-title {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .profile__spirit-grid {
+  /* 间隔参照图二:标题→小字 12px,小字→词条 30px(与简介侧 title/lead/stats 同款) */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 12px;
+  margin-top: 30px;
 }
 
 .profile__spirit-item {
@@ -283,7 +285,7 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .profile__spirit-lead {
-  margin-top: 16px;
+  margin-top: 12px;
   font-size: 17px;
   color: var(--c-text-secondary);
 }
