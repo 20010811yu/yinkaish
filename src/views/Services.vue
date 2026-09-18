@@ -311,6 +311,25 @@ const isCatOpen = (id) => openCat.value === id
   color: var(--c-text-secondary);
 }
 
+/* ---------- 底部咨询横带 ---------- */
+.cta-band {
+  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
+  color: #fff;
+  text-align: center;
+  padding: clamp(48px, 6vw, 72px) 0;
+}
+
+.cta-band h2 {
+  font-size: clamp(24px, 2.4vw, 30px);
+  margin-bottom: 12px;
+}
+
+.cta-band p {
+  max-width: 760px;
+  margin: 0 auto 26px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 /* ---------- 手风琴(≤768px):分类可折叠,列表在上 ---------- */
 @media (max-width: 768px) {
   .svc-layout {
