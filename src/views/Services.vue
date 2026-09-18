@@ -64,7 +64,7 @@ const icons = { SetUp, View, Search, OfficeBuilding }
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 180px;
+  height: clamp(130px, 18vw, 180px);
   border-radius: var(--radius);
   background: linear-gradient(135deg, #123a8f 0%, #1e6fff 100%);
 }
@@ -88,10 +88,6 @@ const icons = { SetUp, View, Search, OfficeBuilding }
   .svc__row--reverse {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .svc__visual {
-    height: 130px;
   }
 
   .svc__row--reverse .svc__visual {

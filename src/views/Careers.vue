@@ -85,6 +85,7 @@ const apply = () => {
 
 .job__meta {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -103,6 +104,12 @@ const apply = () => {
   border-radius: var(--radius);
   padding: 18px 20px;
   font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .welfares {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {

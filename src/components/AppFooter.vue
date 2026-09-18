@@ -76,7 +76,7 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
   align-items: center;
   gap: 10px;
   color: #fff;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.45;
 }
 
@@ -90,17 +90,17 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 
 .footer__slogan {
   margin-top: 12px;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .footer__col h4 {
   color: #fff;
-  font-size: 15px;
+  font-size: 0.9375rem;
   margin-bottom: 14px;
 }
 
 .footer__col li {
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-bottom: 8px;
 }
 
@@ -132,15 +132,22 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 }
 
 .footer__qr-item figcaption {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
 .footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   padding: 18px 0;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.6);
+}
+
+/* 平板 4 列收为 2 列 */
+@media (max-width: 1024px) {
+  .footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {

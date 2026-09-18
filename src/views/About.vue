@@ -266,7 +266,7 @@ onBeforeUnmount(() => observer?.disconnect())
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 190px;
+  grid-template-columns: 1fr minmax(150px, 190px);
   gap: 24px;
   align-items: start;
 }
@@ -275,6 +275,8 @@ onBeforeUnmount(() => observer?.disconnect())
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* 网格项最小宽度归零:否则横向缩略图行的 min-content 会撑破 1fr 轨道 */
+  min-width: 0;
 }
 
 .gallery__viewer {
@@ -284,11 +286,12 @@ onBeforeUnmount(() => observer?.disconnect())
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
+  min-width: 0;
 }
 
 .gallery__img {
   width: 100%;
-  height: 560px;
+  height: clamp(340px, 45vw, 560px);
   object-fit: contain;
   background: #fff;
   display: block;
@@ -407,7 +410,7 @@ onBeforeUnmount(() => observer?.disconnect())
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  min-height: 320px;
+  min-height: clamp(220px, 30vw, 320px);
   background: var(--c-primary-light);
   display: flex;
   align-items: center;
@@ -416,7 +419,7 @@ onBeforeUnmount(() => observer?.disconnect())
 
 .vt__media img {
   width: 100%;
-  height: 320px;
+  height: clamp(220px, 30vw, 320px);
   object-fit: cover;
   display: block;
 }
@@ -431,7 +434,7 @@ onBeforeUnmount(() => observer?.disconnect())
 .vt__spine {
   position: relative;
   align-self: stretch;
-  min-height: 320px;
+  min-height: clamp(220px, 30vw, 320px);
 }
 
 .vt__spine::before {
@@ -464,19 +467,19 @@ onBeforeUnmount(() => observer?.disconnect())
 
 .vt__year {
   display: inline-block;
-  font-size: 38px;
+  font-size: clamp(26px, 2.5vw, 38px);
   font-weight: 800;
   color: var(--c-primary);
   margin-bottom: 10px;
 }
 
 .vt__body h3 {
-  font-size: 28px;
+  font-size: clamp(19px, 2vw, 28px);
   margin-bottom: 12px;
 }
 
 .vt__body p {
-  font-size: 20px;
+  font-size: clamp(14px, 1.4vw, 20px);
   color: var(--c-text-secondary);
   line-height: 1.8;
 }
@@ -517,6 +520,10 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (max-width: 1024px) {
+  .mvv {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .gallery {
     grid-template-columns: 1fr;
   }
@@ -539,11 +546,15 @@ onBeforeUnmount(() => observer?.disconnect())
   .gallery__thumb img {
     height: 64px;
   }
+
+  /* 平板收窄时间线挤压,放宽至 82vw */
+  .vt {
+    max-width: 82vw;
+  }
 }
 
 @media (max-width: 768px) {
   .gallery__img {
-    height: 340px;
     object-fit: cover;
   }
 
@@ -588,18 +599,6 @@ onBeforeUnmount(() => observer?.disconnect())
 
   .vt__row--swap .vt__body {
     text-align: left;
-  }
-
-  .vt__year {
-    font-size: 26px;
-  }
-
-  .vt__body h3 {
-    font-size: 19px;
-  }
-
-  .vt__body p {
-    font-size: 14px;
   }
 }
 </style>

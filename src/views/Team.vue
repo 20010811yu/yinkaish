@@ -104,7 +104,7 @@ const initials = (name) => pick(name, locale).slice(0, 1)
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .team {
     grid-template-columns: 1fr;
   }

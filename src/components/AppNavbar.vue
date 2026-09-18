@@ -87,7 +87,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   justify-content: space-between;
   height: 88px;
   max-width: none;
-  padding: 0 40px;
+  padding: 0 clamp(16px, 3vw, 40px);
 }
 
 .navbar__brand {
@@ -95,7 +95,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   align-items: center;
   gap: 12px;
   font-weight: 700;
-  margin-left: calc(100vw / 6 - 110px);
+  margin-left: max(0px, calc(100vw / 6 - 110px));
 }
 
 .navbar__logo-img {
@@ -116,12 +116,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .navbar__menu {
   display: flex;
   gap: 2px;
-  margin-left: 80px;
+  margin-left: clamp(16px, 5vw, 80px);
   margin-right: auto;
 }
 
 .navbar__link {
-  padding: 0.625rem 0.75rem;
+  padding: 0.625rem 0.625rem;
   border-radius: 8px;
   font-size: 1.0625rem;
   white-space: nowrap;
@@ -163,7 +163,8 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   border-radius: 2px;
 }
 
-@media (max-width: 768px) {
+/* 平板即收起为抽屉菜单:7 个 nowrap 链接 + 长品牌名在 769-1100px 放不下 */
+@media (max-width: 1024px) {
   .navbar__menu {
     display: none;
     position: absolute;
@@ -183,6 +184,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
   .navbar__burger {
     display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar__name {
+    font-size: 1rem;
   }
 }
 </style>

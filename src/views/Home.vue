@@ -141,7 +141,7 @@ const latestNews = news.slice(0, 3)
 
 .intro__stat strong {
   display: block;
-  font-size: 30px;
+  font-size: clamp(22px, 2.4vw, 30px);
   color: var(--c-primary);
 }
 
@@ -204,11 +204,11 @@ const latestNews = news.slice(0, 3)
   background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
   color: #fff;
   text-align: center;
-  padding: 72px 0;
+  padding: clamp(48px, 6vw, 72px) 0;
 }
 
 .cta h2 {
-  font-size: 30px;
+  font-size: clamp(24px, 2.4vw, 30px);
   margin-bottom: 12px;
 }
 

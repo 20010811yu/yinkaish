@@ -33,7 +33,7 @@ const slides = [
 
 <style scoped>
 .hero-carousel :deep(.el-carousel__container) {
-  height: 780px;
+  height: clamp(480px, 55vw, 780px);
 }
 
 .slide {
@@ -73,7 +73,7 @@ const slides = [
 
 .slide__title {
   font-family: 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', sans-serif;
-  font-size: 3.5rem;
+  font-size: clamp(1.75rem, 1.4rem + 2.6vw, 3.5rem);
   font-weight: 900;
   letter-spacing: 3px;
   line-height: 1.2;
@@ -101,7 +101,7 @@ const slides = [
   position: absolute;
   top: -12px;
   left: 30px;
-  width: 220px;
+  width: clamp(120px, 30vw, 220px);
   height: 2px;
   background: linear-gradient(90deg, #00a651, transparent);
 }
@@ -119,12 +119,7 @@ const slides = [
 }
 
 @media (max-width: 768px) {
-  .hero-carousel :deep(.el-carousel__container) {
-    height: 480px;
-  }
-
   .slide__title {
-    font-size: 28px;
     letter-spacing: 2px;
   }
 

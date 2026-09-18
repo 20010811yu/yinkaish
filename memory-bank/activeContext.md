@@ -1,24 +1,26 @@
 # activeContext.md — 当前上下文
 
 ## 当前焦点(2026-09-18)
-页脚改版完成:绿色主题、公司全称、源站联系方式、公众号/抖音二维码;About 页企业文化模块已移除。
+全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
-- 页脚新增「关注我们」列:微信公众号 + 官方抖音二维码(92×92,源自源站 OSS 图,curl 下载存 src/assets/qrcode/wechat.jpg、douyin.jpg),白底圆角 96px 卡片 + 双语标签;新增 i18n footer.follow/wechat/douyin(中英同步)
-- 页脚配色:#12233f 深藏青 → 品牌绿深色渐变 linear-gradient(180deg, #057842, #04512f);grid 改 4 列(1.5fr 0.9fr 1.3fr 1fr),≤768px 单列
-- 页脚品牌区 brand.short → brand.full(上海寅铠精密机械制造有限公司),logo 行 16px
-- 页脚联系方式对齐源站:contact.address 去邮编、新增 contact.fax('021-69173483'/en '+86-021-69173483')、保留邮箱 caolujia@yinkaish.cn;按用户要求不放网址
-- About 页删除企业文化模块:section 模板 + keywords computed + .culture__keywords 样式 + i18n about.cultureTitle/cultureDesc(中英);useI18n 解构同步去掉不再使用的 t
-- 源站信息获取:www.yinkaish.com 根路径 302→/en/,中文站在 /cn/,联系页 /cn/contact.php 页脚引用阿里云 OSS 二维码图
+- AGENTS.md §11 新增「弹性布局(硬约束)」6 条: max-width 容器/fr-minmax 列宽/clamp 流式尺寸/img-video 兜底/断点统一/四档自查;版本升 v1.2
+- AppNavbar:品牌区 margin `calc(100vw/6-110px)` → `max(0px, calc(...))`(小屏不再为负);菜单 margin → clamp(16px,5vw,80px);内边距 → clamp(16px,3vw,40px);链接横 padding 0.625rem;**抽屉菜单断点 768→1024**(7 个 nowrap 链接 769-1100px 放不下);768 补品牌名 1rem
+- HeroCarousel:轮播高 780px → clamp(480px,55vw,780px);标题 3.5rem → clamp(1.75rem,1.4rem+2.6vw,3.5rem);装饰线 220px → clamp(120px,30vw,220px);删 768 硬切覆盖
+- About:荣誉大图 560px → clamp(340px,45vw,560px);缩略图列 → minmax(150px,190px);时间线图高/脊线 320px → clamp(220px,30vw,320px);年/题/文 38/28/20px → clamp 流式;1024 断点 .vt 放宽 82vw;mvv 补 1024→2 列
+- About 相册 ERR-002 修复:.gallery__side/.gallery__viewer 加 min-width:0(横向缩略图行 min-content 撑破 1fr 轨道,375px 溢出 386px)
+- main.css:.section/.page-hero 内边距 → clamp;补全局 video max-width:100%;删被 clamp 取代的 768 覆盖块
+- Home:统计数字/CTA 标题 → clamp;CTA 内边距 → clamp;Services 视觉块高 → clamp(130px,18vw,180px);Team 孤例断点 600→768;Careers 补 1024→2 列 + job__meta flex-wrap;NewsDetail 正文加 overflow-wrap:anywhere;Footer px 字号→rem + 1024→2 列
+- 验证:build 通过;1280/1024/768/375 × 8 页面 scrollWidth==clientWidth 零溢出;1024 汉堡菜单生效、轮播 55vw;375 单列正常
 
 ## 下一步
 - 部署上线(GitHub Pages 需配 base 路径);团队页替换真实人员;补充产品实拍图
 
 ## 决策与考量
-- 用户确认:二维码取自源网站;联系方式为「源站信息+保留邮箱」且不含网址;版权行保持现状不加 ICP 备案号
-- 源站英文页邮箱为 lujiacao@yinkaish.com,与本项目所用 caolujia@yinkaish.cn 不一致,按用户决定保留后者
-- 团队成员无真实资料,用岗位型占位避免虚构人名;新闻混排真实事件与合理演绎,标记可替换
+- 抽屉菜单断点提到 1024:实测 7 链接+长品牌名在 769-1100px 客观放不下,平板收汉堡是唯一稳妥解(1080/1024/1280 三点宽度计算+截图验证)
+- 保留 ≤100px 小控件定宽豁免(logo/日期徽章/箭头/二维码 96px),与规则一致
+- 上一任务决策:二维码取自源网站;联系方式「源站信息+保留邮箱」不含网址;版权行不加 ICP 备案号;源站英文页邮箱 lujiacao@yinkaish.com 与本项目 caolujia@yinkaish.cn 不一致,保留后者
 
 ## 上一焦点概要
-- 2026-09-16~17 品牌化改造:寅铠品牌/绿色主题/logo 导航/HeroCarousel 四张轮播(780px)/弹性根字号/黑体系字体栈/全站 i18n 真实资料改版;ERR-001 页脚渲染丢失修复(@ 转义+minify:false+errorHandler);详见 git 历史与 errorlog.md
-- 2026-09-16~17 About 页持续增强:公司简介(5 段卡)/宣传片(introduce.mp4)/公司荣誉(相册式大图+7 证书)/纵向图文时间线(倒序左右交叉+配图);导航位置调整;详见 git 历史
+- 2026-09-18 页脚改版:绿色渐变主题(#057842→#04512f)/公司全称/源站联系方式(含传真)/公众号+抖音二维码(src/assets/qrcode/,源自源站 OSS);About 企业文化模块移除
+- 2026-09-16~17 品牌化改造与 About 增强:寅铠品牌/绿色主题/轮播/公司简介/宣传片/荣誉相册/纵向时间线;ERR-001 页脚渲染丢失修复;详见 git 历史与 errorlog.md

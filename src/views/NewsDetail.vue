@@ -43,5 +43,6 @@ const title = computed(() => (article.value ? pick(article.value.title, locale.v
   line-height: 1.9;
   color: var(--c-text);
   margin-bottom: 32px;
+  overflow-wrap: anywhere;
 }
 </style>
