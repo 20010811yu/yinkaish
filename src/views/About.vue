@@ -275,7 +275,8 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .profile__spirit-item {
-  font-size: clamp(28px, 2.6vw, 42px);
+  /* 汉字字形占满 em,取数字字号的约 0.75 档,视觉高度与数据数字一致 */
+  font-size: clamp(21px, 2vw, 32px);
   font-weight: 700;
   color: var(--c-primary);
 }
