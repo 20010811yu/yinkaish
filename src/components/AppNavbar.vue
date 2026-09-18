@@ -137,7 +137,6 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .navbar__link--active {
   color: var(--c-primary);
   font-weight: 600;
-  background: var(--c-primary-light);
 }
 
 .navbar__actions {
