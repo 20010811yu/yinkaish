@@ -51,6 +51,26 @@
       </div>
     </section>
 
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">{{ $t('about.honorsTitle') }}</h2>
+          <p class="section-subtitle">{{ $t('about.honorsSubtitle') }}</p>
+        </div>
+        <div class="honors">
+          <div v-for="h in honors" :key="h.image" class="honor-card">
+            <div class="honor-card__img">
+              <img :src="h.image" :alt="pick(h.name, locale)" loading="lazy" />
+            </div>
+            <div class="honor-card__body">
+              <h3>{{ pick(h.name, locale) }}</h3>
+              <p>{{ pick(h.desc, locale) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section section--soft">
       <div class="container">
         <div class="section-head">
@@ -99,7 +119,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Aim, View, Medal } from '@element-plus/icons-vue'
-import { timeline, intro } from '../data'
+import { timeline, intro, honors } from '../data'
 import { pick } from '../data/lang'
 import videoUrl from '../assets/video/introduce.mp4'
 
@@ -225,6 +245,58 @@ onBeforeUnmount(() => observer?.disconnect())
   aspect-ratio: 16 / 9;
   display: block;
   background: #000;
+}
+
+/* 公司荣誉 */
+.honors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.honor-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.honor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.honor-card__img {
+  height: 240px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.honor-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.honor-card:hover .honor-card__img img {
+  transform: scale(1.04);
+}
+
+.honor-card__body {
+  padding: 18px 20px 20px;
+}
+
+.honor-card__body h3 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.honor-card__body p {
+  font-size: 13px;
+  color: var(--c-text-secondary);
+  line-height: 1.6;
 }
 
 /* 纵向图文时间线:整行占屏约 60% */
@@ -360,7 +432,17 @@ onBeforeUnmount(() => observer?.disconnect())
   gap: 12px;
 }
 
+@media (max-width: 1024px) {
+  .honors {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  .honors {
+    grid-template-columns: 1fr;
+  }
+
   .mvv {
     grid-template-columns: 1fr;
   }

@@ -68,6 +68,8 @@ export default {
     profileTitle: 'Company Profile',
     profileLead: 'Two decades of industrial automation — from automotive welding to PV smart manufacturing.',
     mvvTitle: 'Mission, Vision & Values',
+    honorsTitle: 'Company Honors',
+    honorsSubtitle: 'Qualifications and recognitions of Yinkai',
     videoTitle: 'Company Video',
     mission: { title: 'Mission', desc: 'Make PV and automotive production more efficient and intelligent through precision manufacturing.' },
     vision: { title: 'Vision', desc: 'To be a world-leading provider of custom automation solutions for PV frames.' },

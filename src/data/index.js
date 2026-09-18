@@ -86,6 +86,53 @@ export const intro = [
   },
 ]
 
+// 公司荣誉(About 页,按重要程度排序;honor4/honor5 中英文认证并列)
+import honor01 from '../assets/honors/honor-01.jpg'
+import honor02 from '../assets/honors/honor-02.jpg'
+import honor03 from '../assets/honors/honor-03.jpg'
+import honor04 from '../assets/honors/honor-04.jpg'
+import honor05 from '../assets/honors/honor-05.jpg'
+import honor06 from '../assets/honors/honor-06.jpg'
+import honor07 from '../assets/honors/honor-07.jpg'
+
+export const honors = [
+  {
+    image: honor01,
+    name: { zh: '综合资质证书', en: 'Certificates Overview' },
+    desc: { zh: '高新技术企业、安全生产标准化、SEC 年度确认及多项专利证书。', en: 'High-tech enterprise, work safety standardization, SEC annual confirmation and multiple patents.' },
+  },
+  {
+    image: honor02,
+    name: { zh: '上海市"专精特新"中小企业', en: 'Shanghai "Specialized & Innovative" SME' },
+    desc: { zh: '上海市经济和信息化委员会认定,聚焦细分领域的专业化标杆。', en: 'Recognized by Shanghai SME Commission as a specialized and innovative enterprise.' },
+  },
+  {
+    image: honor03,
+    name: { zh: '质量管理体系认证', en: 'QMS Certification' },
+    desc: { zh: '通过 SEC 质量管理体系认证,质量管理与国际接轨。', en: 'Certified quality management system (SEC), aligned with international standards.' },
+  },
+  {
+    image: honor04,
+    name: { zh: 'ISO Quality Certification', en: 'ISO Quality Certification' },
+    desc: { zh: '面向国际客户的质量管理体系认证(英文版)。', en: 'Quality management system certification for international clients.' },
+  },
+  {
+    image: honor05,
+    name: { zh: '安全生产标准化三级企业', en: 'Work Safety Standardization Level 3' },
+    desc: { zh: '机械行业安全生产标准化三级企业认证。', en: 'Level-3 work safety standardization (machinery industry).' },
+  },
+  {
+    image: honor06,
+    name: { zh: '实用新型专利证书', en: 'Utility Model Patents' },
+    desc: { zh: '拥有多项实用新型专利,覆盖光伏边框生产与检测设备。', en: 'Multiple utility model patents covering PV frame production and inspection equipment.' },
+  },
+  {
+    image: honor07,
+    name: { zh: '专利登记簿副本', en: 'Patent Register' },
+    desc: { zh: '国家知识产权局专利登记簿副本,专利权属清晰可查。', en: 'Patent register copies from CNIPA with clear ownership records.' },
+  },
+]
+
 // 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
 import imgT2004 from '../assets/timeline/t-2004.jpg'
 import imgT2007 from '../assets/timeline/t-2007.png'

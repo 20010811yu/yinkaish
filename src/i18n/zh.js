@@ -68,6 +68,8 @@ export default {
     profileTitle: '公司简介',
     profileLead: '从汽车焊装到光伏智造，二十年深耕工业自动化。',
     mvvTitle: '使命、愿景与价值观',
+    honorsTitle: '公司荣誉',
+    honorsSubtitle: '资质与认可，见证寅铠的专业与可靠',
     videoTitle: '公司宣传片',
     mission: { title: '使命', desc: '以精密智造让光伏与汽车生产更高效、更智能。' },
     vision: { title: '愿景', desc: '成为全球领先的光伏边框非标自动化解决方案服务商。' },
