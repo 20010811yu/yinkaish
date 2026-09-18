@@ -57,14 +57,30 @@
           <h2 class="section-title">{{ $t('about.honorsTitle') }}</h2>
           <p class="section-subtitle">{{ $t('about.honorsSubtitle') }}</p>
         </div>
-        <div class="honors">
-          <div v-for="h in honors" :key="h.image" class="honor-card">
-            <div class="honor-card__img">
-              <img :src="h.image" :alt="pick(h.name, locale)" loading="lazy" />
+        <div class="gallery">
+          <div class="gallery__viewer">
+            <transition name="fade" mode="out-in">
+              <img :key="active" :src="honors[active].image" :alt="pick(honors[active].name, locale)" class="gallery__img" />
+            </transition>
+            <button class="gallery__arrow gallery__arrow--left" aria-label="prev" @click="step(-1)">‹</button>
+            <button class="gallery__arrow gallery__arrow--right" aria-label="next" @click="step(1)">›</button>
+            <span class="gallery__counter">{{ active + 1 }} / {{ honors.length }}</span>
+          </div>
+          <div class="gallery__side">
+            <div class="gallery__info">
+              <h3>{{ pick(honors[active].name, locale) }}</h3>
+              <p>{{ pick(honors[active].desc, locale) }}</p>
             </div>
-            <div class="honor-card__body">
-              <h3>{{ pick(h.name, locale) }}</h3>
-              <p>{{ pick(h.desc, locale) }}</p>
+            <div class="gallery__thumbs">
+              <button
+                v-for="(h, i) in honors"
+                :key="h.image"
+                class="gallery__thumb"
+                :class="{ 'gallery__thumb--active': i === active }"
+                @click="active = i"
+              >
+                <img :src="h.image" :alt="pick(h.name, locale)" loading="lazy" />
+              </button>
             </div>
           </div>
         </div>
@@ -139,6 +155,12 @@ const keywords = computed(() => [
   t('about.vision.title'),
   t('about.values.title'),
 ])
+
+// 荣誉相册当前索引
+const active = ref(0)
+const step = (dir) => {
+  active.value = (active.value + dir + honors.length) % honors.length
+}
 
 // 进入视口切入、离开视口淡出(双向可重复)
 const vtEl = ref(null)
@@ -247,56 +269,133 @@ onBeforeUnmount(() => observer?.disconnect())
   background: #000;
 }
 
-/* 公司荣誉 */
-.honors {
+/* 公司荣誉:相册式布局 */
+.gallery {
+  max-width: 1000px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: 1fr 190px;
+  gap: 24px;
+  align-items: start;
 }
 
-.honor-card {
+.gallery__side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gallery__viewer {
+  position: relative;
   background: #fff;
   border: 1px solid var(--c-border);
   border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.honor-card:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow);
-}
-
-.honor-card__img {
-  height: 240px;
   overflow: hidden;
-  background: #fff;
 }
 
-.honor-card__img img {
+.gallery__img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
+  height: 560px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
 }
 
-.honor-card:hover .honor-card__img img {
-  transform: scale(1.04);
+.gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--c-primary);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s;
 }
 
-.honor-card__body {
-  padding: 18px 20px 20px;
+.gallery__arrow:hover {
+  background: var(--c-primary-light);
 }
 
-.honor-card__body h3 {
-  font-size: 17px;
+.gallery__arrow--left {
+  left: 14px;
+}
+
+.gallery__arrow--right {
+  right: 14px;
+}
+
+.gallery__counter {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  font-size: 13px;
+  color: var(--c-text-secondary);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 2px 12px;
+}
+
+.gallery__info {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.gallery__info h3 {
+  font-size: 20px;
   margin-bottom: 6px;
 }
 
-.honor-card__body p {
-  font-size: 13px;
+.gallery__info p {
+  font-size: 14px;
   color: var(--c-text-secondary);
-  line-height: 1.6;
+}
+
+.gallery__thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 470px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.gallery__thumb {
+  border: 2px solid var(--c-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 74px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__thumb--active {
+  border-color: var(--c-primary);
+  transform: scale(1.03);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* 纵向图文时间线:整行占屏约 60% */
@@ -433,14 +532,34 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (max-width: 1024px) {
-  .honors {
-    grid-template-columns: repeat(2, 1fr);
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery__side {
+    order: 2;
+  }
+
+  .gallery__thumbs {
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+  }
+
+  .gallery__thumb {
+    flex-shrink: 0;
+    width: 90px;
+  }
+
+  .gallery__thumb img {
+    height: 64px;
   }
 }
 
 @media (max-width: 768px) {
-  .honors {
-    grid-template-columns: 1fr;
+  .gallery__img {
+    height: 340px;
+    object-fit: cover;
   }
 
   .mvv {
