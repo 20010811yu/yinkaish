@@ -56,6 +56,7 @@
         <div class="section-head">
           <h2 class="section-title">{{ $t('about.honorsTitle') }}</h2>
           <p class="section-subtitle">{{ $t('about.honorsSubtitle') }}</p>
+          <p class="honors-intro">{{ $t('about.honorsIntro') }}</p>
         </div>
         <div class="gallery">
           <div class="gallery__viewer">
@@ -270,6 +271,15 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 /* 公司荣誉:相册式布局 */
+.honors-intro {
+  max-width: 760px;
+  margin: 18px auto 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--c-text);
+  text-align: justify;
+}
+
 .gallery {
   max-width: 1000px;
   margin: 0 auto;

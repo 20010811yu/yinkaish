@@ -70,6 +70,7 @@ export default {
     mvvTitle: 'Mission, Vision & Values',
     honorsTitle: 'Company Honors',
     honorsSubtitle: 'Qualifications and recognitions of Yinkai',
+    honorsIntro: 'Backed by deep industry experience and expert technical resources, Yinkai integrates industry, academia and research to accelerate innovation, continuously strengthening its technical capabilities and advancing technology in PV frame automation. In 2005, the company passed the quality system audit and obtained the ISO9001:2000 certificate, bringing its management in line with advanced international standards. Upholding craftsmanship and continuous breakthroughs, Yinkai has earned industry-wide recognition and high praise for its solid strength in PV frame automation.',
     videoTitle: 'Company Video',
     mission: { title: 'Mission', desc: 'Make PV and automotive production more efficient and intelligent through precision manufacturing.' },
     vision: { title: 'Vision', desc: 'To be a world-leading provider of custom automation solutions for PV frames.' },
