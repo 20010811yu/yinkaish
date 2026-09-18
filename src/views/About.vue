@@ -117,18 +117,6 @@
         </div>
       </div>
     </section>
-
-    <section class="section">
-      <div class="container culture">
-        <div class="section-head">
-          <h2 class="section-title">{{ $t('about.cultureTitle') }}</h2>
-          <p class="section-subtitle">{{ $t('about.cultureDesc') }}</p>
-        </div>
-        <div class="culture__keywords">
-          <el-tag v-for="k in keywords" :key="k" size="large" effect="plain" round>{{ k }}</el-tag>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -140,7 +128,7 @@ import { timeline, intro, honors } from '../data'
 import { pick } from '../data/lang'
 import videoUrl from '../assets/video/introduce.mp4'
 
-const { locale, t } = useI18n()
+const { locale } = useI18n()
 
 // 时间倒序展示(最新在前)
 const reversed = computed(() => [...timeline].reverse())
@@ -150,12 +138,6 @@ const mvv = [
   { key: 'vision', icon: View },
   { key: 'values', icon: Medal },
 ]
-
-const keywords = computed(() => [
-  t('about.mission.title'),
-  t('about.vision.title'),
-  t('about.values.title'),
-])
 
 // 荣誉相册当前索引
 const active = ref(0)
@@ -532,13 +514,6 @@ onBeforeUnmount(() => observer?.disconnect())
 .vt__row--in .vt__body {
   opacity: 1;
   transform: translate(0, 0);
-}
-
-.culture__keywords {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 
 @media (max-width: 1024px) {

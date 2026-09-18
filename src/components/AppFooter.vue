@@ -3,7 +3,7 @@
       <div class="footer__brand">
         <div class="footer__logo-row">
           <img src="../assets/logo.png" alt="logo" class="footer__logo-img" />
-          <strong>{{ $t('brand.short') }}</strong>
+          <strong>{{ $t('brand.full') }}</strong>
         </div>
         <p class="footer__slogan">{{ $t('footer.slogan') }}</p>
       </div>
@@ -23,8 +23,23 @@
         <ul>
           <li>{{ $t('contact.address') }}</li>
           <li>{{ $t('contact.phone') }}</li>
+          <li>{{ $t('contact.fax') }}</li>
           <li>{{ $t('contact.email') }}</li>
         </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>{{ $t('footer.follow') }}</h4>
+        <div class="footer__qr">
+          <figure class="footer__qr-item">
+            <img :src="wechatQr" :alt="$t('footer.wechat')" />
+            <figcaption>{{ $t('footer.wechat') }}</figcaption>
+          </figure>
+          <figure class="footer__qr-item">
+            <img :src="douyinQr" :alt="$t('footer.douyin')" />
+            <figcaption>{{ $t('footer.douyin') }}</figcaption>
+          </figure>
+        </div>
       </div>
     </div>
 
@@ -37,19 +52,21 @@
 </template>
 
 <script setup>
+import wechatQr from '../assets/qrcode/wechat.jpg'
+import douyinQr from '../assets/qrcode/douyin.jpg'
 // 纯展示组件,文案经 i18n 全局注入
 </script>
 
 <style scoped>
 .footer {
-  background: #12233f;
-  color: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(180deg, #057842 0%, #04512f 100%);
+  color: rgba(255, 255, 255, 0.85);
   margin-top: auto;
 }
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1.2fr;
+  grid-template-columns: 1.5fr 0.9fr 1.3fr 1fr;
   gap: 40px;
   padding: 56px 24px 40px;
 }
@@ -59,7 +76,8 @@
   align-items: center;
   gap: 10px;
   color: #fff;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1.45;
 }
 
 .footer__logo-img {
@@ -67,6 +85,7 @@
   height: 36px;
   border-radius: 8px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .footer__slogan {
@@ -89,11 +108,39 @@
   color: #fff;
 }
 
+.footer__qr {
+  display: flex;
+  gap: 14px;
+}
+
+.footer__qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.footer__qr-item img {
+  width: 96px;
+  height: 96px;
+  padding: 4px;
+  background: #fff;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+
+.footer__qr-item figcaption {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .footer__bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
   padding: 18px 0;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 @media (max-width: 768px) {
