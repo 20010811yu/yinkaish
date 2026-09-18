@@ -5,7 +5,7 @@ export default {
   },
   nav: {
     home: 'Home',
-    about: 'About Us',
+    about: 'About Yinkai',
     services: 'Services',
     team: 'Team',
     news: 'News',
@@ -112,7 +112,7 @@ export default {
     infoTitle: 'Contact Information',
     address: 'No. 567 Yuanqu Road, Anting Town, Jiading District, Shanghai 201814',
     phone: '021-69173481',
-    email: 'caolujia@yinkaish.cn',
+    email: "caolujia{'@'}yinkaish.cn",
     hours: 'Weekdays 8:30 - 17:30',
   },
   footer: {

@@ -1,6 +1,5 @@
 <template>
-  <footer class="footer">
-    <div class="container footer__grid">
+  <footer class="footer">    <div class="container footer__grid">
       <div class="footer__brand">
         <div class="footer__logo-row">
           <img src="../assets/logo.png" alt="logo" class="footer__logo-img" />
@@ -12,8 +11,8 @@
       <div class="footer__col">
         <h4>{{ $t('footer.quickLinks') }}</h4>
         <ul>
-          <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
           <li><router-link to="/services">{{ $t('nav.services') }}</router-link></li>
+          <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
           <li><router-link to="/news">{{ $t('nav.news') }}</router-link></li>
           <li><router-link to="/careers">{{ $t('nav.careers') }}</router-link></li>
         </ul>
@@ -36,6 +35,10 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+// 纯展示组件,文案经 i18n 全局注入
+</script>
 
 <style scoped>
 .footer {

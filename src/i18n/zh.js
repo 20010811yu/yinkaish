@@ -5,7 +5,7 @@ export default {
   },
   nav: {
     home: '首页',
-    about: '关于我们',
+    about: '关于寅铠',
     services: '业务与产品',
     team: '团队',
     news: '新闻动态',
@@ -112,7 +112,7 @@ export default {
     infoTitle: '联系方式',
     address: '上海市嘉定区安亭镇园区路 567 号（邮编 201814）',
     phone: '021-69173481',
-    email: 'caolujia@yinkaish.cn',
+    email: "caolujia{'@'}yinkaish.cn",
     hours: '工作日 8:30 - 17:30',
   },
   footer: {
