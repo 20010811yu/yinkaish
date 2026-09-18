@@ -4,6 +4,8 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
+- 首页轮播首图替换:用户提供 home.jpg(5410×3410)拷入 src/assets/banner-home.jpg,替换原 banner-company.webp;文案不变
+- 轮播主标题光影增强:.slide__title 改三层 drop-shadow(12px 亮绿晕+34px 扩散绿光+8px 深色投影),渐变文字其余不变
 - 导航栏选中项(.navbar__link--active)移除浅绿背景底纹,仅保留绿色加粗作选中指示;hover 浅绿反馈保留
 - 企业精神标题上方新增英文标签 SPIRIT(复用 .section-tag,与 PROFILE 胶囊同款;i18n about.spiritTag 中英同为 'SPIRIT')
 - 企业精神引言移至标题与词条之间(间隔对齐图二参照:标题→小字 12px、小字→词条 30px,与简介侧 title/lead/stats 同款节奏),原词条下方位置撤销

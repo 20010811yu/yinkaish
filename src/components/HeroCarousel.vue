@@ -18,13 +18,13 @@
 </template>
 
 <script setup>
-import bannerCompany from '../assets/banner-company.webp'
+import bannerHome from '../assets/banner-home.jpg'
 import bannerPv from '../assets/banner-pv.png'
 import bannerVision from '../assets/banner-vision.png'
 import bannerCooperation from '../assets/banner-cooperation.jpg'
 
 const slides = [
-  { image: bannerCompany, titleKey: 'home.carousel.s1' },
+  { image: bannerHome, titleKey: 'home.carousel.s1' },
   { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
   { image: bannerVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
   { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
@@ -81,7 +81,8 @@ const slides = [
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 22px rgba(0, 166, 81, 0.45));
+  /* 多层光影:内亮绿光晕 + 外扩散绿光 + 深色投影立体感 */
+  filter: drop-shadow(0 0 12px rgba(110, 231, 168, 0.6)) drop-shadow(0 0 34px rgba(0, 166, 81, 0.5)) drop-shadow(0 3px 8px rgba(0, 20, 10, 0.5));
 }
 
 .slide__subtitle {
