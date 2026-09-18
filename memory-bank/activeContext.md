@@ -4,6 +4,7 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
+- 首页轮播新增第 5 张「现代科技城市」主视觉:scripts/gen-hero-city.cjs 程序化生成 src/assets/hero-city.svg(61.5KB,种子随机可复现)——深绿渐变夜空+日出光晕+三层天际线窗灯+地标塔玻璃幕墙+数据流光柱+电路走线+透视网格地面+前景光伏板阵列;i18n home.carousel.s5「绿色智造，点亮未来之城」中英;追加在轮播末位不打乱原四张叙事
 - 首页轮播首图替换:用户提供 home.jpg(5410×3410)拷入 src/assets/banner-home.jpg,替换原 banner-company.webp;文案不变
 - 轮播主标题光影增强:.slide__title 改三层 drop-shadow(12px 亮绿晕+34px 扩散绿光+8px 深色投影),渐变文字其余不变
 - 导航栏选中项(.navbar__link--active)移除浅绿背景底纹,仅保留绿色加粗作选中指示;hover 浅绿反馈保留

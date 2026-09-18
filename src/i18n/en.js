@@ -27,6 +27,7 @@ export default {
       s3sub: 'Every Frame You Can Trust',
       s4: 'Yinkai Spirit, Serving the World',
       s4sub: 'Craftsmanship Forges Quality, Service Wins Trust',
+      s5: 'Green Smart Manufacturing, Lighting the City of the Future',
     },
     intro: {
       tag: 'About Yinkai',

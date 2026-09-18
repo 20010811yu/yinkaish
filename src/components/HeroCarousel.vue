@@ -22,12 +22,14 @@ import bannerHome from '../assets/banner-home.jpg'
 import bannerPv from '../assets/banner-pv.png'
 import bannerVision from '../assets/banner-vision.png'
 import bannerCooperation from '../assets/banner-cooperation.jpg'
+import heroCity from '../assets/hero-city.svg'
 
 const slides = [
   { image: bannerHome, titleKey: 'home.carousel.s1' },
   { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
   { image: bannerVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
   { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
+  { image: heroCity, titleKey: 'home.carousel.s5' },
 ]
 </script>
 
