@@ -4,7 +4,7 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
-- 撤销数据横幅版式:公司数据改为放进公司简介左侧 sticky 栏(profile__side 内、标题+引言下方)——第一行 2004年·成立+150+·员工,第二行 100+·合作+50+·城市,无背景纯绿色数字(var(--c-primary)),2×2 grid,随标题同步 sticky 浮动(复用现有 top:120px);i18n key 不变 about.stats.s1~s4,渲染顺序 stats=['s1','s3','s2','s4']
+- 撤销数据横幅版式:公司数据改为放进公司简介左侧 sticky 栏(profile__side 内、标题+引言下方)——第一行 2004年·成立+150+·员工,第二行 100+·合作+50+·城市,无背景纯绿色数字 clamp(28px,2.6vw,42px)、行距 38px,2×2 grid,随标题同步 sticky 浮动(复用现有 top:120px);i18n key 不变 about.stats.s1~s4,渲染顺序 stats=['s1','s3','s2','s4']
 - About 页公司简介正下方曾加公司数据横幅(.stats-band 绿色渐变),本次撤销改版为上述侧栏样式
 - AGENTS.md §11 新增「弹性布局(硬约束)」6 条: max-width 容器/fr-minmax 列宽/clamp 流式尺寸/img-video 兜底/断点统一/四档自查;版本升 v1.2
 - AppNavbar:品牌区 margin `calc(100vw/6-110px)` → `max(0px, calc(...))`(小屏不再为负);菜单 margin → clamp(16px,5vw,80px);内边距 → clamp(16px,3vw,40px);链接横 padding 0.625rem;**抽屉菜单断点 768→1024**(7 个 nowrap 链接 769-1100px 放不下);768 补品牌名 1rem
