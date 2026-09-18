@@ -73,6 +73,7 @@ export default {
       s3: { value: '150', suffix: '+', label: 'Employees' },
       s4: { value: '50', suffix: '+', label: 'Cities Covered' },
     },
+    spiritTag: 'SPIRIT',
     spiritTitle: 'Enterprise Spirit',
     spiritLead: 'With craftsmanship and steadfast precision we cultivate excellence; with innovation and respect we smart-manufacture for the world.',
     spirit: {

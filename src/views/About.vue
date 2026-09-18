@@ -21,6 +21,7 @@
               </div>
             </div>
             <div class="profile__spirit">
+              <span class="section-tag">{{ $t('about.spiritTag') }}</span>
               <h4 class="section-title profile__spirit-title">{{ $t('about.spiritTitle') }}</h4>
               <p class="profile__spirit-lead">{{ $t('about.spiritLead') }}</p>
               <div class="profile__spirit-grid">

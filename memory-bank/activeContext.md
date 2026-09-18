@@ -4,6 +4,7 @@
 全站弹性布局改造完成并写入 AGENTS.md v1.2 规则;4 档宽度 × 8 页面零横向溢出。
 
 ### 最近变更
+- 企业精神标题上方新增英文标签 SPIRIT(复用 .section-tag,与 PROFILE 胶囊同款;i18n about.spiritTag 中英同为 'SPIRIT')
 - 企业精神引言移至标题与词条之间(间隔对齐图二参照:标题→小字 12px、小字→词条 30px,与简介侧 title/lead/stats 同款节奏),原词条下方位置撤销
 - 企业精神词条下方曾新增引言「以匠心笃实深耕精工，携创新敬畏智造全球。」(i18n about.spiritLead 中英,17px 灰),本次仅调整位置;企业精神模块 margin-top 48px
 - 企业精神仿截图模块定稿:标题复用 .section-title(与「公司简介」等大 2.125rem),词条 clamp(21px,2vw,32px)(≈数字字号 0.75 档,汉字字形占满 em 而数字仅 0.72em,此档视觉高度与数据数字一致),绿色加粗,三行两列每行两词,行距 20px;i18n about.spiritTitle + about.spirit.i1~i6(中英);随侧栏 sticky 浮动

@@ -73,6 +73,7 @@ export default {
       s3: { value: '150', suffix: '+', label: '公司员工' },
       s4: { value: '50', suffix: '+', label: '业务覆盖城市' },
     },
+    spiritTag: 'SPIRIT',
     spiritTitle: '企业精神',
     spiritLead: '以匠心笃实深耕精工，携创新敬畏智造全球。',
     spirit: {
