@@ -148,29 +148,49 @@ let revealObserver = null
 let scrollRaf = null
 
 // 解析文本中的数字(保留 ±/单位前后缀与小数位),缓动滚动到目标值
-// 页面不可见时定时器会被浏览器节流,此时直接跳到最终值,可见时平滑计数
+// 页面不可见/定时器被节流时直接跳终值,保证任何时刻数值正确;可重入(el._counting 防重)
+const snapCount = (el) => {
+  const finalText = el.dataset.final ?? el.textContent
+  el.dataset.final = finalText
+  const m = finalText.match(/^([^\d]*)([\d.]+)(.*)$/)
+  if (m) el.textContent = finalText
+  clearInterval(el._countTimer)
+  el._counting = false
+}
 const animateCount = (el) => {
-  const m = el.textContent.match(/^([^\d]*)([\d.]+)(.*)$/)
-  if (!m) return
+  // 可重入:清掉上一轮(可能被后台冻结的)计数,重新完整播放
+  clearInterval(el._countTimer)
+  document.removeEventListener('visibilitychange', el._onVis ?? (() => {}))
+  el._counting = false
+  const finalText = el.dataset.final ?? el.textContent
+  el.dataset.final = finalText
+  const m = finalText.match(/^([^\d]*)([\d.]+)(.*)$/)
+  if (!m) { el._counting = false; return }
   const finish = () => {
-    clearInterval(timer)
-    document.removeEventListener('visibilitychange', onVis)
-    el.textContent = m[1] + m[2] + m[3]
+    clearInterval(el._countTimer)
+    document.removeEventListener('visibilitychange', el._onVis)
+    el.textContent = finalText
+    el._counting = false
   }
   const onVis = () => { if (document.hidden) finish() }
+  el._onVis = onVis
   if (document.hidden || prefersReducedMotion()) { finish(); return }
   const decimals = (m[2].split('.')[1] || '').length
   const target = parseFloat(m[2])
+  const prefix = m[1]
+  const suffix = m[3]
   const duration = 1200
   const start = performance.now()
   const timer = setInterval(() => {
     if (document.hidden) { finish(); return }
     const k = Math.min(1, (performance.now() - start) / duration)
     const eased = 1 - Math.pow(1 - k, 3)
-    el.textContent = m[1] + (target * eased).toFixed(decimals) + m[3]
+    el.textContent = prefix + (target * eased).toFixed(decimals) + suffix
     if (k >= 1) finish()
   }, 16)
   document.addEventListener('visibilitychange', onVis)
+  el._countTimer = timer
+  el._counting = true
 }
 
 const onScroll = () => {
@@ -193,13 +213,19 @@ onMounted(() => {
     els.forEach((el) => el.classList.add('revealed'))
     return
   }
+  // 每次进入视口都重播:进入→加 .revealed 并跑计数;离开→复位待重播
   revealObserver = new IntersectionObserver((entries) => {
     for (const e of entries) {
-      if (!e.isIntersecting) continue
-      e.target.classList.add('revealed')
-      e.target.querySelectorAll('.count').forEach(animateCount)
-      if (e.target.classList.contains('count')) animateCount(e.target)
-      revealObserver.unobserve(e.target)
+      const el = e.target
+      if (e.isIntersecting) {
+        el.classList.add('revealed')
+        el.querySelectorAll('.count').forEach(animateCount)
+        if (el.classList.contains('count')) animateCount(el)
+      } else {
+        el.classList.remove('revealed')
+        el.querySelectorAll('.count').forEach(snapCount)
+        if (el.classList.contains('count')) snapCount(el)
+      }
     }
   }, { threshold: 0.18 })
   els.forEach((el) => revealObserver.observe(el))
