@@ -4,6 +4,7 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- 轮播顺序调换:第 4 张=焊装交钥匙(car.jpg)、第 5 张=寅铠精神(cooperation);左右切换箭头放大(36→56px,黑 35% 底白字,≤768 44px)
 - 首页移除「新闻动态」板块(模板/NewsCard 导入/latestNews/.news-list 样式);/news 页与 data 中 news 数据保留
 - 首页员工统计 200+→150+(与 About 页一致)
 - 首页轮播新增第 5 张「汽车焊装交钥匙」:用户供图 car_.jpg(7360×4230,5.7MB)压缩至 2560 宽 293KB 入 src/assets/banner-car.jpg;文案 s5「焊装交钥匙，智造白车身」/s5sub「服务大众、通用、上汽的焊装线智造伙伴」(中英);追加末位

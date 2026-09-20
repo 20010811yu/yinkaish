@@ -188,8 +188,8 @@ export const productCategories = [
         tag: { zh: '在线视觉检测', en: 'Inline Inspection' },
         image: ykOl2iImg,
         desc: {
-          zh: '产线在线式全检，外形 3550×2900×2500mm，与生产线节拍同步，自动分拣 OK/NG。',
-          en: 'Inline full inspection synchronized with line cycle, footprint 3550×2900×2500mm, automatic OK/NG sorting.',
+          zh: '设备与上一工位对接，加工后的产品自动输送到设备内部待检测，本设备自动检测产品的长度、漏加工、外观瑕疵。检测后的产品自动分类输送到下一工位。',
+          en: 'Docking with the upstream station, processed products are automatically conveyed inside for inspection. The machine automatically checks length, missed operations and surface defects, then sorts and conveys products to the next station.',
         },
       },
       {
