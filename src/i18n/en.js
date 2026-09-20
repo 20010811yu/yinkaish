@@ -7,7 +7,6 @@ export default {
     home: 'Home',
     about: 'About Yinkai',
     services: 'Services',
-    team: 'Team',
     news: 'News',
     careers: 'Careers',
     contact: 'Contact',
@@ -121,12 +120,6 @@ export default {
     ctaDesc: 'Tell us your frame specifications and capacity needs — Yinkai engineers will propose the right equipment and line layout.',
     ctaBtn: 'Request a Proposal',
     paramsTitle: 'Equipment Parameters',
-  },
-  team: {
-    title: 'Our Team',
-    subtitle: 'A professional team built on engineering culture',
-    cta: 'Want to work with us?',
-    ctaBtn: 'See Open Positions',
   },
   news: {
     title: 'News',

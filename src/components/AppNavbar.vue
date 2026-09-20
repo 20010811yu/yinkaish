@@ -45,7 +45,6 @@ const items = [
   { to: '/', key: 'nav.home' },
   { to: '/services', key: 'nav.services' },
   { to: '/about', key: 'nav.about' },
-  { to: '/team', key: 'nav.team' },
   { to: '/news', key: 'nav.news' },
   { to: '/careers', key: 'nav.careers' },
   { to: '/contact', key: 'nav.contact' },

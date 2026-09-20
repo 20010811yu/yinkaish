@@ -7,7 +7,6 @@ export default {
     home: '首页',
     about: '关于寅铠',
     services: '业务与产品',
-    team: '团队',
     news: '新闻动态',
     careers: '加入我们',
     contact: '联系我们',
@@ -121,12 +120,6 @@ export default {
     ctaDesc: '告诉我们您的边框规格与产能需求，寅铠工程师将为您提供针对性的设备选型与产线规划方案。',
     ctaBtn: '咨询选型方案',
     paramsTitle: '设备参数',
-  },
-  team: {
-    title: '我们的团队',
-    subtitle: '一支以工程师文化为底色的专业队伍',
-    cta: '想和我们一起工作？',
-    ctaBtn: '查看在招职位',
   },
   news: {
     title: '新闻动态',

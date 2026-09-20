@@ -548,14 +548,6 @@ export const timeline = [
   { year: '2026', image: imgT2026, title: { zh: '面向全球', en: 'Going Global' }, desc: { zh: '持续拓展光伏边框自动化产线全球市场。', en: 'Continuing to expand PV frame automation worldwide.' } },
 ]
 
-// 团队成员(岗位型占位,可替换为真实人员)
-export const team = [
-  { id: 1, name: { zh: '总经理', en: 'General Manager' }, title: { zh: '公司创始人', en: 'Founder' }, desc: { zh: '二十年非标自动化行业经验，带领公司从汽车焊装走向光伏装备。', en: 'Two decades in custom automation, leading Yinkai from automotive welding to PV equipment.' } },
-  { id: 2, name: { zh: '技术总监', en: 'Technical Director' }, title: { zh: '研发中心', en: 'R&D Center' }, desc: { zh: '主导光伏边框产线与视觉检测系统的总体方案设计。', en: 'Leads overall design of PV frame lines and vision inspection systems.' } },
-  { id: 3, name: { zh: '测量工程团队', en: 'Metrology Team' }, title: { zh: '质量控制', en: 'Quality Control' }, desc: { zh: '配备 3 套 FARO 激光跟踪仪与 7 套关节臂测量机，保障 ±0.1mm 精度。', en: 'Equipped with 3 FARO laser trackers and 7 measuring arms, ensuring ±0.1mm precision.' } },
-  { id: 4, name: { zh: '项目交付团队', en: 'Delivery Team' }, title: { zh: '工程与安装', en: 'Engineering & Installation' }, desc: { zh: '机械、电气调试工程师占员工三分之一，具备海外项目交付经验。', en: 'Mechanical and electrical commissioning engineers make up a third of staff, with overseas delivery experience.' } },
-]
-
 // 新闻(真实事件 + 行业内容)
 export const news = [
   {
