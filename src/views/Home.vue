@@ -201,21 +201,21 @@ const latestNews = news.slice(0, 3)
 }
 
 .cta {
-  background: linear-gradient(135deg, #0a5c33 0%, #00a651 100%);
-  color: #fff;
+  background: var(--c-bg);
   text-align: center;
   padding: clamp(48px, 6vw, 72px) 0;
 }
 
 .cta h2 {
   font-size: clamp(24px, 2.4vw, 30px);
+  color: var(--c-text);
   margin-bottom: 12px;
 }
 
 .cta p {
   max-width: 560px;
   margin: 0 auto 26px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--c-text-secondary);
 }
 
 @media (max-width: 1024px) {
