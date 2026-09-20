@@ -40,18 +40,18 @@ export const services = [
 
 // 产品分类(依据企业画册设备内容归类,图片源自官网产品图,双语)
 import yk6aImg from '../assets/products/yk-6a_banner.png'
-import yk6bImg from '../assets/products/yk-6b_banner.png'
-import yk6wImg from '../assets/products/yk-6w_banner.png'
-import ykFc3cImg from '../assets/products/yk-fc-3c_banner.png'
-import ykFc3dImg from '../assets/products/yk-fc-3d_banner.png'
-import ykFc3jImg from '../assets/products/yk-fc-3j_banner.png'
-import yk3eImg from '../assets/products/yk-3e_banner.png'
-import yk3fImg from '../assets/products/yk-3f_banner.png'
+import yk6bImg from '../assets/products/yk-6b_banner.jpg'
+import yk6wImg from '../assets/products/yk-6w_banner.jpg'
+import ykFc3cImg from '../assets/products/yk-fc-3c_banner.jpg'
+import ykFc3dImg from '../assets/products/yk-fc-3d_banner.jpg'
+import ykFc3jImg from '../assets/products/yk-fc-3j_banner.jpg'
+import yk3eImg from '../assets/products/yk-3e_banner.jpg'
+import yk3fImg from '../assets/products/yk-3f_banner.jpg'
 import ykAl1Img from '../assets/products/yk-al-1_banner.png'
 import ykOl2iImg from '../assets/products/yk-ol-2i_banner.png'
 import ykOl3iImg from '../assets/products/yk-ol-3i_banner.png'
 import ykLawanImg from '../assets/products/yk-xingcailawanji_banner.png'
-import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner.png'
+import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner.jpg'
 
 // YK-OL-2I 多图画廊(本地图片库,按文件名顺序)
 const ol2iModules = import.meta.glob('../assets/products/yk-ol-2i/*.png', { eager: true, import: 'default' })

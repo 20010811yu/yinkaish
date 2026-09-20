@@ -4,6 +4,7 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- YK-OL-2I 查看器悬停暂停:鼠标悬停图片时自动轮播暂停(figHover),移开后恢复 3.5s 节拍
 - YK-OL-2I 详情图改为多图查看器:用户图片库(设备/视觉检测/YK-OL-2I/1-5.png,sharp 限宽 1200 palette PNG 共 1.6MB)入 src/assets/products/yk-ol-2i/;data 用 import.meta.glob 按文件名序导入 images 数组;Services 详情区单张显示+左右箭头+「n/5」计数+3.5s 自动轮播(切产品归零,无缩略图);其他型号单图不受影响
 - YK-OL-2I 产品简介更新:改为「设备与上一工位对接…自动检测长度/漏加工/外观瑕疵…分类输送到下一工位」(用户提供的对接流程描述,中英)
 - 轮播顺序调换:第 4 张=焊装交钥匙(car.jpg)、第 5 张=寅铠精神(cooperation);左右切换箭头放大(36→56px,黑 35% 底白字,≤768 44px)
