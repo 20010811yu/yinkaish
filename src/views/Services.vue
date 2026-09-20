@@ -2,7 +2,6 @@
   <div>
     <section class="page-hero">
       <div class="container">
-        <p class="hero-lead">{{ $t('services.heroLead') }}</p>
         <h1 class="section-title">{{ $t('services.title') }}</h1>
         <p class="section-subtitle">{{ $t('services.subtitle') }}</p>
       </div>
@@ -104,14 +103,6 @@ const isCatOpen = (id) => openCat.value === id
 </script>
 
 <style scoped>
-/* 页头引导语:标题上方 */
-.hero-lead {
-  font-size: 1rem;
-  letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 14px;
-}
-
 .svc-layout {
   display: grid;
   grid-template-columns: 300px 1fr;
