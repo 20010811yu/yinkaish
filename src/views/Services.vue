@@ -35,7 +35,12 @@
         <!-- 右侧:产品详情(大图 + 简介 + 参数表格) -->
         <div class="svc-detail">
           <div class="detail-fig">
-            <img :src="selectedProd.image" :alt="selectedProd.model" />
+            <img :src="currentImages[figIdx]" :alt="selectedProd.model" />
+            <template v-if="currentImages.length > 1">
+              <button class="fig-arrow fig-arrow--left" type="button" aria-label="previous" @click="stepFig(-1)">‹</button>
+              <button class="fig-arrow fig-arrow--right" type="button" aria-label="next" @click="stepFig(1)">›</button>
+              <span class="fig-counter">{{ figIdx + 1 }} / {{ currentImages.length }}</span>
+            </template>
           </div>
           <div class="detail-head">
             <span class="detail-cat">{{ pick(selectedCat.name, locale) }}</span>
@@ -77,7 +82,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { productCategories, productParams } from '../data'
 import { pick } from '../data/lang'
@@ -92,6 +97,14 @@ const selectedCat = computed(() => productCategories.find((c) => c.id === select
 const selectedProd = computed(() => selectedCat.value.products.find((x) => x.model === selected.value.model))
 const currentParams = computed(() => productParams[selectedProd.value.model.replaceAll('-', '')] ?? productParams[selectedProd.value.model] ?? [])
 
+/* 详情图查看器:多图按序单张显示,3.5s 自动轮播,无缩略图 */
+const figIdx = ref(0)
+const currentImages = computed(() => (selectedProd.value.images?.length ? selectedProd.value.images : [selectedProd.value.image]))
+const stepFig = (d) => {
+  figIdx.value = (figIdx.value + d + currentImages.value.length) % currentImages.value.length
+  restartFigTimer()
+}
+
 const select = (cat, prod) => {
   selected.value = { catId: cat.id, model: prod.model }
   openCat.value = cat.id
@@ -100,6 +113,25 @@ const toggleCat = (id) => {
   openCat.value = openCat.value === id ? '' : id
 }
 const isCatOpen = (id) => openCat.value === id
+
+let figTimer = null
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const startFigTimer = () => {
+  clearInterval(figTimer)
+  if (prefersReducedMotion() || currentImages.value.length < 2) return
+  figTimer = setInterval(() => {
+    if (document.hidden) return
+    stepFig(1)
+  }, 3500)
+}
+watch(selectedProd, () => {
+  figIdx.value = 0
+  startFigTimer()
+})
+onMounted(() => {
+  if (currentImages.value.length > 1) startFigTimer()
+})
+onBeforeUnmount(() => clearInterval(figTimer))
 </script>
 
 <style scoped>
@@ -202,11 +234,60 @@ const isCatOpen = (id) => openCat.value === id
 }
 
 .detail-fig {
+  position: relative;
   background: #fff;
   border: 1px solid var(--c-border);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
+}
+
+.detail-fig img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  padding: 28px;
+  display: block;
+}
+
+/* 多图查看器:左右箭头 + 计数 */
+.fig-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fig-arrow:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.fig-arrow--left {
+  left: 14px;
+}
+
+.fig-arrow--right {
+  right: 14px;
+}
+
+.fig-counter {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  font-size: 0.8125rem;
+  color: var(--c-text-secondary);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 2px 12px;
 }
 
 .detail-fig img {

@@ -4,6 +4,7 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- YK-OL-2I 产品简介更新:改为「设备与上一工位对接…自动检测长度/漏加工/外观瑕疵…分类输送到下一工位」(用户提供的对接流程描述,中英)
 - 轮播顺序调换:第 4 张=焊装交钥匙(car.jpg)、第 5 张=寅铠精神(cooperation);左右切换箭头放大(36→56px,黑 35% 底白字,≤768 44px)
 - 首页移除「新闻动态」板块(模板/NewsCard 导入/latestNews/.news-list 样式);/news 页与 data 中 news 数据保留
 - 首页员工统计 200+→150+(与 About 页一致)

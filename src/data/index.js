@@ -53,6 +53,10 @@ import ykOl3iImg from '../assets/products/yk-ol-3i_banner.png'
 import ykLawanImg from '../assets/products/yk-xingcailawanji_banner.png'
 import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner.png'
 
+// YK-OL-2I 多图画廊(本地图片库,按文件名顺序)
+const ol2iModules = import.meta.glob('../assets/products/yk-ol-2i/*.png', { eager: true, import: 'default' })
+const ykOl2iImages = Object.keys(ol2iModules).sort().map((k) => ol2iModules[k])
+
 export const productCategories = [
   {
     id: 'pv-alu',
@@ -187,6 +191,7 @@ export const productCategories = [
         model: 'YK-OL-2I',
         tag: { zh: '在线视觉检测', en: 'Inline Inspection' },
         image: ykOl2iImg,
+        images: ykOl2iImages,
         desc: {
           zh: '设备与上一工位对接，加工后的产品自动输送到设备内部待检测，本设备自动检测产品的长度、漏加工、外观瑕疵。检测后的产品自动分类输送到下一工位。',
           en: 'Docking with the upstream station, processed products are automatically conveyed inside for inspection. The machine automatically checks length, missed operations and surface defects, then sorts and conveys products to the next station.',
