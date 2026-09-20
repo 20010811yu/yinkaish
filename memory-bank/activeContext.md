@@ -1,9 +1,12 @@
 # activeContext.md — 当前上下文
 
-## 当前焦点(2026-09-18)
-业务与产品页按画册设备完成归类重做:6 大类 13 款产品全部图文展示。
+## 当前焦点(2026-09-20)
+上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- 产品图高清化:10 款(YK-6A/6W/FC-3C/3D/3J/3E/3F/拉弯机/OL-2I/OF-3I)换为画册 PDF 内嵌原图(sharp 裁白边+白底+限宽 800,sRGB),文件名不变;配对依据 PDF 内容流 cm 绘制坐标(跨页左半=第一个型号);scripts/upgrade-product-images.cjs 可复跑;YK-6B/AL-1/锁螺母 3 款原图在 JP2 复合图内无法解码,保留源图 435×288
+- **修复路由 base 缺失**:createWebHistory() 未传 BASE_URL,base '/yinkaish/' 下深链被兜底重定向回首页;改 createWebHistory(import.meta.env.BASE_URL)
+- 部署准备:vite.config base '/yinkaish/';新增 .github/workflows/deploy.yml(npm ci→build→cp 404.html→upload/deploy-pages);本地 preview 验证 /yinkaish/services 深链 200 且渲染完整(18 参数行/零破图/零溢出)
 - 修复 Services 页 CTA 横带样式缺失(重写时 scoped 遗漏 .cta-band 定义,渲染为白底左对齐裸文本):补回绿渐变+居中,描述限宽 760px 保证单行;**教训:重写页面时模板与样式要成对迁移,build 前比对模板引用的类名是否都有样式定义**
 - Services 页改版为「左侧列表栏+右侧详情」:左栏按分类分组的产品列表(sticky,选中绿高亮,≤768 折叠为手风琴单组展开),右侧产品大图+分类标签+型号标题+简介+参数表格(表头绿底"设备参数 EQUIPMENT PARAMETERS"+斑马纹行);点击切换联动;数据层新增 productParams(按型号索引的双语参数行,画册参数表转录:YK-6/FC/3 系全表 16-18 行、YK-AL-1 源站全表、视觉检测与汽车轻量化简表)
 - Services 页重做:数据层新增 productCategories(src/data/index.js,6 分类×双语+13 产品 model/tag/image/desc);页面按分类分节(编号标签+浅底软隔断交替),产品卡片 3:2 白底图+型号+变体标签+参数描述;底部新增选型咨询 CTA 横带(i18n services.ctaTitle/ctaDesc/ctaBtn 中英);弹性合规(3→2→1 列)
