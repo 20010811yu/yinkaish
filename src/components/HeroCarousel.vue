@@ -20,7 +20,7 @@
 <script setup>
 import bannerHome from '../assets/banner-home.jpg'
 import bannerPv from '../assets/banner-pv.png'
-import bannerVision from '../assets/banner-vision.png'
+import bannerVision from '../assets/banner-vision.jpg'
 import bannerCooperation from '../assets/banner-cooperation.jpg'
 import bannerCar from '../assets/banner-car.jpg'
 
