@@ -134,7 +134,7 @@ const icons = { SetUp, View, Search, OfficeBuilding }
 
 const stats = computed(() => [
   { value: '20+', label: t('home.intro.stat1') },
-  { value: '200+', label: t('home.intro.stat2') },
+  { value: '150+', label: t('home.intro.stat2') },
   { value: '10000+', label: t('home.intro.stat3') },
   { value: '±0.1', label: t('home.intro.stat4') },
 ])
