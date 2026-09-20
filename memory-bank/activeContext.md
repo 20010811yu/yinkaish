@@ -4,6 +4,7 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- 动画改为每次进入视口都重播(用户要求):观察器去掉 unobserve——进入加 .revealed 并重跑计数,离开移除 .revealed 并把计数立即 snap 回终值(dataset.final 缓存终值+_counting 防重+可重入清理);修复后台冻结导致的计数滞留中间值(±0.0mm/8%)问题
 - 首页动画改造(方案一+二):①全局 [data-reveal] 滚动入场工具(main.css,IntersectionObserver+.revealed,1-3 档错峰) ②大数字计数(±0.1mm/98% 解析 i18n 数字缓动滚动;interval 驱动+document.hidden/visibilitychange 兜底跳终值——后台标签页定时器会被冻结) ③优势区电路连线 SVG 描边绘制+端点脉冲 ④hero-city.svg 内置微动效(gen 脚本内嵌 style:窗户闪烁/光柱升降/星星闪烁,种子不变构图不变) ⑤城市图滚动视差(rAF 节流 translateY);全部尊重 prefers-reduced-motion;计数动画在后台标签页直接跳终值属预期行为
 - 首页「为什么选择寅铠」板块重做(参照正泰官网):左文右图两栏——左列 tag+左对齐大标题+电路连线 SVG+绿色标语+说明段+大数字统计(±0.1mm 加工精度/98% 无故障运行率,顶部细线+大数字,画册参数);右列 hero-city.svg 城市插画(圆角+阴影);4 条优势移至下方一行四列轻量排布(顶部细线+编号,去卡片边框);新增 i18n home.advantages.slogan/lead/stat1-stat2(中英);≤768 单列、≤1024 收窄
 - 首页「为什么选择寅铠」板块重做(参照正泰官网):左文右图两栏——左列 tag+左对齐大标题+电路连线 SVG(折线+端点圆)+绿色标语+说明段+大数字统计(±0.1mm 加工精度/98% 无故障运行率,顶部细线+大数字,画册参数);右列 hero-city.svg 城市插画(圆角+阴影);4 条优势移至下方一行四列轻量排布(顶部细线+编号,去卡片边框);新增 i18n home.advantages.slogan/lead/stat1-stat2(中英);≤768 单列、≤1024 收窄
