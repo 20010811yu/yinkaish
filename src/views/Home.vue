@@ -112,18 +112,7 @@
       </div>
 
       <div class="container" data-reveal>
-        <div class="worldmap">
-          <div class="worldmap__map" aria-hidden="true" :style="mapMaskStyle"></div>
-          <div
-            v-for="loc in mapLocations"
-            :key="loc.key"
-            class="worldmap__mark"
-            :class="`worldmap__mark--${loc.key}`"
-          >
-            <span class="worldmap__dot"></span>
-            <span class="worldmap__label">{{ $t(`home.partners.locations.${loc.key}`) }}</span>
-          </div>
-        </div>
+        <WorldMap />
       </div>
     </section>
 
@@ -150,26 +139,11 @@ import { services, partners } from '../data'
 import { pick } from '../data/lang'
 import HeroCarousel from '../components/HeroCarousel.vue'
 import heroCity from '../assets/hero-city.svg'
-import worldMap from '../assets/world-map.png'
+import WorldMap from '../components/WorldMap.vue'
 
 const { locale, t } = useI18n()
 
 const icons = { SetUp, View, Search, OfficeBuilding }
-
-// 地图标记:公司服务覆盖点(上海总部 + 海外地区)
-const mapLocations = [
-  { key: 'shanghai' },
-  { key: 'usa' },
-  { key: 'egypt' },
-  { key: 'india' },
-  { key: 'malaysia' },
-]
-
-// 世界地图:SVG 作 CSS mask,填充品牌浅绿渐变
-const mapMaskStyle = {
-  WebkitMaskImage: `url(${worldMap})`,
-  maskImage: `url(${worldMap})`,
-}
 
 const stats = computed(() => [
   { value: '20+', label: t('home.intro.stat1') },
@@ -543,103 +517,8 @@ onBeforeUnmount(() => {
   object-fit: contain;
 }
 
-/* 世界地图:mask 填充品牌浅绿 + 区域脉冲标记 */
-.worldmap {
-  position: relative;
-  margin-top: clamp(40px, 5vw, 64px);
-  aspect-ratio: 1010 / 666; /* 与地图图片真实比例一致,保证标记经纬度不漂移 */
-  max-width: 980px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.worldmap__map {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #bfe9d2 0%, #7dd8a8 55%, #35bd7c 100%);
-  background-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.worldmap__mark {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transform: translate(-4px, -4px);
-}
-
-.worldmap__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c-primary);
-  position: relative;
-  flex: none;
-}
-
-.worldmap__dot::after {
-  content: '';
-  position: absolute;
-  inset: -7px;
-  border-radius: 50%;
-  border: 2px solid var(--c-primary);
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .worldmap__dot::after {
-    animation: map-pulse 2.4s ease-out infinite;
-  }
-
-  @keyframes map-pulse {
-    0% { transform: scale(0.4); opacity: 0.9; }
-    70% { transform: scale(1.6); opacity: 0; }
-    100% { transform: scale(1.6); opacity: 0; }
-  }
-}
-
-.worldmap__label {
-  font-size: clamp(11px, 1vw, 13px);
-  font-weight: 600;
-  color: var(--c-primary);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 3px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 166, 81, 0.18);
-}
-
-/* 标记位置:由 @svg-maps/world 米勒投影按经纬度换算的精确百分比(上海 121.5E/31.2N、
-   美国 98W/39N、埃及 30E/26.5N、印度 79E/22N、吉隆坡 101.7E/3.1N),缩放时随容器等比跟随 */
-.worldmap__mark--shanghai {
-  left: 83.8%;
-  top: 54.8%;
-}
-
-.worldmap__mark--usa {
-  left: 22.8%;
-  top: 51.3%;
-}
-
-.worldmap__mark--egypt {
-  left: 55.6%;
-  top: 57.8%;
-}
-
-.worldmap__mark--india {
-  left: 70%;
-  top: 60.1%;
-}
-
-.worldmap__mark--malaysia {
-  left: 75.3%;
-  top: 68.6%;
+.center {
+  text-align: center;
 }
 
 .center {
@@ -693,24 +572,6 @@ onBeforeUnmount(() => {
 
   .partners__wire {
     width: 200px;
-  }
-
-  /* 小屏地图小:只保留上海标签,其余标记只显示圆点;上海标签翻到圆点左侧避免溢出 */
-  .worldmap__label {
-    display: none;
-  }
-
-  .worldmap__mark--shanghai .worldmap__label {
-    display: inline-block;
-  }
-
-  .worldmap__mark--shanghai {
-    transform: translate(calc(-100% + 4px), -4px);
-  }
-
-  .worldmap__label {
-    font-size: 11px;
-    padding: 2px 8px;
   }
 
   .adv {
