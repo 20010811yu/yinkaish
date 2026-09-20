@@ -4,7 +4,8 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
-- Services 页头新增引导语「以精密智造驱动光伏与汽车产业」(标题上方,i18n services.heroLead 中英,白字 88% 透明度+字距 3px)
+- 首页「为什么选择寅铠」板块重做(参照正泰官网):左文右图两栏——左列 tag+左对齐大标题+电路连线 SVG(折线+端点圆)+绿色标语+说明段+大数字统计(±0.1mm 加工精度/98% 无故障运行率,顶部细线+大数字,画册参数);右列 hero-city.svg 城市插画(圆角+阴影);4 条优势移至下方一行四列轻量排布(顶部细线+编号,去卡片边框);新增 i18n home.advantages.slogan/lead/stat1-stat2(中英);≤768 单列、≤1024 收窄
+- 撤销 Services 页头引导语(heroLead 已从模板/样式/i18n 移除,页头恢复标题+副标题)
 - 底部 CTA 横幅去背景(用户要求全站检查):Home .cta 与 Services .cta-band 两处绿渐变改为 var(--c-bg) 白底,标题/描述改深色系(其余页面无绿色横幅);绿色胶囊按钮保留为视觉锚点
 - 产品图高清化:10 款(YK-6A/6W/FC-3C/3D/3J/3E/3F/拉弯机/OL-2I/OF-3I)换为画册 PDF 内嵌原图(sharp 裁白边+白底+限宽 800,sRGB),文件名不变;配对依据 PDF 内容流 cm 绘制坐标(跨页左半=第一个型号);scripts/upgrade-product-images.cjs 可复跑;YK-6B/AL-1/锁螺母 3 款原图在 JP2 复合图内无法解码,保留源图 435×288
 - **修复路由 base 缺失**:createWebHistory() 未传 BASE_URL,base '/yinkaish/' 下深链被兜底重定向回首页;改 createWebHistory(import.meta.env.BASE_URL)

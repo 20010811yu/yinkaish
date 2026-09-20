@@ -42,16 +42,44 @@
       </div>
     </section>
 
-    <!-- 核心优势 -->
+    <!-- 核心优势(正泰风:左文右图+电路连线+大数字) -->
     <section class="section">
-      <div class="container">
-        <div class="section-head">
+      <div class="container adv">
+        <div class="adv__left">
           <span class="section-tag">{{ $t('home.advantages.tag') }}</span>
-          <h2 class="section-title">{{ $t('home.advantages.title') }}</h2>
+          <h2 class="adv__title">{{ $t('home.advantages.title') }}</h2>
+
+          <svg class="adv__wire" viewBox="0 0 320 64" fill="none" aria-hidden="true">
+            <path d="M4 0 V28 Q4 36 12 36 H120" stroke="#00a651" stroke-width="2.5" />
+            <path d="M120 36 H300" stroke="#57e39a" stroke-width="2" opacity="0.7" />
+            <circle cx="302" cy="36" r="4" fill="#00a651" />
+            <circle cx="4" cy="2" r="3.5" fill="#57e39a" />
+          </svg>
+
+          <p class="adv__slogan">{{ $t('home.advantages.slogan') }}</p>
+          <p class="adv__lead">{{ $t('home.advantages.lead') }}</p>
+
+          <div class="adv__stats">
+            <div class="adv__stat">
+              <strong>{{ $t('home.advantages.stat1Value') }}</strong>
+              <span>{{ $t('home.advantages.stat1Label') }}</span>
+            </div>
+            <div class="adv__stat">
+              <strong>{{ $t('home.advantages.stat2Value') }}</strong>
+              <span>{{ $t('home.advantages.stat2Label') }}</span>
+            </div>
+          </div>
         </div>
-        <div class="cards cards--4">
-          <div v-for="(key, i) in ['a1', 'a2', 'a3', 'a4']" :key="key" class="card">
-            <span class="card__num">0{{ i + 1 }}</span>
+
+        <div class="adv__fig">
+          <img :src="heroCity" alt="YINKAI smart city" />
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="adv-list">
+          <div v-for="(key, i) in ['a1', 'a2', 'a3', 'a4']" :key="key" class="adv-list__item">
+            <span class="adv-list__num">0{{ i + 1 }}</span>
             <h3>{{ $t(`home.advantages.${key}.title`) }}</h3>
             <p>{{ $t(`home.advantages.${key}.desc`) }}</p>
           </div>
@@ -98,6 +126,7 @@ import { services, news } from '../data'
 import { pick } from '../data/lang'
 import NewsCard from '../components/NewsCard.vue'
 import HeroCarousel from '../components/HeroCarousel.vue'
+import heroCity from '../assets/hero-city.svg'
 
 const { locale, t } = useI18n()
 
@@ -190,6 +219,106 @@ const latestNews = news.slice(0, 3)
   -webkit-text-stroke: 1px var(--c-primary);
 }
 
+/* ---------- 核心优势(正泰风) ---------- */
+.adv {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.adv__title {
+  font-size: clamp(26px, 2.6vw, 36px);
+  color: var(--c-text);
+  margin: 14px 0 6px;
+}
+
+.adv__wire {
+  width: 280px;
+  height: 56px;
+  margin: 8px 0 18px;
+}
+
+.adv__slogan {
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 700;
+  color: var(--c-primary);
+  margin-bottom: 10px;
+}
+
+.adv__lead {
+  color: var(--c-text-secondary);
+  line-height: 1.9;
+  margin-bottom: 34px;
+  max-width: 420px;
+}
+
+.adv__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  gap: 28px;
+}
+
+.adv__stat {
+  border-top: 1px solid var(--c-border);
+  padding-top: 14px;
+}
+
+.adv__stat strong {
+  display: block;
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: 800;
+  color: var(--c-primary);
+  line-height: 1.2;
+}
+
+.adv__stat span {
+  font-size: 0.875rem;
+  color: var(--c-text-secondary);
+}
+
+.adv__fig {
+  min-width: 0;
+}
+
+.adv__fig img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* 四条优势:一行四列轻量排布 */
+.adv-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.adv-list__item {
+  border-top: 2px solid var(--c-primary-light);
+  padding-top: 16px;
+}
+
+.adv-list__num {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--c-primary);
+  opacity: 0.45;
+}
+
+.adv-list__item h3 {
+  font-size: 1rem;
+  margin: 8px 0;
+}
+
+.adv-list__item p {
+  font-size: 0.875rem;
+  color: var(--c-text-secondary);
+  line-height: 1.75;
+}
+
 .news-list {
   display: grid;
   gap: 16px;
@@ -229,6 +358,24 @@ const latestNews = news.slice(0, 3)
   .intro {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+
+  .adv {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .adv__wire {
+    width: 200px;
+  }
+
+  .adv__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .adv-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .cards,

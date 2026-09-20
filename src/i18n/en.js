@@ -48,6 +48,12 @@ export default {
     advantages: {
       tag: 'Why Yinkai',
       title: 'Why Choose Us',
+      slogan: 'One-stop automation solutions, one-stop smart manufacturing',
+      lead: 'Building a new ecosystem of full-process PV frame automation — feeding, processing, inspection and stacking',
+      stat1Value: '±0.1mm',
+      stat1Label: 'Machining Precision',
+      stat2Value: '98%',
+      stat2Label: 'Uptime',
       a1: { title: 'Two Decades of Precision', desc: 'Twenty years in custom automation with automotive-grade manufacturing standards and ±0.1mm precision control.' },
       a2: { title: 'Leading PV Equipment', desc: 'PV frame production lines with a cycle of just seconds per frame — cutting, punching and riveting in one flow for lights-out factories.' },
       a3: { title: 'Sharp-Eyed Vision Inspection', desc: 'Inline/offline vision systems detect over a dozen defect types at second-level cycles, with fully traceable inspection data.' },
