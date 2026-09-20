@@ -426,16 +426,19 @@ onBeforeUnmount(() => {
 
 /* 电路连线:进视口描边绘制 + 端点脉冲 */
 @media (prefers-reduced-motion: no-preference) {
-  .adv__wire path {
+  .adv__wire path,
+  .partners__wire path {
     stroke-dasharray: 340;
     stroke-dashoffset: 340;
   }
 
-  .adv__left.revealed .adv__wire path {
+  .adv__left.revealed .adv__wire path,
+  .partners__left.revealed .partners__wire path {
     animation: wire-draw 1.1s ease 0.3s forwards;
   }
 
-  .adv__wire circle {
+  .adv__wire circle,
+  .partners__wire circle {
     animation: dot-pulse 2.6s ease-in-out 1.5s infinite;
   }
 
