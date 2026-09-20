@@ -28,14 +28,42 @@ const slides = [
   { image: bannerHome, titleKey: 'home.carousel.s1' },
   { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
   { image: bannerVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
-  { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
   { image: bannerCar, titleKey: 'home.carousel.s5', subtitleKey: 'home.carousel.s5sub' },
+  { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
 ]
 </script>
 
 <style scoped>
 .hero-carousel :deep(.el-carousel__container) {
   height: clamp(480px, 55vw, 780px);
+}
+
+/* 放大左右切换箭头 */
+.hero-carousel :deep(.el-carousel__arrow) {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hero-carousel :deep(.el-carousel__arrow:hover) {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-carousel :deep(.el-carousel__arrow--left) {
+  left: 16px;
+}
+
+.hero-carousel :deep(.el-carousel__arrow--right) {
+  right: 16px;
+}
+
+@media (max-width: 768px) {
+  .hero-carousel :deep(.el-carousel__arrow) {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
 }
 
 .slide {
