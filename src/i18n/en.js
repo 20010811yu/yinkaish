@@ -62,7 +62,7 @@ export default {
     partners: {
       tag: 'Service & Partners',
       title: 'Global Partners, Trusted Choice',
-      desc: 'From turnkey PV frame automation lines to automotive welding projects, Yinkai works side by side with leading PV module and new-energy material companies, serving the global market with ±0.1mm precision manufacturing.',
+      desc: 'From turnkey PV frame automation lines to vision inspection systems, Yinkai works side by side with leading PV module and new-energy material companies, serving the global market with ±0.1mm precision manufacturing.',
       locations: {
         shanghai: 'Shanghai · HQ',
         usa: 'USA',
