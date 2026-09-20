@@ -27,6 +27,8 @@ export default {
       s3sub: 'Every Frame You Can Trust',
       s4: 'Yinkai Spirit, Serving the World',
       s4sub: 'Craftsmanship Forges Quality, Service Wins Trust',
+      s5: 'Turnkey BIW Welding, Smart Body Manufacturing',
+      s5sub: 'Trusted welding-line partner for VW, GM and SAIC',
     },
     intro: {
       tag: 'About Yinkai',
