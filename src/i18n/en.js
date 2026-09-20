@@ -97,6 +97,7 @@ export default {
   },
   services: {
     title: 'Services & Products',
+    heroLead: 'Precision Manufacturing Driving PV and Automotive Industries',
     subtitle: 'Six product series: PV frame lines, stacking & feeding, vision inspection and automotive lightweight equipment',
     ctaTitle: 'Get a Tailored Proposal',
     ctaDesc: 'Tell us your frame specifications and capacity needs — Yinkai engineers will propose the right equipment and line layout.',
