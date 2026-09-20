@@ -97,9 +97,25 @@ function buildOption() {
 onMounted(() => {
   chart = echarts.init(el.value, null, { renderer: 'svg' })
   chart.setOption(buildOption())
+  fitContainer()
   resizeObserver = new ResizeObserver(() => chart?.resize())
   resizeObserver.observe(el.value)
 })
+
+// 按地图实际渲染轮廓动态设置容器比例,保证地图不压缩、不裁切、完整显示
+function fitContainer() {
+  const svg = el.value?.querySelector('svg')
+  if (!svg) return
+  let minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9
+  svg.querySelectorAll('path').forEach((p) => {
+    const b = p.getBBox()
+    minX = Math.min(minX, b.x); minY = Math.min(minY, b.y)
+    maxX = Math.max(maxX, b.x + b.width); maxY = Math.max(maxY, b.y + b.height)
+  })
+  if (maxX <= minX || maxY <= minY) return
+  el.value.style.aspectRatio = `${(maxX - minX).toFixed(1)} / ${(maxY - minY).toFixed(1)}`
+  chart.resize()
+}
 
 // 语言切换:仅刷新标记标签文字
 watch(locale, () => {
@@ -118,8 +134,8 @@ onBeforeUnmount(() => {
   width: 100%;
   max-width: 980px;
   height: auto;
-  /* 与 aspectScale:1 时的地图实际比例一致(经度 360°/纬度跨约 140°),消除四周留白 */
+  /* 初始比例,挂载后由 fitContainer() 按地图实际轮廓动态校正 */
   aspect-ratio: 360 / 140;
-  margin: 0 auto;
+  margin: clamp(40px, 5vw, 64px) auto 0;
 }
 </style>
