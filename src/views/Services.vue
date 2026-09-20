@@ -34,7 +34,7 @@
 
         <!-- 右侧:产品详情(大图 + 简介 + 参数表格) -->
         <div class="svc-detail">
-          <div class="detail-fig">
+          <div class="detail-fig" @mouseenter="figHover = true" @mouseleave="figHover = false">
             <img :src="currentImages[figIdx]" :alt="selectedProd.model" />
             <template v-if="currentImages.length > 1">
               <button class="fig-arrow fig-arrow--left" type="button" aria-label="previous" @click="stepFig(-1)">‹</button>
@@ -115,12 +115,14 @@ const toggleCat = (id) => {
 const isCatOpen = (id) => openCat.value === id
 
 let figTimer = null
+const figHover = ref(false)
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const startFigTimer = () => {
   clearInterval(figTimer)
   if (prefersReducedMotion() || currentImages.value.length < 2) return
   figTimer = setInterval(() => {
-    if (document.hidden) return
+    // 悬停图片时暂停自动切换,移开后恢复
+    if (document.hidden || figHover.value) return
     stepFig(1)
   }, 3500)
 }
