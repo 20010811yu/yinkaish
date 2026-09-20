@@ -547,7 +547,7 @@ onBeforeUnmount(() => {
 .worldmap {
   position: relative;
   margin-top: clamp(40px, 5vw, 64px);
-  aspect-ratio: 1010 / 560;
+  aspect-ratio: 1010 / 666; /* 与地图图片真实比例一致,保证标记经纬度不漂移 */
   max-width: 980px;
   margin-left: auto;
   margin-right: auto;
@@ -615,30 +615,31 @@ onBeforeUnmount(() => {
   box-shadow: 0 2px 8px rgba(0, 166, 81, 0.18);
 }
 
-/* 标记位置(相对地图容器百分比,依据 @svg-maps/world 投影目测校准) */
+/* 标记位置:由 @svg-maps/world 米勒投影按经纬度换算的精确百分比(上海 121.5E/31.2N、
+   美国 98W/39N、埃及 30E/26.5N、印度 79E/22N、吉隆坡 101.7E/3.1N),缩放时随容器等比跟随 */
 .worldmap__mark--shanghai {
-  left: 74.5%;
-  top: 45%;
+  left: 83.8%;
+  top: 54.8%;
 }
 
 .worldmap__mark--usa {
-  left: 21%;
-  top: 42%;
+  left: 22.8%;
+  top: 51.3%;
 }
 
 .worldmap__mark--egypt {
-  left: 55.5%;
-  top: 49%;
+  left: 55.6%;
+  top: 57.8%;
 }
 
 .worldmap__mark--india {
-  left: 66.5%;
-  top: 51%;
+  left: 70%;
+  top: 60.1%;
 }
 
 .worldmap__mark--malaysia {
-  left: 71.5%;
-  top: 60%;
+  left: 75.3%;
+  top: 68.6%;
 }
 
 .center {
