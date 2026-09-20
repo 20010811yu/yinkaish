@@ -58,8 +58,7 @@ function buildOption() {
       map: 'world',
       roam: false,
       silent: false,
-      layoutCenter: ['50%', '50%'],
-      layoutSize: '100%',
+      aspectScale: 1, // 默认 0.75 会压窄经度,导致地图周围大片留白
       itemStyle: {
         areaColor: '#8fdcb1',
         borderColor: '#ffffff',
@@ -119,7 +118,8 @@ onBeforeUnmount(() => {
   width: 100%;
   max-width: 980px;
   height: auto;
-  aspect-ratio: 1000 / 500;
+  /* 与 aspectScale:1 时的地图实际比例一致(经度 360°/纬度跨约 140°),消除四周留白 */
+  aspect-ratio: 360 / 140;
   margin: 0 auto;
 }
 </style>
