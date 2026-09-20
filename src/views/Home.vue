@@ -6,7 +6,7 @@
     <!-- 公司简介 + 数据 -->
     <section class="section">
       <div class="container">
-        <div class="intro">
+        <div class="intro" data-reveal>
           <div class="intro__text">
             <span class="section-tag">{{ $t('home.intro.tag') }}</span>
             <h2 class="section-title">{{ $t('home.intro.title') }}</h2>
@@ -28,12 +28,12 @@
     <!-- 核心业务 -->
     <section class="section section--soft">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <span class="section-tag">{{ $t('home.services.tag') }}</span>
           <h2 class="section-title">{{ $t('home.services.title') }}</h2>
         </div>
         <div class="cards">
-          <div v-for="s in services" :key="s.id" class="card">
+          <div v-for="(s, i) in services" :key="s.id" class="card" data-reveal :data-reveal-delay="(i % 3) + 1">
             <el-icon :size="30" color="var(--c-primary)"><component :is="icons[s.icon]" /></el-icon>
             <h3>{{ pick(s.name, locale) }}</h3>
             <p>{{ pick(s.desc, locale) }}</p>
@@ -45,7 +45,7 @@
     <!-- 核心优势(正泰风:左文右图+电路连线+大数字) -->
     <section class="section">
       <div class="container adv">
-        <div class="adv__left">
+        <div class="adv__left" data-reveal>
           <span class="section-tag">{{ $t('home.advantages.tag') }}</span>
           <h2 class="adv__title">{{ $t('home.advantages.title') }}</h2>
 
@@ -59,26 +59,26 @@
           <p class="adv__slogan">{{ $t('home.advantages.slogan') }}</p>
           <p class="adv__lead">{{ $t('home.advantages.lead') }}</p>
 
-          <div class="adv__stats">
+          <div class="adv__stats" data-reveal>
             <div class="adv__stat">
-              <strong>{{ $t('home.advantages.stat1Value') }}</strong>
+              <strong class="count">{{ $t('home.advantages.stat1Value') }}</strong>
               <span>{{ $t('home.advantages.stat1Label') }}</span>
             </div>
             <div class="adv__stat">
-              <strong>{{ $t('home.advantages.stat2Value') }}</strong>
+              <strong class="count">{{ $t('home.advantages.stat2Value') }}</strong>
               <span>{{ $t('home.advantages.stat2Label') }}</span>
             </div>
           </div>
         </div>
 
-        <div class="adv__fig">
+        <div class="adv__fig" data-reveal data-reveal-delay="1">
           <img :src="heroCity" alt="YINKAI smart city" />
         </div>
       </div>
 
       <div class="container">
         <div class="adv-list">
-          <div v-for="(key, i) in ['a1', 'a2', 'a3', 'a4']" :key="key" class="adv-list__item">
+          <div v-for="(key, i) in ['a1', 'a2', 'a3', 'a4']" :key="key" class="adv-list__item" data-reveal :data-reveal-delay="(i % 3) + 1">
             <span class="adv-list__num">0{{ i + 1 }}</span>
             <h3>{{ $t(`home.advantages.${key}.title`) }}</h3>
             <p>{{ $t(`home.advantages.${key}.desc`) }}</p>
@@ -90,12 +90,12 @@
     <!-- 新闻动态 -->
     <section class="section section--soft">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <span class="section-tag">{{ $t('home.news.tag') }}</span>
           <h2 class="section-title">{{ $t('home.news.title') }}</h2>
         </div>
         <div class="news-list">
-          <NewsCard v-for="n in latestNews" :key="n.id" :item="n" />
+          <NewsCard v-for="(n, i) in latestNews" :key="n.id" :item="n" data-reveal :data-reveal-delay="(i % 3) + 1" />
         </div>
         <div class="center">
           <el-button round @click="$router.push('/news')">{{ $t('common.viewAll') }}</el-button>
@@ -117,7 +117,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   SetUp, View, Search, OfficeBuilding,
@@ -140,6 +140,78 @@ const stats = computed(() => [
 ])
 
 const latestNews = news.slice(0, 3)
+
+/* ---------- 滚动入场 + 大数字计数 + 视差(尊重系统减动效) ---------- */
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+let revealObserver = null
+let scrollRaf = null
+
+// 解析文本中的数字(保留 ±/单位前后缀与小数位),缓动滚动到目标值
+// 页面不可见时定时器会被浏览器节流,此时直接跳到最终值,可见时平滑计数
+const animateCount = (el) => {
+  const m = el.textContent.match(/^([^\d]*)([\d.]+)(.*)$/)
+  if (!m) return
+  const finish = () => {
+    clearInterval(timer)
+    document.removeEventListener('visibilitychange', onVis)
+    el.textContent = m[1] + m[2] + m[3]
+  }
+  const onVis = () => { if (document.hidden) finish() }
+  if (document.hidden || prefersReducedMotion()) { finish(); return }
+  const decimals = (m[2].split('.')[1] || '').length
+  const target = parseFloat(m[2])
+  const duration = 1200
+  const start = performance.now()
+  const timer = setInterval(() => {
+    if (document.hidden) { finish(); return }
+    const k = Math.min(1, (performance.now() - start) / duration)
+    const eased = 1 - Math.pow(1 - k, 3)
+    el.textContent = m[1] + (target * eased).toFixed(decimals) + m[3]
+    if (k >= 1) finish()
+  }, 16)
+  document.addEventListener('visibilitychange', onVis)
+}
+
+const onScroll = () => {
+  if (scrollRaf) return
+  scrollRaf = requestAnimationFrame(() => {
+    scrollRaf = null
+    const fig = document.querySelector('.adv__fig')
+    if (!fig) return
+    const r = fig.getBoundingClientRect()
+    const vh = window.innerHeight
+    if (r.bottom < 0 || r.top > vh) return
+    const progress = (vh - r.top) / (vh + r.height)
+    fig.querySelector('img').style.transform = `translateY(${((progress - 0.5) * 30).toFixed(1)}px)`
+  })
+}
+
+onMounted(() => {
+  const els = document.querySelectorAll('[data-reveal]')
+  if (prefersReducedMotion()) {
+    els.forEach((el) => el.classList.add('revealed'))
+    return
+  }
+  revealObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue
+      e.target.classList.add('revealed')
+      e.target.querySelectorAll('.count').forEach(animateCount)
+      if (e.target.classList.contains('count')) animateCount(e.target)
+      revealObserver.unobserve(e.target)
+    }
+  }, { threshold: 0.18 })
+  els.forEach((el) => revealObserver.observe(el))
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+})
+
+onBeforeUnmount(() => {
+  revealObserver?.disconnect()
+  window.removeEventListener('scroll', onScroll)
+  if (scrollRaf) cancelAnimationFrame(scrollRaf)
+})
 </script>
 
 <style scoped>
@@ -286,6 +358,32 @@ const latestNews = news.slice(0, 3)
   display: block;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  will-change: transform;
+}
+
+/* 电路连线:进视口描边绘制 + 端点脉冲 */
+@media (prefers-reduced-motion: no-preference) {
+  .adv__wire path {
+    stroke-dasharray: 340;
+    stroke-dashoffset: 340;
+  }
+
+  .adv__left.revealed .adv__wire path {
+    animation: wire-draw 1.1s ease 0.3s forwards;
+  }
+
+  .adv__wire circle {
+    animation: dot-pulse 2.6s ease-in-out 1.5s infinite;
+  }
+
+  @keyframes wire-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
 }
 
 /* 四条优势:一行四列轻量排布 */

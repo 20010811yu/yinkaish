@@ -20,6 +20,17 @@ const rand = () => {
 /* ---------- 天空与光晕 ---------- */
 const sky = `
   <defs>
+    <style>
+      @media (prefers-reduced-motion: no-preference) {
+        .tw { animation: winblink 3.4s ease-in-out infinite; }
+        .tw2 { animation: winblink 4.6s ease-in-out infinite 1.2s; }
+        .beam-p { animation: beamrise 4.2s ease-in-out infinite alternate; }
+        .star-t { animation: twinkl 5s ease-in-out infinite; }
+        @keyframes winblink { 0%,100% { opacity: 0.85; } 50% { opacity: 0.2; } }
+        @keyframes beamrise { from { transform: translateY(0); opacity: 0.35; } to { transform: translateY(-16px); opacity: 0.75; } }
+        @keyframes twinkl { 0%,100% { opacity: 0.5; } 50% { opacity: 0.08; } }
+      }
+    </style>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#02120a"/>
       <stop offset="45%" stop-color="#04331f"/>
@@ -56,7 +67,8 @@ for (let i = 0; i < 90; i++) {
   const y = (rand() * H * 0.62).toFixed(1)
   const r = (rand() * 1.8 + 0.4).toFixed(2)
   const o = (rand() * 0.5 + 0.15).toFixed(2)
-  particles += `<circle cx="${x}" cy="${y}" r="${r}" fill="#c8f7dd" opacity="${o}"/>`
+  const tw = rand() > 0.75 ? ' class="star-t"' : ''
+  particles += `<circle${tw} cx="${x}" cy="${y}" r="${r}" fill="#c8f7dd" opacity="${o}"/>`
 }
 
 /* ---------- 三层城市天际线(远→近,亮度递减) ---------- */
@@ -86,7 +98,9 @@ const buildSkyline = (baseY, maxH, minW, maxW, gapMin, gapMax, fill, windowColor
           const wx = bx + 6 + c * Math.floor((bw - 10) / cols)
           const wy = by + 8 + r * Math.floor((bh - 8) / rows)
           const lit = rand() > 0.3
-          out += `<rect x="${wx}" y="${wy}" width="4" height="6" fill="${lit ? windowColor : '#1f4433'}" opacity="${lit ? 0.85 : 0.6}"/>`
+          const blink = lit && rand() > 0.78
+          const cls = blink ? (rand() > 0.5 ? ' class="tw"' : ' class="tw2"') : ''
+          out += `<rect${cls} x="${wx}" y="${wy}" width="4" height="6" fill="${lit ? windowColor : '#1f4433'}" opacity="${lit ? 0.85 : 0.6}"/>`
         }
       }
     }
@@ -133,8 +147,8 @@ for (const b of beamTops) {
   const cx = b.x + b.w / 2
   const bw = 3 + rand() * 5
   const bh = 120 + rand() * 260
-  beams += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${(1000 - b.h - bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="url(#beam)" opacity="${(0.25 + rand() * 0.45).toFixed(2)}"/>`
-  beams += `<circle cx="${cx.toFixed(1)}" cy="${(1000 - b.h - bh).toFixed(1)}" r="${(2 + rand() * 2).toFixed(1)}" fill="#b9f6d3" opacity="0.9"/>`
+  beams += `<g class="beam-p"><rect x="${(cx - bw / 2).toFixed(1)}" y="${(1000 - b.h - bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="url(#beam)" opacity="${(0.25 + rand() * 0.45).toFixed(2)}"/>`
+  beams += `<circle cx="${cx.toFixed(1)}" cy="${(1000 - b.h - bh).toFixed(1)}" r="${(2 + rand() * 2).toFixed(1)}" fill="#b9f6d3" opacity="0.9"/></g>`
 }
 
 /* ---------- 电路走线(地平线附近横向数据总线) ---------- */
