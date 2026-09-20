@@ -64,10 +64,12 @@ export default {
       tag: '服务与合作伙伴',
       title: '全球伙伴，信赖之选',
       desc: '从光伏边框自动化整线到汽车焊装交钥匙工程，寅铠与光伏组件、新能源材料领域的头部企业长期同行，以 ±0.1mm 的精密制造标准服务全球市场。',
-      regions: {
-        apac: '亚太区 · 上海总部',
-        europe: '欧洲区',
-        na: '北美区',
+      locations: {
+        shanghai: '上海 · 总部',
+        usa: '美国',
+        egypt: '埃及',
+        india: '印度',
+        malaysia: '马来西亚',
       },
     },
     news: {

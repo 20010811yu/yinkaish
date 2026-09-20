@@ -114,17 +114,14 @@
       <div class="container" data-reveal>
         <div class="worldmap">
           <div class="worldmap__map" aria-hidden="true" :style="mapMaskStyle"></div>
-          <div class="worldmap__mark worldmap__mark--apac">
+          <div
+            v-for="loc in mapLocations"
+            :key="loc.key"
+            class="worldmap__mark"
+            :class="`worldmap__mark--${loc.key}`"
+          >
             <span class="worldmap__dot"></span>
-            <span class="worldmap__label">{{ $t('home.partners.regions.apac') }}</span>
-          </div>
-          <div class="worldmap__mark worldmap__mark--europe">
-            <span class="worldmap__dot"></span>
-            <span class="worldmap__label">{{ $t('home.partners.regions.europe') }}</span>
-          </div>
-          <div class="worldmap__mark worldmap__mark--na">
-            <span class="worldmap__dot"></span>
-            <span class="worldmap__label">{{ $t('home.partners.regions.na') }}</span>
+            <span class="worldmap__label">{{ $t(`home.partners.locations.${loc.key}`) }}</span>
           </div>
         </div>
       </div>
@@ -158,6 +155,15 @@ import worldMap from '../assets/world-map.png'
 const { locale, t } = useI18n()
 
 const icons = { SetUp, View, Search, OfficeBuilding }
+
+// 地图标记:公司服务覆盖点(上海总部 + 海外地区)
+const mapLocations = [
+  { key: 'shanghai' },
+  { key: 'usa' },
+  { key: 'egypt' },
+  { key: 'india' },
+  { key: 'malaysia' },
+]
 
 // 世界地图:SVG 作 CSS mask,填充品牌浅绿渐变
 const mapMaskStyle = {
@@ -606,19 +612,30 @@ onBeforeUnmount(() => {
   box-shadow: 0 2px 8px rgba(0, 166, 81, 0.18);
 }
 
-.worldmap__mark--apac {
+/* 标记位置(相对地图容器百分比,依据 @svg-maps/world 投影目测校准) */
+.worldmap__mark--shanghai {
   left: 74.5%;
   top: 45%;
 }
 
-.worldmap__mark--europe {
-  left: 48.5%;
-  top: 36%;
+.worldmap__mark--usa {
+  left: 21%;
+  top: 42%;
 }
 
-.worldmap__mark--na {
-  left: 20%;
-  top: 40%;
+.worldmap__mark--egypt {
+  left: 55.5%;
+  top: 49%;
+}
+
+.worldmap__mark--india {
+  left: 66.5%;
+  top: 51%;
+}
+
+.worldmap__mark--malaysia {
+  left: 71.5%;
+  top: 60%;
 }
 
 .center {
@@ -674,13 +691,16 @@ onBeforeUnmount(() => {
     width: 200px;
   }
 
-  .worldmap__mark--europe .worldmap__label,
-  .worldmap__mark--na .worldmap__label {
+  /* 小屏地图小:只保留上海标签,其余标记只显示圆点;上海标签翻到圆点左侧避免溢出 */
+  .worldmap__label {
     display: none;
   }
 
-  /* 小屏只留亚太标签,并翻到圆点左侧避免溢出 */
-  .worldmap__mark--apac {
+  .worldmap__mark--shanghai .worldmap__label {
+    display: inline-block;
+  }
+
+  .worldmap__mark--shanghai {
     transform: translate(calc(-100% + 4px), -4px);
   }
 
