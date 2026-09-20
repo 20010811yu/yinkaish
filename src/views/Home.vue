@@ -87,22 +87,6 @@
       </div>
     </section>
 
-    <!-- 新闻动态 -->
-    <section class="section section--soft">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <span class="section-tag">{{ $t('home.news.tag') }}</span>
-          <h2 class="section-title">{{ $t('home.news.title') }}</h2>
-        </div>
-        <div class="news-list">
-          <NewsCard v-for="(n, i) in latestNews" :key="n.id" :item="n" data-reveal :data-reveal-delay="(i % 3) + 1" />
-        </div>
-        <div class="center">
-          <el-button round @click="$router.push('/news')">{{ $t('common.viewAll') }}</el-button>
-        </div>
-      </div>
-    </section>
-
     <!-- CTA -->
     <section class="cta">
       <div class="container">
@@ -122,9 +106,8 @@ import { useI18n } from 'vue-i18n'
 import {
   SetUp, View, Search, OfficeBuilding,
 } from '@element-plus/icons-vue'
-import { services, news } from '../data'
+import { services } from '../data'
 import { pick } from '../data/lang'
-import NewsCard from '../components/NewsCard.vue'
 import HeroCarousel from '../components/HeroCarousel.vue'
 import heroCity from '../assets/hero-city.svg'
 
@@ -138,8 +121,6 @@ const stats = computed(() => [
   { value: '10000+', label: t('home.intro.stat3') },
   { value: '±0.1', label: t('home.intro.stat4') },
 ])
-
-const latestNews = news.slice(0, 3)
 
 /* ---------- 滚动入场 + 大数字计数 + 视差(尊重系统减动效) ---------- */
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -441,12 +422,6 @@ onBeforeUnmount(() => {
   font-size: 0.875rem;
   color: var(--c-text-secondary);
   line-height: 1.75;
-}
-
-.news-list {
-  display: grid;
-  gap: 16px;
-  margin-bottom: 28px;
 }
 
 .center {
