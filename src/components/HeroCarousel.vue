@@ -1,6 +1,6 @@
 <template>
   <section class="hero-carousel">
-    <el-carousel :interval="5000" arrow="hover">
+    <el-carousel :interval="3000" arrow="hover">
       <el-carousel-item v-for="slide in slides" :key="slide.image">
         <div class="slide" :style="{ backgroundImage: `url(${slide.image})` }">
           <div class="slide__mask" />
