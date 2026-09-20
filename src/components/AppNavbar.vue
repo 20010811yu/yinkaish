@@ -3,7 +3,10 @@
     <div class="container navbar__inner">
       <router-link to="/" class="navbar__brand">
         <img src="../assets/favicon.ico" alt="logo" class="navbar__logo-img" />
-        <span class="navbar__name">{{ $t('brand.full') }}</span>
+        <span class="navbar__brand-text">
+          <span class="navbar__name">{{ $t('brand.full') }}</span>
+          <span class="navbar__name-en">{{ $t('brand.english') }}</span>
+        </span>
       </router-link>
 
       <nav class="navbar__menu" :class="{ 'navbar__menu--open': menuOpen }">
@@ -104,12 +107,41 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   object-fit: cover;
 }
 
+.navbar__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
 .navbar__name {
   color: var(--c-text);
-  font-size: 1.375rem;
+  font-size: clamp(1rem, 0.5rem + 0.6vw, 1.375rem);
   font-weight: 700;
   letter-spacing: 1px;
   white-space: nowrap;
+}
+
+/* 英文全称较长:窄桌面收起品牌区左侧留白,防止菜单溢出 */
+@media (max-width: 1439px) {
+  .navbar__brand {
+    margin-left: 0;
+  }
+
+  .navbar__menu {
+    margin-left: 12px;
+  }
+}
+
+.navbar__name-en {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .navbar__menu {

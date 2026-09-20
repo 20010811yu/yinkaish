@@ -2,6 +2,7 @@ export default {
   brand: {
     short: '寅铠精密 YINKAI',
     full: '上海寅铠精密机械制造有限公司',
+    english: 'Shanghai YK Precision Machinery Manufacturing Co.,Ltd.',
   },
   nav: {
     home: '首页',

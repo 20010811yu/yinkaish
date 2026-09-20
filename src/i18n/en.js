@@ -1,7 +1,8 @@
 export default {
   brand: {
     short: 'YINKAI Precision',
-    full: 'Shanghai Yinkai Precision Machinery',
+    full: 'Shanghai YK Precision Machinery Manufacturing Co.,Ltd.',
+    english: 'Shanghai YK Precision Machinery Manufacturing Co.,Ltd.',
   },
   nav: {
     home: 'Home',
@@ -163,6 +164,6 @@ export default {
     follow: 'Follow Us',
     wechat: 'WeChat Official Account',
     douyin: 'Douyin',
-    copyright: '© 2026 Shanghai Yinkai Precision Machinery Manufacturing Co., Ltd. All rights reserved.',
+    copyright: '© 2026 Shanghai YK Precision Machinery Manufacturing Co.,Ltd. All rights reserved.',
   },
 }
