@@ -4,6 +4,9 @@
 上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
 
 ### 最近变更
+- 首页新增「服务与合作伙伴」模块(核心优势之后、CTA 之前):上两栏(左列 tag「服务与合作伙伴」+标题+电路连线+说明段;右列伙伴墙 4×5 细边框格子 hover 绿) + 下部通栏世界地图(品牌绿渐变+三区域脉冲标记:亚太区·上海总部/欧洲区/北美区,≤768 只留亚太标签并翻到圆点左侧)。合作伙伴名单以源站 www.yinkaish.com 首页合作伙伴区为准:20 张 logo(阿里云 OSS images/logo/1-20.png,光伏产业链客户:鑫铂股份/晶科能源/德毅隆/CIRS/鸿盛/晶科科技/合肥科晶/爱康/源盛金属/源盛/科蓝特/复睿金属/江苏月嘉/生信/高瓴新材料/艾纳新能源/中信博/平煤隆基/创佳型材,第 17 号 logo 无文字用通用 alt)下载入 src/assets/partners/;data 新增 partners(import.meta.glob 导入,含双语 name);地图素材 world-map.png(91KB,源自 npm @svg-maps/world v2.0.0 **CC-BY-4.0**,已降坐标精度/删微小岛屿/渲染为 2000px PNG,署名见 src/assets/CREDITS.md);i18n home.partners.*(中英);prefers-reduced-motion 降级;新增 home.partners 区块复用 [data-reveal]。Wikimedia SVG 直连被网络重置,改用 npm 包
+- **修复导航 1280 横向溢出 7px**:品牌区 margin-left 用 100vw(含 15px 滚动条宽度)致总宽超视口;改 calc(100%/6 - 110px) 用容器百分比。**教训:vw 单位在出现滚动条的页面必然偏大,布局间距禁用 100vw 改 %**
+- 视觉检测轮播背景替换:用户横版裁切图(3888×1797)限宽 2560 压缩为 banner-vision.jpg(269KB,替代原 png);文案不变
 - 产品图全面换为本地设备图片库(用户资料 D:\OneDrive\桌面\网站\image\设备):10 款替换(YK-6A/6B←6E图/6W/FC-3C/3D/3J/3E/3F/OF-3I←YK-OL-3I_1/锁螺母←自锁螺母),sharp 裁白边限宽 800,7 款改 .jpg 扩展名(data 导入同步);YK-6B 与 6W 的库图为同一文件(资料库本身如此);拉弯机与 AL-1 库内无图保留原图;scripts/replace-product-images.cjs 可复跑
 - YK-OL-2I 查看器悬停暂停:鼠标悬停图片时自动轮播暂停(figHover),移开后恢复 3.5s 节拍
 - YK-OL-2I 详情图改为多图查看器:用户图片库(设备/视觉检测/YK-OL-2I/1-5.png,sharp 限宽 1200 palette PNG 共 1.6MB)入 src/assets/products/yk-ol-2i/;data 用 import.meta.glob 按文件名序导入 images 数组;Services 详情区单张显示+左右箭头+「n/5」计数+3.5s 自动轮播(切产品归零,无缩略图);其他型号单图不受影响

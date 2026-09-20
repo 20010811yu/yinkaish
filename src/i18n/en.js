@@ -60,6 +60,16 @@ export default {
       a3: { title: 'Sharp-Eyed Vision Inspection', desc: 'Inline/offline vision systems detect over a dozen defect types at second-level cycles, with fully traceable inspection data.' },
       a4: { title: 'Global Delivery', desc: 'TÜV ISO9001 certified, with equipment exported to the US and proven international project experience.' },
     },
+    partners: {
+      tag: 'Service & Partners',
+      title: 'Global Partners, Trusted Choice',
+      desc: 'From turnkey PV frame automation lines to automotive welding projects, Yinkai works side by side with leading PV module and new-energy material companies, serving the global market with ±0.1mm precision manufacturing.',
+      regions: {
+        apac: 'APAC · Shanghai HQ',
+        europe: 'Europe',
+        na: 'North America',
+      },
+    },
     news: {
       tag: 'News',
       title: 'Latest from Yinkai',

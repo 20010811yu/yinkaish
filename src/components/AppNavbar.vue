@@ -95,7 +95,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   align-items: center;
   gap: 12px;
   font-weight: 700;
-  margin-left: max(0px, calc(100vw / 6 - 110px));
+  margin-left: max(0px, calc(100% / 6 - 110px));
 }
 
 .navbar__logo-img {

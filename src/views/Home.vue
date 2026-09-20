@@ -87,6 +87,49 @@
       </div>
     </section>
 
+    <!-- 服务与合作伙伴 -->
+    <section class="section section--soft">
+      <div class="container partners">
+        <div class="partners__left" data-reveal>
+          <span class="section-tag">{{ $t('home.partners.tag') }}</span>
+          <h2 class="partners__title">{{ $t('home.partners.title') }}</h2>
+
+          <svg class="partners__wire" viewBox="0 0 320 64" fill="none" aria-hidden="true">
+            <path d="M4 0 V28 Q4 36 12 36 H120" stroke="#00a651" stroke-width="2.5" />
+            <path d="M120 36 H300" stroke="#57e39a" stroke-width="2" opacity="0.7" />
+            <circle cx="302" cy="36" r="4" fill="#00a651" />
+            <circle cx="4" cy="2" r="3.5" fill="#57e39a" />
+          </svg>
+
+          <p class="partners__desc">{{ $t('home.partners.desc') }}</p>
+        </div>
+
+        <div class="partners__wall" data-reveal data-reveal-delay="1">
+          <div v-for="p in partners" :key="p.id" class="partners__cell">
+            <img :src="p.image" :alt="pick(p.name, locale)" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <div class="container" data-reveal>
+        <div class="worldmap">
+          <div class="worldmap__map" aria-hidden="true" :style="mapMaskStyle"></div>
+          <div class="worldmap__mark worldmap__mark--apac">
+            <span class="worldmap__dot"></span>
+            <span class="worldmap__label">{{ $t('home.partners.regions.apac') }}</span>
+          </div>
+          <div class="worldmap__mark worldmap__mark--europe">
+            <span class="worldmap__dot"></span>
+            <span class="worldmap__label">{{ $t('home.partners.regions.europe') }}</span>
+          </div>
+          <div class="worldmap__mark worldmap__mark--na">
+            <span class="worldmap__dot"></span>
+            <span class="worldmap__label">{{ $t('home.partners.regions.na') }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta">
       <div class="container">
@@ -106,14 +149,21 @@ import { useI18n } from 'vue-i18n'
 import {
   SetUp, View, Search, OfficeBuilding,
 } from '@element-plus/icons-vue'
-import { services } from '../data'
+import { services, partners } from '../data'
 import { pick } from '../data/lang'
 import HeroCarousel from '../components/HeroCarousel.vue'
 import heroCity from '../assets/hero-city.svg'
+import worldMap from '../assets/world-map.png'
 
 const { locale, t } = useI18n()
 
 const icons = { SetUp, View, Search, OfficeBuilding }
+
+// 世界地图:SVG 作 CSS mask,填充品牌浅绿渐变
+const mapMaskStyle = {
+  WebkitMaskImage: `url(${worldMap})`,
+  maskImage: `url(${worldMap})`,
+}
 
 const stats = computed(() => [
   { value: '20+', label: t('home.intro.stat1') },
@@ -424,6 +474,153 @@ onBeforeUnmount(() => {
   line-height: 1.75;
 }
 
+/* ---------- 服务与合作伙伴 ---------- */
+.partners {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.partners__title {
+  font-size: clamp(26px, 2.6vw, 36px);
+  color: var(--c-text);
+  margin: 14px 0 6px;
+}
+
+.partners__wire {
+  width: 280px;
+  height: 56px;
+  margin: 8px 0 18px;
+}
+
+.partners__desc {
+  color: var(--c-text-secondary);
+  line-height: 1.9;
+  max-width: 420px;
+}
+
+.partners__wall {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  min-width: 0;
+}
+
+.partners__cell {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  aspect-ratio: 5 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  min-width: 0;
+}
+
+.partners__cell:hover {
+  border-color: var(--c-primary);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.partners__cell img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 世界地图:mask 填充品牌浅绿 + 区域脉冲标记 */
+.worldmap {
+  position: relative;
+  margin-top: clamp(40px, 5vw, 64px);
+  aspect-ratio: 1010 / 560;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.worldmap__map {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #bfe9d2 0%, #7dd8a8 55%, #35bd7c 100%);
+  background-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.worldmap__mark {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translate(-4px, -4px);
+}
+
+.worldmap__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  position: relative;
+  flex: none;
+}
+
+.worldmap__dot::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px solid var(--c-primary);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .worldmap__dot::after {
+    animation: map-pulse 2.4s ease-out infinite;
+  }
+
+  @keyframes map-pulse {
+    0% { transform: scale(0.4); opacity: 0.9; }
+    70% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+}
+
+.worldmap__label {
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 600;
+  color: var(--c-primary);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 166, 81, 0.18);
+}
+
+.worldmap__mark--apac {
+  left: 74.5%;
+  top: 45%;
+}
+
+.worldmap__mark--europe {
+  left: 48.5%;
+  top: 36%;
+}
+
+.worldmap__mark--na {
+  left: 20%;
+  top: 40%;
+}
+
 .center {
   text-align: center;
 }
@@ -451,12 +648,45 @@ onBeforeUnmount(() => {
   .cards--4 {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .partners {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 @media (max-width: 768px) {
   .intro {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+
+  .partners {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .partners__wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .partners__wire {
+    width: 200px;
+  }
+
+  .worldmap__mark--europe .worldmap__label,
+  .worldmap__mark--na .worldmap__label {
+    display: none;
+  }
+
+  /* 小屏只留亚太标签,并翻到圆点左侧避免溢出 */
+  .worldmap__mark--apac {
+    transform: translate(calc(-100% + 4px), -4px);
+  }
+
+  .worldmap__label {
+    font-size: 11px;
+    padding: 2px 8px;
   }
 
   .adv {

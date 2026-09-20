@@ -1,3 +1,9 @@
+// 合作伙伴 logo(官网首页合作伙伴区)
+const partnerImgs = Object.fromEntries(
+  Object.entries(import.meta.glob('../assets/partners/*.png', { eager: true, import: 'default' }))
+    .map(([path, url]) => [path.match(/(p\d+)\.png$/)[1], url])
+)
+
 // 核心业务数据(光伏边框自动化 + 汽车焊装装备,双语)
 export const services = [
   {
@@ -632,4 +638,28 @@ export const welfares = [
   { icon: 'AlarmClock', text: { zh: '带薪年假与弹性加班调休', en: 'Paid annual leave and flexible compensatory leave' } },
   { icon: 'Reading', text: { zh: '技术培训与海外项目机会', en: 'Technical training and overseas project opportunities' } },
   { icon: 'Watermelon', text: { zh: '工作餐补、团建与节日福利', en: 'Meal allowance, team events and holiday perks' } },
+]
+
+// 合作伙伴(logo 图片来自官网 www.yinkaish.com 首页合作伙伴区)
+export const partners = [
+  { id: 'xinbo', image: partnerImgs.p1, name: { zh: '鑫铂股份', en: 'Xinbo Co.' } },
+  { id: 'jinkosolar', image: partnerImgs.p2, name: { zh: '晶科能源', en: 'JinkoSolar' } },
+  { id: 'deyilong', image: partnerImgs.p3, name: { zh: '德毅隆', en: 'Deyilong' } },
+  { id: 'cirs', image: partnerImgs.p4, name: { zh: 'CIRS', en: 'CIRS' } },
+  { id: 'hongsheng', image: partnerImgs.p5, name: { zh: '鸿盛', en: 'Hongsheng' } },
+  { id: 'jinkopower', image: partnerImgs.p6, name: { zh: '晶科科技', en: 'JinkoPower' } },
+  { id: 'kejing', image: partnerImgs.p7, name: { zh: '合肥科晶', en: 'Hefei Kejing' } },
+  { id: 'akcome', image: partnerImgs.p8, name: { zh: '爱康集团', en: 'AKCOME Group' } },
+  { id: 'ysmetal', image: partnerImgs.p9, name: { zh: '源盛金属', en: 'YuanSheng Metal' } },
+  { id: 'yuansheng', image: partnerImgs.p10, name: { zh: '源盛', en: 'Yuansheng' } },
+  { id: 'krant', image: partnerImgs.p11, name: { zh: '科蓝特', en: 'Krant' } },
+  { id: 'freemt', image: partnerImgs.p12, name: { zh: '复睿金属', en: 'FreeMt Metal' } },
+  { id: 'yuejia', image: partnerImgs.p13, name: { zh: '江苏月嘉金属', en: 'Jiangsu Yuejia Metal' } },
+  { id: 'shengxin', image: partnerImgs.p14, name: { zh: '生信', en: 'Shengxin' } },
+  { id: 'gaoling', image: partnerImgs.p15, name: { zh: '高瓴新材料', en: 'Gaoling New Materials' } },
+  { id: 'aina', image: partnerImgs.p16, name: { zh: '艾纳新能源', en: 'Aina New Energy' } },
+  { id: 'partner17', image: partnerImgs.p17, name: { zh: '合作伙伴', en: 'Partner' } },
+  { id: 'arctech', image: partnerImgs.p18, name: { zh: '中信博', en: 'Arctech' } },
+  { id: 'pingmei', image: partnerImgs.p19, name: { zh: '平煤隆基', en: 'Pingmei Longji' } },
+  { id: 'chuangjia', image: partnerImgs.p20, name: { zh: '创佳型材', en: 'Chuangjia' } },
 ]

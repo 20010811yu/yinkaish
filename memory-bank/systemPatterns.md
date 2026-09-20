@@ -16,3 +16,5 @@ Vue 3(`<script setup>`)+ Vite SPA:
 
 ## 已知陷阱与规避模式
 - **网格/flex 轨道被 min-content 撑破(ERR-002)**:`1fr` 轨道实际是 `minmax(auto,1fr)`,轨道内含不可收缩内容(如 flex-shrink:0 的横滚缩略图行)会把轨道撑到内容宽、整页横向溢出;修法=网格项加 `min-width: 0`,让内部 overflow-x:auto 生效
+- **布局禁用 100vw(ERR-003)**:有纵向滚动条时 100vw 比可用宽大一个滚动条宽,间距用 % / clamp
+- **外部素材入库**:第三方图/svg 先核验许可并在 `src/assets/CREDITS.md` 署名;网络下载的大 SVG 可能被截断,先验 XML 完整性(或改用 npm pack)
