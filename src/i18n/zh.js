@@ -124,6 +124,7 @@ export default {
   news: {
     title: '新闻动态',
     subtitle: '公司动态与行业洞察',
+    featured: '最新动态',
   },
   newsDetail: {
     notFound: '未找到该新闻',

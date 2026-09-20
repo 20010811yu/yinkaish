@@ -124,6 +124,7 @@ export default {
   news: {
     title: 'News',
     subtitle: 'Company updates and industry insights',
+    featured: 'Latest News',
   },
   newsDetail: {
     notFound: 'Article not found',

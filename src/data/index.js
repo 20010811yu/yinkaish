@@ -552,6 +552,7 @@ export const timeline = [
 export const news = [
   {
     id: 1,
+    tag: { zh: '公司动态', en: 'Company News' },
     date: '2026-08-20',
     title: { zh: '寅铠光伏边框自动生产线再获海外订单', en: 'Yinkai Wins Another Overseas Order for PV Frame Production Lines' },
     summary: { zh: '海外客户对 ±0.1mm 加工精度与数秒级节拍给予高度认可。', en: 'The overseas customer highly recognized the ±0.1mm precision and second-level cycle time.' },
@@ -562,6 +563,7 @@ export const news = [
   },
   {
     id: 2,
+    tag: { zh: '技术迭代', en: 'Technology' },
     date: '2026-05-12',
     title: { zh: 'YK-OL 在线视觉检测系统完成新一轮迭代升级', en: 'New Iteration of the YK-OL Inline Vision Inspection System Released' },
     summary: { zh: '检测节拍提升至 1.7 秒以内，新增多类瑕疵识别模型。', en: 'Cycle improved to under 1.7 seconds with new defect recognition models.' },
@@ -572,6 +574,7 @@ export const news = [
   },
   {
     id: 3,
+    tag: { zh: '项目交付', en: 'Project Delivery' },
     date: '2026-03-02',
     title: { zh: '美国光伏边框产线项目顺利通过终验收', en: 'US PV Frame Line Project Passes Final Acceptance' },
     summary: { zh: '涵盖边框生产与在线视觉尺寸检测的整线方案获客户认可。', en: 'The complete line with production and inline dimension inspection was accepted by the customer.' },
@@ -582,6 +585,7 @@ export const news = [
   },
   {
     id: 4,
+    tag: { zh: '展会活动', en: 'Exhibitions' },
     date: '2025-11-15',
     title: { zh: '寅铠亮相国际光伏装备展会', en: 'Yinkai Exhibited at an International PV Equipment Show' },
     summary: { zh: '现场展示光伏边框自动生产线核心技术方案。', en: 'Showcased core technologies of the PV frame production line on site.' },
@@ -592,6 +596,7 @@ export const news = [
   },
   {
     id: 5,
+    tag: { zh: '质量体系', en: 'Quality' },
     date: '2025-06-18',
     title: { zh: '公司通过 ISO9001 质量管理体系换版审核', en: 'Yinkai Passed the ISO9001 Recertification Audit' },
     summary: { zh: '自 2005 年首次认证以来持续保持质量体系有效运行。', en: 'Maintaining an effective quality system since first certification in 2005.' },
@@ -602,6 +607,7 @@ export const news = [
   },
   {
     id: 6,
+    tag: { zh: '公司动态', en: 'Company News' },
     date: '2025-01-10',
     title: { zh: '汽车焊装业务稳步推进，多条产线同步交付', en: 'Steady Progress in Automotive BIW Business with Multiple Lines Delivered' },
     summary: { zh: '延续大众、通用等主机厂长期合作关系。', en: 'Continuing long-term partnerships with OEMs such as VW and GM.' },
