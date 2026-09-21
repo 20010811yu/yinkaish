@@ -70,12 +70,18 @@
     </section>
 
     <section class="cta-band">
-      <div class="container">
-        <h2>{{ $t('services.ctaTitle') }}</h2>
-        <p>{{ $t('services.ctaDesc') }}</p>
-        <el-button type="primary" size="large" round @click="$router.push('/contact')">
-          {{ $t('services.ctaBtn') }}
-        </el-button>
+      <div class="container cta-band__inner">
+        <div class="cta-band__text">
+          <h2>{{ $t('services.ctaTitle') }}</h2>
+          <p>{{ $t('services.ctaDesc') }}</p>
+          <el-button type="primary" size="large" round @click="$router.push('/contact')">
+            {{ $t('services.ctaBtn') }}
+          </el-button>
+        </div>
+        <div class="cta-band__visual" aria-hidden="true">
+          <span class="cta-band__block cta-band__block--big"></span>
+          <span class="cta-band__block cta-band__block--small"></span>
+        </div>
       </div>
     </section>
   </div>
@@ -402,21 +408,70 @@ onBeforeUnmount(() => clearInterval(figTimer))
 
 /* ---------- 底部咨询横带(无背景) ---------- */
 .cta-band {
-  background: var(--c-bg);
-  text-align: center;
-  padding: clamp(48px, 6vw, 72px) 0;
+  background: var(--c-bg-soft);
+  padding: clamp(48px, 6vw, 80px) 0;
+  overflow: hidden;
 }
 
-.cta-band h2 {
-  font-size: clamp(24px, 2.4vw, 30px);
+.cta-band__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+
+.cta-band__text h2 {
+  font-size: clamp(24px, 2.6vw, 34px);
   color: var(--c-text);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.cta-band p {
-  max-width: 760px;
-  margin: 0 auto 26px;
+.cta-band__text p {
+  max-width: 480px;
+  margin-bottom: 26px;
   color: var(--c-text-secondary);
+  line-height: 1.9;
+}
+
+/* 右侧圆角色块装饰(与首页 CTA 一致) */
+.cta-band__visual {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(200px, 22vw, 300px);
+  display: flex;
+  justify-content: center;
+}
+
+.cta-band__block {
+  position: absolute;
+  border-radius: 32px;
+}
+
+.cta-band__block--big {
+  width: 78%;
+  height: 82%;
+  right: 0;
+  bottom: 0;
+  background: var(--c-primary-light);
+}
+
+.cta-band__block--small {
+  width: 46%;
+  height: 46%;
+  left: 4%;
+  bottom: -12px;
+  background: #ccefe0;
+}
+
+@media (max-width: 1024px) {
+  .cta-band__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-band__visual {
+    order: -1;
+    min-height: 180px;
+  }
 }
 
 /* ---------- 手风琴(≤768px):分类可折叠,列表在上 ---------- */
