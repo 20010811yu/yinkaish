@@ -127,107 +127,6 @@
         <div class="cta__visual" aria-hidden="true">
           <span class="cta__block cta__block--big"></span>
           <span class="cta__block cta__block--small"></span>
-          <svg class="unicorn" viewBox="0 0 260 320">
-            <defs>
-              <!-- 3D 塑体质感:径向高光渐变 -->
-              <radialGradient id="uni-body" cx="0.38" cy="0.28" r="0.95">
-                <stop offset="0" stop-color="#ffffff" />
-                <stop offset="0.62" stop-color="#f4faf6" />
-                <stop offset="1" stop-color="#d5e7dd" />
-              </radialGradient>
-              <radialGradient id="uni-head" cx="0.36" cy="0.3" r="0.95">
-                <stop offset="0" stop-color="#ffffff" />
-                <stop offset="0.6" stop-color="#f6fbf8" />
-                <stop offset="1" stop-color="#d5e7dd" />
-              </radialGradient>
-              <linearGradient id="uni-horn" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#4cc088" />
-                <stop offset="1" stop-color="#00a651" />
-              </linearGradient>
-              <linearGradient id="uni-leg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#ffffff" />
-                <stop offset="1" stop-color="#dcebe2" />
-              </linearGradient>
-              <radialGradient id="uni-shadow" cx="0.5" cy="0.5" r="0.5">
-                <stop offset="0" stop-color="rgba(0,90,50,0.28)" />
-                <stop offset="1" stop-color="rgba(0,90,50,0)" />
-              </radialGradient>
-            </defs>
-
-            <!-- 地面软阴影 -->
-            <ellipse cx="130" cy="302" rx="78" ry="14" fill="url(#uni-shadow)" />
-
-            <g class="unicorn__float">
-              <!-- 腿 -->
-              <rect x="93" y="230" width="28" height="66" rx="14" fill="url(#uni-leg)" />
-              <rect x="139" y="230" width="28" height="66" rx="14" fill="url(#uni-leg)" />
-              <!-- 身体 -->
-              <ellipse cx="130" cy="196" rx="62" ry="66" fill="url(#uni-body)" />
-              <!-- 小翅膀 -->
-              <path d="M66 158 q-26 -18 -30 -44 q22 4 34 24 z" fill="#b3e7cd" />
-              <path d="M194 158 q26 -18 30 -44 q-22 4 -34 24 z" fill="#b3e7cd" />
-
-              <!-- 左臂(下垂,手指分明) -->
-              <g class="unicorn__arm">
-                <rect x="58" y="168" width="22" height="52" rx="11" fill="url(#uni-body)" transform="rotate(8 69 168)" />
-                <g class="unicorn__hand">
-                  <ellipse cx="66" cy="228" rx="12" ry="11" fill="#ffffff" />
-                  <rect x="55" y="228" width="7" height="14" rx="3.5" fill="#ffffff" />
-                  <rect x="64" y="230" width="7" height="16" rx="3.5" fill="#ffffff" />
-                  <rect x="73" y="228" width="7" height="13" rx="3.5" fill="#ffffff" />
-                </g>
-              </g>
-
-              <!-- 右臂(挥手) -->
-              <g class="unicorn__wave">
-                <rect x="180" y="168" width="22" height="52" rx="11" fill="url(#uni-body)" transform="rotate(-24 191 168)" />
-                <g class="unicorn__hand">
-                  <ellipse cx="212" cy="128" rx="12" ry="11" fill="#ffffff" />
-                  <rect x="198" y="116" width="7" height="14" rx="3.5" fill="#ffffff" transform="rotate(-30 201 123)" />
-                  <rect x="210" y="112" width="7" height="16" rx="3.5" fill="#ffffff" />
-                  <rect x="220" y="118" width="7" height="14" rx="3.5" fill="#ffffff" transform="rotate(30 223 125)" />
-                </g>
-              </g>
-
-              <!-- 头部(拟人大头) -->
-              <g>
-                <!-- 马耳(长而尖,位于独角两侧) -->
-                <path d="M92 34 Q84 6 62 10 Q78 20 82 42 Z" fill="#ffffff" />
-                <path d="M87 34 Q82 16 70 14 Q80 22 82 38 Z" fill="#7dd8a8" />
-                <path d="M168 34 Q176 6 198 10 Q182 20 178 42 Z" fill="#ffffff" />
-                <path d="M173 34 Q178 16 190 14 Q180 22 178 38 Z" fill="#7dd8a8" />
-                <!-- 头 -->
-                <circle cx="130" cy="96" r="62" fill="url(#uni-head)" />
-                <!-- 独角(加高加宽,条纹) -->
-                <path d="M130 -4 l17 52 h-34 z" fill="url(#uni-horn)" />
-                <path d="M118 34 l24 -6 M121 20 l18 -4 M124 8 l12 -3" stroke="#ccefe0" stroke-width="3.5" stroke-linecap="round" />
-                <!-- 前额鬃毛刘海(独角下) -->
-                <path d="M112 46 q-22 8 -26 34 q14 -16 28 -16 q-8 10 -6 22 q10 -16 22 -18 q-4 12 0 20 q8 -14 22 -16 q16 -6 24 -22 q-22 10 -30 4 q-16 -12 -34 -8 z" fill="#00a651" />
-                <!-- 侧鬃毛(垂到肩) -->
-                <path d="M74 84 q-14 26 -8 56 q10 -30 20 -40 z" fill="#35bd7c" />
-                <path d="M186 84 q14 26 8 56 q-10 -30 -20 -40 z" fill="#35bd7c" />
-                <!-- 口鼻(马吻,小巧) -->
-                <ellipse cx="130" cy="130" rx="24" ry="15" fill="#f0f8f3" />
-                <path d="M116 134 q14 10 28 0" stroke="#9fb8aa" stroke-width="3" fill="none" stroke-linecap="round" />
-                <circle cx="121" cy="126" r="2.4" fill="#9fb8aa" />
-                <circle cx="139" cy="126" r="2.4" fill="#9fb8aa" />
-                <!-- 眼睛(眨眼) -->
-                <g class="unicorn__eye">
-                  <circle cx="104" cy="88" r="7.5" fill="#1f2d26" />
-                  <circle cx="106.5" cy="85.5" r="2.6" fill="#ffffff" />
-                  <circle cx="101.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
-                </g>
-                <g class="unicorn__eye">
-                  <circle cx="156" cy="88" r="7.5" fill="#1f2d26" />
-                  <circle cx="158.5" cy="85.5" r="2.6" fill="#ffffff" />
-                  <circle cx="153.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
-                </g>
-                <!-- 腮红 -->
-                <ellipse cx="86" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
-                <ellipse cx="174" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
-              </g>
-            </g>
-          </svg>
         </div>
       </div>
     </section>
@@ -661,6 +560,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   display: flex;
   justify-content: center;
+  min-height: clamp(220px, 24vw, 340px); /* 由色块撑起画面高度 */
 }
 
 .cta__block {
@@ -682,48 +582,6 @@ onBeforeUnmount(() => {
   left: 4%;
   bottom: -12px;
   background: #ccefe0;
-}
-
-.unicorn {
-  position: relative;
-  width: clamp(200px, 22vw, 300px);
-  height: auto;
-  filter: drop-shadow(0 14px 22px rgba(0, 166, 81, 0.16));
-}
-
-.unicorn__float {
-  animation: unicorn-float 3.2s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.unicorn__wave {
-  transform-box: fill-box;
-  transform-origin: 30% 90%;
-  animation: unicorn-wave 2.2s ease-in-out infinite;
-}
-
-.unicorn__eye {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: unicorn-blink 4.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes unicorn-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes unicorn-wave {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(14deg); }
-  }
-
-  @keyframes unicorn-blink {
-    0%, 92%, 100% { transform: scaleY(1); }
-    95% { transform: scaleY(0.08); }
-  }
 }
 
 @media (max-width: 1024px) {
