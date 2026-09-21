@@ -76,7 +76,7 @@ export default {
     },
   },
   about: {
-    title: 'About Us',
+    title: 'About Yinkai',
     subtitle: 'The mission, vision and journey of Yinkai Precision',
     profileTitle: 'Company Profile',
     profileLead: 'Two decades of industrial automation — from automotive welding to PV smart manufacturing.',

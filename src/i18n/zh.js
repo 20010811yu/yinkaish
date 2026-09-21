@@ -76,7 +76,7 @@ export default {
     },
   },
   about: {
-    title: '关于我们',
+    title: '关于寅铠',
     subtitle: '了解寅铠的使命、愿景与成长历程',
     profileTitle: '公司简介',
     profileLead: '从汽车焊装到光伏智造，二十年深耕工业自动化。',
