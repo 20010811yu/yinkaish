@@ -2,14 +2,16 @@
   <section class="hero-carousel">
     <el-carousel :interval="3000" arrow="hover">
       <el-carousel-item v-for="(slide, index) in slides" :key="slide.image">
-        <div class="slide" :style="{ backgroundImage: `url(${slide.image})` }">
+        <div class="slide" :style="{ backgroundImage: `url(${slide.image}), url(${slide.lqip})` }">
           <!-- 首图用 img 高优先级加载,避免慢网络下轮播区长时间空白 -->
           <img
             v-if="index === 0"
             :src="slide.image"
             class="slide__img"
+            :class="{ 'slide__img--loaded': imgLoaded }"
             fetchpriority="high"
             alt=""
+            @load="imgLoaded = true"
           />
           <div class="slide__mask" />
           <div class="slide__content container">
@@ -31,14 +33,21 @@ import bannerPv from '../assets/banner-pv.jpg'
 import bannerVision from '../assets/banner-vision.jpg'
 import bannerCooperation from '../assets/banner-cooperation.jpg'
 import bannerCar from '../assets/banner-car.jpg'
+import {
+  lqip_home, lqip_pv, lqip_vision, lqip_car, lqip_cooperation,
+} from '../assets/banner-lqip.js'
+import { ref } from 'vue'
 
+// lqip:32px 模糊占位图(base64),高清图加载前先显示,消除刷新时的深色大块
 const slides = [
-  { image: bannerHome, titleKey: 'home.carousel.s1' },
-  { image: bannerPv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
-  { image: bannerVision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
-  { image: bannerCar, titleKey: 'home.carousel.s5', subtitleKey: 'home.carousel.s5sub' },
-  { image: bannerCooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
+  { image: bannerHome, lqip: lqip_home, titleKey: 'home.carousel.s1' },
+  { image: bannerPv, lqip: lqip_pv, titleKey: 'home.carousel.s2', subtitleKey: 'home.carousel.s2sub' },
+  { image: bannerVision, lqip: lqip_vision, titleKey: 'home.carousel.s3', subtitleKey: 'home.carousel.s3sub' },
+  { image: bannerCar, lqip: lqip_car, titleKey: 'home.carousel.s5', subtitleKey: 'home.carousel.s5sub' },
+  { image: bannerCooperation, lqip: lqip_cooperation, titleKey: 'home.carousel.s4', subtitleKey: 'home.carousel.s4sub' },
 ]
+
+const imgLoaded = ref(false)
 </script>
 
 <style scoped>
@@ -77,9 +86,9 @@ const slides = [
 .slide {
   position: relative;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-color: #123524; /* 图片未加载时的深绿兜底 */
+  background-size: cover, cover;
+  background-position: center, center;
+  background-color: #e8f5ee; /* 占位图前的浅色兜底 */
   display: flex;
   align-items: center;
 }
@@ -90,6 +99,12 @@ const slides = [
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.slide__img--loaded {
+  opacity: 1;
 }
 
 .slide__mask {
