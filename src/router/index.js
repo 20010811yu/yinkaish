@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
 
 // 禁用浏览器刷新时的滚动位置恢复,避免刷新先显示页脚再跳回顶部
 if ('scrollRestoration' in window.history) {
@@ -6,7 +7,8 @@ if ('scrollRestoration' in window.history) {
 }
 
 const routes = [
-  { path: '/', name: 'Home', component: () => import('../views/Home.vue') },
+  // 首页静态导入:作为主要落地页随主包加载,避免刷新时异步分包空窗(页脚贴导航)
+  { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: () => import('../views/About.vue') },
   { path: '/services', name: 'Services', component: () => import('../views/Services.vue') },
   { path: '/news', name: 'News', component: () => import('../views/News.vue') },
