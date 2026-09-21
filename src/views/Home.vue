@@ -127,37 +127,102 @@
         <div class="cta__visual" aria-hidden="true">
           <span class="cta__block cta__block--big"></span>
           <span class="cta__block cta__block--small"></span>
-          <svg class="unicorn" viewBox="0 0 240 250">
+          <svg class="unicorn" viewBox="0 0 260 320">
+            <defs>
+              <!-- 3D 塑体质感:径向高光渐变 -->
+              <radialGradient id="uni-body" cx="0.38" cy="0.28" r="0.95">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="0.62" stop-color="#f4faf6" />
+                <stop offset="1" stop-color="#d5e7dd" />
+              </radialGradient>
+              <radialGradient id="uni-head" cx="0.36" cy="0.3" r="0.95">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="0.6" stop-color="#f6fbf8" />
+                <stop offset="1" stop-color="#d5e7dd" />
+              </radialGradient>
+              <linearGradient id="uni-horn" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#4cc088" />
+                <stop offset="1" stop-color="#00a651" />
+              </linearGradient>
+              <linearGradient id="uni-leg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="1" stop-color="#dcebe2" />
+              </linearGradient>
+              <radialGradient id="uni-shadow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="rgba(0,90,50,0.28)" />
+                <stop offset="1" stop-color="rgba(0,90,50,0)" />
+              </radialGradient>
+            </defs>
+
+            <!-- 地面软阴影 -->
+            <ellipse cx="130" cy="302" rx="78" ry="14" fill="url(#uni-shadow)" />
+
             <g class="unicorn__float">
-              <!-- 尾巴 -->
-              <path class="unicorn__tail" d="M162 148 q36 -10 34 -46 q-1 28 -37 32 z" fill="#7dd8a8" />
-              <!-- 后腿 -->
-              <rect x="70" y="178" width="18" height="54" rx="9" fill="#ffffff" />
-              <rect x="148" y="178" width="18" height="54" rx="9" fill="#e6f6ee" />
+              <!-- 腿 -->
+              <rect x="93" y="230" width="28" height="66" rx="14" fill="url(#uni-leg)" />
+              <rect x="139" y="230" width="28" height="66" rx="14" fill="url(#uni-leg)" />
               <!-- 身体 -->
-              <ellipse cx="118" cy="152" rx="60" ry="54" fill="#ffffff" />
-              <!-- 前腿 -->
-              <rect x="100" y="184" width="18" height="50" rx="9" fill="#ffffff" />
-              <rect x="130" y="184" width="18" height="50" rx="9" fill="#e6f6ee" />
-              <!-- 鬃毛 -->
-              <path d="M74 46 q-24 6 -30 30 q16 -10 34 -8 z" fill="#00a651" />
-              <path d="M66 76 q-26 4 -36 26 q20 -10 40 -6 z" fill="#35bd7c" />
-              <!-- 头颈 -->
-              <path d="M62 92 q-4 -50 36 -58 q34 -6 44 22 l6 22 q4 16 -12 22 q-20 8 -40 2 z" fill="#ffffff" />
-              <!-- 口鼻 -->
-              <rect x="128" y="74" width="46" height="32" rx="16" fill="#ffffff" />
-              <circle cx="164" cy="90" r="2.8" fill="#5f7568" />
-              <!-- 耳朵 -->
-              <path d="M70 42 l8 -22 l14 20 z" fill="#ffffff" />
-              <path d="M74 42 l5 -14 l9 13 z" fill="#7dd8a8" />
-              <!-- 独角 -->
-              <path d="M92 2 l12 42 h-24 z" fill="#00a651" />
-              <path d="M83 30 l21 -5 M85 18 l17 -4" stroke="#e6f6ee" stroke-width="2.5" />
-              <!-- 眼睛(眨眼) -->
-              <circle class="unicorn__eye" cx="112" cy="70" r="5" fill="#1f2d26" />
-              <circle cx="113.8" cy="68.2" r="1.6" fill="#ffffff" />
-              <!-- 腮红 -->
-              <ellipse cx="132" cy="86" rx="7" ry="4.5" fill="#b3e7cd" />
+              <ellipse cx="130" cy="196" rx="62" ry="66" fill="url(#uni-body)" />
+              <!-- 小翅膀 -->
+              <path d="M66 158 q-26 -18 -30 -44 q22 4 34 24 z" fill="#b3e7cd" />
+              <path d="M194 158 q26 -18 30 -44 q-22 4 -34 24 z" fill="#b3e7cd" />
+
+              <!-- 左臂(下垂,手指分明) -->
+              <g class="unicorn__arm">
+                <rect x="58" y="168" width="22" height="52" rx="11" fill="url(#uni-body)" transform="rotate(8 69 168)" />
+                <g class="unicorn__hand">
+                  <ellipse cx="66" cy="228" rx="12" ry="11" fill="#ffffff" />
+                  <rect x="55" y="228" width="7" height="14" rx="3.5" fill="#ffffff" />
+                  <rect x="64" y="230" width="7" height="16" rx="3.5" fill="#ffffff" />
+                  <rect x="73" y="228" width="7" height="13" rx="3.5" fill="#ffffff" />
+                </g>
+              </g>
+
+              <!-- 右臂(挥手) -->
+              <g class="unicorn__wave">
+                <rect x="180" y="168" width="22" height="52" rx="11" fill="url(#uni-body)" transform="rotate(-24 191 168)" />
+                <g class="unicorn__hand">
+                  <ellipse cx="212" cy="128" rx="12" ry="11" fill="#ffffff" />
+                  <rect x="198" y="116" width="7" height="14" rx="3.5" fill="#ffffff" transform="rotate(-30 201 123)" />
+                  <rect x="210" y="112" width="7" height="16" rx="3.5" fill="#ffffff" />
+                  <rect x="220" y="118" width="7" height="14" rx="3.5" fill="#ffffff" transform="rotate(30 223 125)" />
+                </g>
+              </g>
+
+              <!-- 头部(拟人大头) -->
+              <g>
+                <!-- 耳朵 -->
+                <path d="M78 44 l6 -26 l22 18 z" fill="#ffffff" />
+                <path d="M84 42 l4 -15 l11 12 z" fill="#7dd8a8" />
+                <path d="M182 44 l-6 -26 l-22 18 z" fill="#ffffff" />
+                <path d="M176 42 l-4 -15 l-11 12 z" fill="#7dd8a8" />
+                <!-- 头 -->
+                <circle cx="130" cy="96" r="62" fill="url(#uni-head)" />
+                <!-- 鬃毛顶髻 -->
+                <path d="M130 30 q-18 -14 -34 -2 q14 -2 18 8 q8 -10 16 0 q6 -10 18 -6 q-8 -8 -18 0 z" fill="#00a651" />
+                <!-- 口鼻 -->
+                <ellipse cx="130" cy="124" rx="30" ry="22" fill="#f0f8f3" />
+                <circle cx="118" cy="118" r="3" fill="#9fb8aa" />
+                <circle cx="142" cy="118" r="3" fill="#9fb8aa" />
+                <path d="M118 132 q12 8 24 0" stroke="#9fb8aa" stroke-width="3" fill="none" stroke-linecap="round" />
+                <!-- 独角 -->
+                <path d="M130 6 l13 44 h-26 z" fill="url(#uni-horn)" />
+                <path d="M120 34 l20 -5 M122 20 l16 -4" stroke="#ccefe0" stroke-width="3" stroke-linecap="round" />
+                <!-- 眼睛(眨眼) -->
+                <g class="unicorn__eye">
+                  <circle cx="106" cy="88" r="7.5" fill="#1f2d26" />
+                  <circle cx="108.5" cy="85.5" r="2.6" fill="#ffffff" />
+                  <circle cx="103.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
+                </g>
+                <g class="unicorn__eye">
+                  <circle cx="154" cy="88" r="7.5" fill="#1f2d26" />
+                  <circle cx="156.5" cy="85.5" r="2.6" fill="#ffffff" />
+                  <circle cx="151.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
+                </g>
+                <!-- 腮红 -->
+                <ellipse cx="88" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
+                <ellipse cx="172" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
+              </g>
             </g>
           </svg>
         </div>
@@ -629,10 +694,10 @@ onBeforeUnmount(() => {
   transform-origin: center;
 }
 
-.unicorn__tail {
+.unicorn__wave {
   transform-box: fill-box;
-  transform-origin: left center;
-  animation: unicorn-tail 2.8s ease-in-out infinite;
+  transform-origin: 30% 90%;
+  animation: unicorn-wave 2.2s ease-in-out infinite;
 }
 
 .unicorn__eye {
@@ -647,9 +712,9 @@ onBeforeUnmount(() => {
     50% { transform: translateY(-10px); }
   }
 
-  @keyframes unicorn-tail {
+  @keyframes unicorn-wave {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(10deg); }
+    50% { transform: rotate(14deg); }
   }
 
   @keyframes unicorn-blink {
