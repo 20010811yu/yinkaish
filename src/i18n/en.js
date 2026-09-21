@@ -150,7 +150,7 @@ export default {
     phoneZhu: '15999876867 Mr. Zhu',
     fax: '+86-021-69173483',
     email: "caolujia{'@'}yinkaish.cn",
-    hours: 'Weekdays 8:30 - 17:30',
+    hours: 'Business hours: 8:30 - 17:00 (Beijing Time)',
   },
   footer: {
     slogan: 'Technology has only a starting point; innovation has no end',
