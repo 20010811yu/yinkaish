@@ -52,7 +52,7 @@ const imgLoaded = ref(false)
 
 <style scoped>
 .hero-carousel :deep(.el-carousel__container) {
-  height: clamp(480px, 55vw, 780px);
+  height: clamp(400px, 40vw, 560px);
 }
 
 /* 放大左右切换箭头 */
