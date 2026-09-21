@@ -176,7 +176,13 @@ onBeforeUnmount(() => clearInterval(figTimer))
   text-align: left;
 }
 
+/* 分类名单行显示 */
+.svc-group__head > span:first-child {
+  white-space: nowrap;
+}
+
 .svc-group__count {
+  flex: none;
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--c-primary);
@@ -432,7 +438,7 @@ onBeforeUnmount(() => clearInterval(figTimer))
 /* ---------- 平板收窄 ---------- */
 @media (min-width: 769px) and (max-width: 1024px) {
   .svc-layout {
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 285px 1fr; /* 保证最长分类名单行显示 */
     gap: 24px;
   }
 }
