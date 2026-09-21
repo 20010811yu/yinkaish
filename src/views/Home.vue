@@ -115,12 +115,52 @@
 
     <!-- CTA -->
     <section class="cta">
-      <div class="container">
-        <h2>{{ $t('home.cta.title') }}</h2>
-        <p>{{ $t('home.cta.desc') }}</p>
-        <el-button type="primary" size="large" round @click="$router.push('/contact')">
-          {{ $t('home.cta.btn') }}
-        </el-button>
+      <div class="container cta__inner">
+        <div class="cta__text">
+          <h2>{{ $t('home.cta.title') }}</h2>
+          <p>{{ $t('home.cta.desc') }}</p>
+          <el-button type="primary" size="large" round @click="$router.push('/contact')">
+            {{ $t('home.cta.btn') }}
+          </el-button>
+        </div>
+
+        <div class="cta__visual" aria-hidden="true">
+          <span class="cta__block cta__block--big"></span>
+          <span class="cta__block cta__block--small"></span>
+          <svg class="unicorn" viewBox="0 0 240 250">
+            <g class="unicorn__float">
+              <!-- 尾巴 -->
+              <path class="unicorn__tail" d="M162 148 q36 -10 34 -46 q-1 28 -37 32 z" fill="#7dd8a8" />
+              <!-- 后腿 -->
+              <rect x="70" y="178" width="18" height="54" rx="9" fill="#ffffff" />
+              <rect x="148" y="178" width="18" height="54" rx="9" fill="#e6f6ee" />
+              <!-- 身体 -->
+              <ellipse cx="118" cy="152" rx="60" ry="54" fill="#ffffff" />
+              <!-- 前腿 -->
+              <rect x="100" y="184" width="18" height="50" rx="9" fill="#ffffff" />
+              <rect x="130" y="184" width="18" height="50" rx="9" fill="#e6f6ee" />
+              <!-- 鬃毛 -->
+              <path d="M74 46 q-24 6 -30 30 q16 -10 34 -8 z" fill="#00a651" />
+              <path d="M66 76 q-26 4 -36 26 q20 -10 40 -6 z" fill="#35bd7c" />
+              <!-- 头颈 -->
+              <path d="M62 92 q-4 -50 36 -58 q34 -6 44 22 l6 22 q4 16 -12 22 q-20 8 -40 2 z" fill="#ffffff" />
+              <!-- 口鼻 -->
+              <rect x="128" y="74" width="46" height="32" rx="16" fill="#ffffff" />
+              <circle cx="164" cy="90" r="2.8" fill="#5f7568" />
+              <!-- 耳朵 -->
+              <path d="M70 42 l8 -22 l14 20 z" fill="#ffffff" />
+              <path d="M74 42 l5 -14 l9 13 z" fill="#7dd8a8" />
+              <!-- 独角 -->
+              <path d="M92 2 l12 42 h-24 z" fill="#00a651" />
+              <path d="M83 30 l21 -5 M85 18 l17 -4" stroke="#e6f6ee" stroke-width="2.5" />
+              <!-- 眼睛(眨眼) -->
+              <circle class="unicorn__eye" cx="112" cy="70" r="5" fill="#1f2d26" />
+              <circle cx="113.8" cy="68.2" r="1.6" fill="#ffffff" />
+              <!-- 腮红 -->
+              <ellipse cx="132" cy="86" rx="7" ry="4.5" fill="#b3e7cd" />
+            </g>
+          </svg>
+        </div>
       </div>
     </section>
   </div>
@@ -522,21 +562,100 @@ onBeforeUnmount(() => {
 }
 
 .cta {
-  background: var(--c-bg);
-  text-align: center;
-  padding: clamp(48px, 6vw, 72px) 0;
+  background: var(--c-bg-soft);
+  padding: clamp(48px, 6vw, 80px) 0;
+  overflow: hidden;
 }
 
-.cta h2 {
-  font-size: clamp(24px, 2.4vw, 30px);
+.cta__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+
+.cta__text h2 {
+  font-size: clamp(24px, 2.6vw, 34px);
   color: var(--c-text);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.cta p {
-  max-width: 560px;
-  margin: 0 auto 26px;
+.cta__text p {
+  max-width: 480px;
+  margin-bottom: 26px;
   color: var(--c-text-secondary);
+  line-height: 1.9;
+}
+
+/* 独角兽动画区:品牌绿圆角色块错位衬底 */
+.cta__visual {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cta__block {
+  position: absolute;
+  border-radius: 32px;
+}
+
+.cta__block--big {
+  width: 78%;
+  height: 82%;
+  right: 0;
+  bottom: 0;
+  background: var(--c-primary-light);
+}
+
+.cta__block--small {
+  width: 46%;
+  height: 46%;
+  left: 4%;
+  bottom: -12px;
+  background: #ccefe0;
+}
+
+.unicorn {
+  position: relative;
+  width: clamp(200px, 22vw, 300px);
+  height: auto;
+  filter: drop-shadow(0 14px 22px rgba(0, 166, 81, 0.16));
+}
+
+.unicorn__float {
+  animation: unicorn-float 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.unicorn__tail {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: unicorn-tail 2.8s ease-in-out infinite;
+}
+
+.unicorn__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: unicorn-blink 4.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes unicorn-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes unicorn-tail {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(10deg); }
+  }
+
+  @keyframes unicorn-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.08); }
+  }
 }
 
 @media (max-width: 1024px) {
@@ -548,6 +667,15 @@ onBeforeUnmount(() => {
   .partners {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .cta__inner {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .cta__visual {
+    order: -1;
   }
 }
 
