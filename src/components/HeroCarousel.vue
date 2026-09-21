@@ -1,8 +1,16 @@
 <template>
   <section class="hero-carousel">
     <el-carousel :interval="3000" arrow="hover">
-      <el-carousel-item v-for="slide in slides" :key="slide.image">
+      <el-carousel-item v-for="(slide, index) in slides" :key="slide.image">
         <div class="slide" :style="{ backgroundImage: `url(${slide.image})` }">
+          <!-- 首图用 img 高优先级加载,避免慢网络下轮播区长时间空白 -->
+          <img
+            v-if="index === 0"
+            :src="slide.image"
+            class="slide__img"
+            fetchpriority="high"
+            alt=""
+          />
           <div class="slide__mask" />
           <div class="slide__content container">
             <div class="slide__title-row">
@@ -19,7 +27,7 @@
 
 <script setup>
 import bannerHome from '../assets/banner-home.jpg'
-import bannerPv from '../assets/banner-pv.png'
+import bannerPv from '../assets/banner-pv.jpg'
 import bannerVision from '../assets/banner-vision.jpg'
 import bannerCooperation from '../assets/banner-cooperation.jpg'
 import bannerCar from '../assets/banner-car.jpg'
@@ -71,8 +79,17 @@ const slides = [
   height: 100%;
   background-size: cover;
   background-position: center;
+  background-color: #123524; /* 图片未加载时的深绿兜底 */
   display: flex;
   align-items: center;
+}
+
+.slide__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .slide__mask {
