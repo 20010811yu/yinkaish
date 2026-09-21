@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+// 禁用浏览器刷新时的滚动位置恢复,避免刷新先显示页脚再跳回顶部
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
+
 const routes = [
   { path: '/', name: 'Home', component: () => import('../views/Home.vue') },
   { path: '/about', name: 'About', component: () => import('../views/About.vue') },
