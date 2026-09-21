@@ -618,14 +618,68 @@ export const news = [
   },
 ]
 
-// 职位(占位)
+// 职位(desc:点击卡片展开的岗位详情,双语)
 export const jobs = [
-  { id: 1, title: { zh: '机械设计工程师', en: 'Mechanical Design Engineer' }, dept: { zh: '研发中心', en: 'R&D Center' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
-  { id: 2, title: { zh: '电气调试工程师', en: 'Electrical Commissioning Engineer' }, dept: { zh: '工程部', en: 'Engineering' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
-  { id: 3, title: { zh: '视觉算法工程师', en: 'Vision Algorithm Engineer' }, dept: { zh: '研发中心', en: 'R&D Center' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
-  { id: 4, title: { zh: '测量工程师（FARO）', en: 'Metrology Engineer (FARO)' }, dept: { zh: '质量部', en: 'Quality' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
-  { id: 5, title: { zh: '装配钳工', en: 'Assembly Fitter' }, dept: { zh: '生产部', en: 'Production' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
-  { id: 6, title: { zh: '国际销售工程师', en: 'International Sales Engineer' }, dept: { zh: '销售部', en: 'Sales' }, location: { zh: '上海·安亭', en: 'Anting, Shanghai' } },
+  {
+    id: 1,
+    title: { zh: '机械设计工程师', en: 'Mechanical Design Engineer' },
+    dept: { zh: '研发中心', en: 'R&D Center' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：负责非标自动化设备与产线的机械结构设计方案、图纸绘制及 BOM 编制，跟进装配调试并持续优化结构。\n任职要求：机械设计及相关专业，熟练使用 SolidWorks / AutoCAD，三年以上非标自动化设计经验，熟悉钣金、机加工工艺。',
+      en: 'Responsibilities: Design mechanical structures for custom automation equipment and lines, produce drawings and BOMs, and support assembly, commissioning and optimization.\nRequirements: Degree in mechanical design or related field; proficient in SolidWorks / AutoCAD; 3+ years of non-standard automation design experience; familiar with sheet-metal and machining processes.',
+    },
+  },
+  {
+    id: 2,
+    title: { zh: '电气调试工程师', en: 'Electrical Commissioning Engineer' },
+    dept: { zh: '工程部', en: 'Engineering' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：负责自动化产线电气原理设计、PLC 程序编写与现场调试，配合机械完成整线联调并交付客户。\n任职要求：电气自动化相关专业，熟悉西门子 / 三菱 PLC 与伺服系统，能适应出差，有产线整线调试经验者优先。',
+      en: 'Responsibilities: Design electrical schematics for automation lines, write PLC programs, commission on site and support full-line integration and customer delivery.\nRequirements: Degree in electrical automation; familiar with Siemens / Mitsubishi PLC and servo systems; willing to travel; line commissioning experience preferred.',
+    },
+  },
+  {
+    id: 3,
+    title: { zh: '视觉算法工程师', en: 'Vision Algorithm Engineer' },
+    dept: { zh: '研发中心', en: 'R&D Center' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：负责视觉检测系统的图像算法开发与优化（尺寸测量、外观瑕疵识别、分类分拣），跟进现场调试与算法迭代。\n任职要求：计算机 / 光电 / 自动化相关专业，熟练使用 OpenCV / Halcon，有深度学习瑕疵检测项目经验者优先。',
+      en: 'Responsibilities: Develop and optimize image algorithms for vision inspection (dimension measurement, defect recognition and sorting), and iterate on-site.\nRequirements: Degree in CS / optoelectronics / automation; proficient in OpenCV / Halcon; deep-learning defect detection project experience preferred.',
+    },
+  },
+  {
+    id: 4,
+    title: { zh: '测量工程师（FARO）', en: 'Metrology Engineer (FARO)' },
+    dept: { zh: '质量部', en: 'Quality' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：使用 FARO 激光跟踪仪、关节臂等设备开展精密测量与数据分析，出具检测报告，参与设备精度验收。\n任职要求：测量 / 机械相关专业，熟悉 FARO 设备与三维测量软件，细心严谨，具备 ±0.1mm 级精度检测经验者优先。',
+      en: 'Responsibilities: Perform precision measurement and data analysis with FARO laser trackers and measuring arms, issue inspection reports and join equipment accuracy acceptance.\nRequirements: Degree in metrology / mechanical engineering; familiar with FARO devices and 3D inspection software; detail-oriented; ±0.1mm-level inspection experience preferred.',
+    },
+  },
+  {
+    id: 5,
+    title: { zh: '装配钳工', en: 'Assembly Fitter' },
+    dept: { zh: '生产部', en: 'Production' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：按图纸完成自动化设备的机械装配、调试与出厂检验，配合现场安装与售后支持。\n任职要求：有钳工装配经验，能识读机械图纸，熟练使用各类量具与装配工具，责任心强，能配合出差。',
+      en: 'Responsibilities: Assemble and commission automation equipment per drawings, carry out factory inspection, and support on-site installation and after-sales.\nRequirements: Fitting and assembly experience; able to read mechanical drawings; skilled with measuring and assembly tools; responsible and willing to travel.',
+    },
+  },
+  {
+    id: 6,
+    title: { zh: '国际销售工程师', en: 'International Sales Engineer' },
+    dept: { zh: '销售部', en: 'Sales' },
+    location: { zh: '上海·安亭', en: 'Anting, Shanghai' },
+    desc: {
+      zh: '岗位职责：负责海外市场开拓与客户维护，参与技术方案沟通、报价与商务谈判，跟进项目签约与回款。\n任职要求：本科及以上，英语流利（可海外出差），了解光伏或汽车装备行业者优先，具备良好的沟通与抗压能力。',
+      en: 'Responsibilities: Develop overseas markets and maintain client relationships, join technical discussions, quotations and negotiations, and follow up on contracts and payments.\nRequirements: Bachelor degree or above; fluent English and willing to travel abroad; PV or automotive equipment industry knowledge preferred; strong communication skills.',
+    },
+  },
 ]
 
 // 福利(占位)
