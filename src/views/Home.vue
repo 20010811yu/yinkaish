@@ -111,9 +111,6 @@
         </div>
       </div>
 
-      <div class="container" data-reveal>
-        <WorldMap />
-      </div>
     </section>
 
     <!-- CTA -->
@@ -139,7 +136,6 @@ import { services, partners } from '../data'
 import { pick } from '../data/lang'
 import HeroCarousel from '../components/HeroCarousel.vue'
 import heroCity from '../assets/hero-city.svg'
-import WorldMap from '../components/WorldMap.vue'
 
 const { locale, t } = useI18n()
 

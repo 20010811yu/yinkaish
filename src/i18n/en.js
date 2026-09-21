@@ -64,13 +64,6 @@ export default {
       tag: 'Service & Partners',
       title: 'Global Partners, Trusted Choice',
       desc: 'From turnkey PV frame automation lines to vision inspection systems, Yinkai works side by side with leading PV module and new-energy material companies, serving the global market with ±0.1mm precision manufacturing.',
-      locations: {
-        shanghai: 'Shanghai · HQ',
-        usa: 'USA',
-        egypt: 'Egypt',
-        india: 'India',
-        malaysia: 'Malaysia',
-      },
     },
     news: {
       tag: 'News',
