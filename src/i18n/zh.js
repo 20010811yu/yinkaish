@@ -146,6 +146,8 @@ export default {
     infoTitle: '联系方式',
     address: '上海市嘉定区安亭镇园区路 567 号',
     phone: '021-69173481',
+    phoneCao: '18621638485 曹经理',
+    phoneZhu: '15999876867 朱经理',
     fax: '021-69173483',
     email: "caolujia{'@'}yinkaish.cn",
     hours: '工作日 8:30 - 17:30',

@@ -22,8 +22,9 @@
         <h4>{{ $t('footer.contact') }}</h4>
         <ul>
           <li>{{ $t('contact.address') }}</li>
-          <li>{{ $t('contact.phone') }}</li>
-          <li>{{ $t('contact.fax') }}</li>
+          <li>Tel: {{ $t('contact.phone') }}</li>
+          <li>{{ $t('contact.phoneCao') }}</li>
+          <li>{{ $t('contact.phoneZhu') }}</li>
           <li>{{ $t('contact.email') }}</li>
         </ul>
       </div>

@@ -146,6 +146,8 @@ export default {
     infoTitle: 'Contact Information',
     address: 'No. 567 Yuanqu Road, Anting Town, Jiading District, Shanghai',
     phone: '021-69173481',
+    phoneCao: '18621638485 Mr. Cao',
+    phoneZhu: '15999876867 Mr. Zhu',
     fax: '+86-021-69173483',
     email: "caolujia{'@'}yinkaish.cn",
     hours: 'Weekdays 8:30 - 17:30',

@@ -18,7 +18,11 @@
             </li>
             <li>
               <el-icon><Phone /></el-icon>
-              <span>{{ $t('contact.phone') }}</span>
+              <span class="contact__phones">
+                <span>Tel: {{ $t('contact.phone') }}</span>
+                <span>{{ $t('contact.phoneCao') }}</span>
+                <span>{{ $t('contact.phoneZhu') }}</span>
+              </span>
             </li>
             <li>
               <el-icon><Message /></el-icon>
@@ -110,6 +114,12 @@ const submit = () => {
 .contact__info .el-icon {
   margin-top: 4px;
   color: var(--c-primary);
+}
+
+.contact__phones {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 @media (max-width: 768px) {
