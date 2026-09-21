@@ -191,37 +191,40 @@
 
               <!-- 头部(拟人大头) -->
               <g>
-                <!-- 耳朵 -->
-                <path d="M78 44 l6 -26 l22 18 z" fill="#ffffff" />
-                <path d="M84 42 l4 -15 l11 12 z" fill="#7dd8a8" />
-                <path d="M182 44 l-6 -26 l-22 18 z" fill="#ffffff" />
-                <path d="M176 42 l-4 -15 l-11 12 z" fill="#7dd8a8" />
+                <!-- 马耳(长而尖,位于独角两侧) -->
+                <path d="M92 34 Q84 6 62 10 Q78 20 82 42 Z" fill="#ffffff" />
+                <path d="M87 34 Q82 16 70 14 Q80 22 82 38 Z" fill="#7dd8a8" />
+                <path d="M168 34 Q176 6 198 10 Q182 20 178 42 Z" fill="#ffffff" />
+                <path d="M173 34 Q178 16 190 14 Q180 22 178 38 Z" fill="#7dd8a8" />
                 <!-- 头 -->
                 <circle cx="130" cy="96" r="62" fill="url(#uni-head)" />
-                <!-- 鬃毛顶髻 -->
-                <path d="M130 30 q-18 -14 -34 -2 q14 -2 18 8 q8 -10 16 0 q6 -10 18 -6 q-8 -8 -18 0 z" fill="#00a651" />
-                <!-- 口鼻 -->
-                <ellipse cx="130" cy="124" rx="30" ry="22" fill="#f0f8f3" />
-                <circle cx="118" cy="118" r="3" fill="#9fb8aa" />
-                <circle cx="142" cy="118" r="3" fill="#9fb8aa" />
-                <path d="M118 132 q12 8 24 0" stroke="#9fb8aa" stroke-width="3" fill="none" stroke-linecap="round" />
-                <!-- 独角 -->
-                <path d="M130 6 l13 44 h-26 z" fill="url(#uni-horn)" />
-                <path d="M120 34 l20 -5 M122 20 l16 -4" stroke="#ccefe0" stroke-width="3" stroke-linecap="round" />
+                <!-- 独角(加高加宽,条纹) -->
+                <path d="M130 -4 l17 52 h-34 z" fill="url(#uni-horn)" />
+                <path d="M118 34 l24 -6 M121 20 l18 -4 M124 8 l12 -3" stroke="#ccefe0" stroke-width="3.5" stroke-linecap="round" />
+                <!-- 前额鬃毛刘海(独角下) -->
+                <path d="M112 46 q-22 8 -26 34 q14 -16 28 -16 q-8 10 -6 22 q10 -16 22 -18 q-4 12 0 20 q8 -14 22 -16 q16 -6 24 -22 q-22 10 -30 4 q-16 -12 -34 -8 z" fill="#00a651" />
+                <!-- 侧鬃毛(垂到肩) -->
+                <path d="M74 84 q-14 26 -8 56 q10 -30 20 -40 z" fill="#35bd7c" />
+                <path d="M186 84 q14 26 8 56 q-10 -30 -20 -40 z" fill="#35bd7c" />
+                <!-- 口鼻(马吻,小巧) -->
+                <ellipse cx="130" cy="130" rx="24" ry="15" fill="#f0f8f3" />
+                <path d="M116 134 q14 10 28 0" stroke="#9fb8aa" stroke-width="3" fill="none" stroke-linecap="round" />
+                <circle cx="121" cy="126" r="2.4" fill="#9fb8aa" />
+                <circle cx="139" cy="126" r="2.4" fill="#9fb8aa" />
                 <!-- 眼睛(眨眼) -->
                 <g class="unicorn__eye">
-                  <circle cx="106" cy="88" r="7.5" fill="#1f2d26" />
-                  <circle cx="108.5" cy="85.5" r="2.6" fill="#ffffff" />
-                  <circle cx="103.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
+                  <circle cx="104" cy="88" r="7.5" fill="#1f2d26" />
+                  <circle cx="106.5" cy="85.5" r="2.6" fill="#ffffff" />
+                  <circle cx="101.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
                 </g>
                 <g class="unicorn__eye">
-                  <circle cx="154" cy="88" r="7.5" fill="#1f2d26" />
-                  <circle cx="156.5" cy="85.5" r="2.6" fill="#ffffff" />
-                  <circle cx="151.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
+                  <circle cx="156" cy="88" r="7.5" fill="#1f2d26" />
+                  <circle cx="158.5" cy="85.5" r="2.6" fill="#ffffff" />
+                  <circle cx="153.5" cy="90.5" r="1.3" fill="#ffffff" opacity="0.85" />
                 </g>
                 <!-- 腮红 -->
-                <ellipse cx="88" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
-                <ellipse cx="172" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
+                <ellipse cx="86" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
+                <ellipse cx="174" cy="106" rx="9" ry="5.5" fill="#b3e7cd" opacity="0.9" />
               </g>
             </g>
           </svg>
