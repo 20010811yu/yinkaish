@@ -149,7 +149,7 @@ export default {
     phoneCao: '18621638485 曹经理',
     phoneZhu: '15999876867 朱经理',
     fax: '021-69173483',
-    email: "caolujia{'@'}yinkaish.cn",
+    email: "lukecao{'@'}ykautomus.com",
     hours: '工作时间：8:30 - 17:00（UTC+8）',
   },
   footer: {

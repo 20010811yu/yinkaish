@@ -26,7 +26,9 @@
             </li>
             <li>
               <el-icon><Message /></el-icon>
-              <span>{{ $t('contact.email') }}</span>
+              <span class="contact__phones">
+                <span>{{ $t('contact.email') }}</span>
+              </span>
             </li>
             <li>
               <el-icon><Clock /></el-icon>
