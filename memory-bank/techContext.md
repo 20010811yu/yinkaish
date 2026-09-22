@@ -12,7 +12,10 @@
 - 仓库:D:\yinkai_web,远程 git@github.com:20010811yu/yinkaish.git,分支 main
 - 规则文件:仓库根 AGENTS.md(工作流 P0–P5 + 项目规范)
 - 构建验证:`npm run build` 必须通过;本地验证 `npm run dev`
-- **部署**:GitHub Actions(.github/workflows/deploy.yml)push main 自动构建并发布 Pages;站点 https://20010811yu.github.io/yinkaish/ ;vite base 与 router history base 均为 /yinkaish/(改仓库名需同步改 base);SPA 深链靠 dist/404.html 回退(workflow 中 cp)
+- **部署(双平台)**:
+  - GitHub Pages:GitHub Actions(.github/workflows/deploy.yml)push main 自动构建并发布;站点 https://20010811yu.github.io/yinkaish/ ;SPA 深链靠 dist/404.html 回退(workflow 中 cp)
+  - Netlify:Git 连接持续部署(main),站点 https://yinkai.netlify.app ;netlify.toml 定义 build(npm run build)/publish(dist)/SPA 通配 redirect 200
+  - **vite base 环境自适应**:`process.env.NETLIFY ? '/' : '/yinkaish/'`——Netlify 构建环境自带 NETLIFY 变量取根路径,GitHub Pages 取子路径;改仓库名需同步改 /yinkaish/
 
 ## 命令
 - dev:`npm run dev`;build:`npm run build`;preview:`npm run preview`

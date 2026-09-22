@@ -1,9 +1,10 @@
 # activeContext.md — 当前上下文
 
-## 当前焦点(2026-09-20)
-上周挂账两项收尾完成:①产品图高清化(10/13 张换画册原图) ②部署上线准备(vite base+路由 base+Actions 工作流+SPA 404 回退);**待用户在 GitHub 仓库 Settings→Pages 将 Source 切为 GitHub Actions 即自动部署**
+## 当前焦点(2026-09-22)
+Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更
+- Netlify 部署配置:vite base 环境自适应 + netlify.toml(构建命令/发布目录/SPA 通配回退)
 - 首页新增「服务与合作伙伴」模块(核心优势之后、CTA 之前):上两栏(左列 tag「服务与合作伙伴」+标题+电路连线+说明段;右列伙伴墙 4×5 细边框格子 hover 绿) + 下部通栏世界地图(品牌绿渐变+五个地点脉冲标记:上海·总部/美国/埃及/印度/马来西亚,位置百分比目测校准,≤768 只留上海标签并翻到圆点左侧)。合作伙伴名单以源站 www.yinkaish.com 首页合作伙伴区为准:20 张 logo(阿里云 OSS images/logo/1-20.png,光伏产业链客户:鑫铂股份/晶科能源/德毅隆/CIRS/鸿盛/晶科科技/合肥科晶/爱康/源盛金属/源盛/科蓝特/复睿金属/江苏月嘉/生信/高瓴新材料/艾纳新能源/中信博/平煤隆基/创佳型材,第 17 号 logo 无文字用通用 alt)下载入 src/assets/partners/;data 新增 partners(import.meta.glob 导入,含双语 name);地图素材 world-map.png(91KB,源自 npm @svg-maps/world v2.0.0 **CC-BY-4.0**,已降坐标精度/删微小岛屿/渲染为 2000px PNG,署名见 src/assets/CREDITS.md);i18n home.partners.*(中英);prefers-reduced-motion 降级;新增 home.partners 区块复用 [data-reveal]。Wikimedia SVG 直连被网络重置,改用 npm 包
 - **修复导航 1280 横向溢出 7px**:品牌区 margin-left 用 100vw(含 15px 滚动条宽度)致总宽超视口;改 calc(100%/6 - 110px) 用容器百分比。**教训:vw 单位在出现滚动条的页面必然偏大,布局间距禁用 100vw 改 %**
 - 视觉检测轮播背景替换:用户横版裁切图(3888×1797)限宽 2560 压缩为 banner-vision.jpg(269KB,替代原 png);文案不变
@@ -37,7 +38,7 @@
 - 企业精神模块定稿:SPIRIT 标签+引言在标题与词条间(12/30px 间隔)+三行两列绿色词条 clamp(21px,2vw,32px)
 
 ## 下一步
-- 部署上线(GitHub Pages base);团队真实人员;产品实拍高清图替换(现 435×288 偏小,PDF 内嵌原图 800-1000px 可再提取)
+- 团队真实人员;产品实拍高清图替换(现 435×288 偏小,PDF 内嵌原图 800-1000px 可再提取);Netlify 自定义域名(可选)
 
 ## 决策与考量
 - 型号沿用画册 PDF(YK-6A/FC-3C/3E 系)而非源站导航的新一代(YK-7A/FC-5C/5E):图片文件名与 PDF 型号一一对应,且任务依据为画册内容

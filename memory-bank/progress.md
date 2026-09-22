@@ -17,13 +17,13 @@
 | 2026-09-20 | 0.9.0 | 新闻页布局改版:置顶头条+3 列网格+分类标签;抽用 useReveal 共享入场观察器 |
 | 2026-09-20 | 0.9.1 | 合作伙伴板块迭代:说明段改写(去汽车表述)/ECharts 世界地图(后删除)/连线动画补齐 |
 | 2026-09-20 | 0.9.2 | 删除首页世界地图(合规考虑),保留伙伴墙;卸载 echarts 等依赖 |
+| 2026-09-22 | 0.9.3 | Netlify 部署:vite base 环境自适应(NETLIFY→根路径)+netlify.toml(SPA 回退),修复白屏;https://yinkai.netlify.app |
 
 ## 待构建
-- **用户一步操作**:GitHub 仓库 Settings→Pages→Source 选「GitHub Actions」后自动部署上线(https://20010811yu.github.io/yinkaish/)
-- YK-6B/AL-1/锁螺母 3 款产品高清图(需 JP2 解码或用户供图)
+- 团队真实人员;产品实拍高清图(YK-6B/AL-1/锁螺母 3 款,需 JP2 解码或用户供图)
 
 ## 当前状态
-- 首页「服务与合作伙伴」板块定稿(文字说明+20 家伙伴 logo 墙,世界地图因合规考虑已删除);全部功能已验证,推送后待用户启用 Pages 即上线
+- 双平台部署可用:GitHub Pages(/yinkaish/ 子路径)与 Netlify(根路径,https://yinkai.netlify.app)共用同一构建配置
 
 ## 已知问题
 - 暂无(详情见 errorlog.md)
