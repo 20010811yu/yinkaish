@@ -6,6 +6,7 @@
           <strong>{{ $t('brand.full') }}</strong>
         </div>
         <p class="footer__slogan">{{ $t('footer.slogan') }}</p>
+        <p class="footer__addr">{{ $t('contact.address') }}</p>
       </div>
 
       <div class="footer__col">
@@ -21,7 +22,6 @@
       <div class="footer__col">
         <h4>{{ $t('footer.contact') }}</h4>
         <ul>
-          <li>{{ $t('contact.address') }}</li>
           <li>Tel: {{ $t('contact.phone') }}</li>
           <li>{{ $t('contact.phoneCao') }}</li>
           <li>{{ $t('contact.phoneZhu') }}</li>
@@ -92,6 +92,16 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 .footer__slogan {
   margin-top: 12px;
   font-size: 0.875rem;
+}
+
+.footer__addr {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.875rem;
+  opacity: 0.92;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
 .footer__col h4 {
