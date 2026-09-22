@@ -150,6 +150,7 @@ export default {
     phoneZhu: '15999876867 朱经理',
     fax: '021-69173483',
     email: "lukecao{'@'}ykautomus.com",
+    email2: "lujiacao{'@'}163.com",
     hours: '工作时间：8:30 - 17:00（UTC+8）',
   },
   footer: {

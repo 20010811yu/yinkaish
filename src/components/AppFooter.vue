@@ -26,6 +26,7 @@
           <li>{{ $t('contact.phoneCao') }}</li>
           <li>{{ $t('contact.phoneZhu') }}</li>
           <li>{{ $t('contact.email') }}</li>
+          <li>{{ $t('contact.email2') }}</li>
         </ul>
       </div>
 
