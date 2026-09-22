@@ -38,7 +38,7 @@
           </ul>
         </div>
 
-        <el-form ref="formRef" :model="form" :rules="rules" label-position="top" class="contact__form">
+        <el-form ref="formRef" :model="form" :rules="rules" label-position="top" name="contact" class="contact__form">
           <el-form-item :label="$t('contact.form.name')" prop="name">
             <el-input v-model="form.name" :placeholder="$t('contact.form.name')" />
           </el-form-item>
@@ -82,13 +82,24 @@ const rules = {
 }
 
 const submit = () => {
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (!valid) return
-    ElMessage.success(t('contact.form.success'))
-    form.name = ''
-    form.email = ''
-    form.phone = ''
-    form.message = ''
+    try {
+      // Netlify Forms 提交:POST 到站点根路径,form-name 指向 index.html 中的影子表单
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'contact', ...form }),
+      })
+      if (!res.ok) throw new Error(`status ${res.status}`)
+      ElMessage.success(t('contact.form.success'))
+      form.name = ''
+      form.email = ''
+      form.phone = ''
+      form.message = ''
+    } catch {
+      ElMessage.error(t('contact.form.fail'))
+    }
   })
 }
 </script>

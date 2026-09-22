@@ -142,6 +142,7 @@ export default {
       message: 'Please enter your inquiry',
       submit: 'Submit',
       success: 'Submitted successfully! We will get back to you soon.',
+      fail: 'Submission failed. Please try again later or email us directly.',
     },
     infoTitle: 'Contact Information',
     address: 'No. 567 Yuanqu Road, Anting Town, Jiading District, Shanghai',

@@ -4,6 +4,7 @@
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更
+- 联系表单接入 Netlify Forms:index.html 影子表单(name=contact, data-netlify, hidden)+Contact.vue submit 改 fetch POST / (URLSearchParams: form-name+四字段),失败 ElMessage.error(i18n contact.form.fail 中英);收件通知已由用户在 Netlify 后台配置(lukecao@ykautomus.com + lujiacao@163.com);**表单仅在 Netlify 站生效,GitHub Pages 版提交会失败提示**
 - 邮箱定稿:contact.email=lukecao@ykautomus.com、contact.email2=lujiacao@163.com(双包+页脚+联系页均两行展示;{'@'} 转义);原 caolujia@yinkaish.cn 已删除
 - 删除旧邮箱 lujiacao@163.com 后用户要求撤销(revert e75c1e9),页脚/联系页/双语言包已恢复展示该邮箱
 - Netlify 部署配置:vite base 环境自适应 + netlify.toml(构建命令/发布目录/SPA 通配回退)

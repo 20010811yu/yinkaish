@@ -8,6 +8,13 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- Netlify Forms 影子表单:部署时被 Netlify 解析注册,供 SPA 的联系表单 POST 提交;勿删 -->
+    <form name="contact" data-netlify="true" netlify hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="phone" />
+      <textarea name="message"></textarea>
+    </form>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -142,6 +142,7 @@ export default {
       message: '请输入您想咨询的内容',
       submit: '提交',
       success: '提交成功，我们会尽快与您联系！',
+      fail: '提交失败，请稍后重试或直接发邮件联系我们。',
     },
     infoTitle: '联系方式',
     address: '上海市嘉定区安亭镇园区路 567 号',

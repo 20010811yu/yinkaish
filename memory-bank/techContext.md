@@ -15,6 +15,7 @@
 - **部署(双平台)**:
   - GitHub Pages:GitHub Actions(.github/workflows/deploy.yml)push main 自动构建并发布;站点 https://20010811yu.github.io/yinkaish/ ;SPA 深链靠 dist/404.html 回退(workflow 中 cp)
   - Netlify:Git 连接持续部署(main),站点 https://yinkai.netlify.app ;netlify.toml 定义 build(npm run build)/publish(dist)/SPA 通配 redirect 200
+  - **Netlify Forms 联系表单**:index.html 内置隐藏影子表单(name=contact, data-netlify)供部署时注册;Contact.vue 以 fetch POST '/' + URLSearchParams(form-name=contact)提交;邮件通知在 Netlify 后台 Forms→Settings 配置(lukecao@ykautomus.com / lujiacao@163.com);**该功能仅 Netlify 生效,GitHub Pages 版提交会失败**(SPA 静态托管无表单后端)
   - **vite base 环境自适应**:`process.env.NETLIFY ? '/' : '/yinkaish/'`——Netlify 构建环境自带 NETLIFY 变量取根路径,GitHub Pages 取子路径;改仓库名需同步改 /yinkaish/
 
 ## 命令
