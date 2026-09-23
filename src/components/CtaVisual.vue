@@ -51,14 +51,14 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-// 12 块电池片多边形:按梯形边线线性插值切分(4 列 × 3 行),与分隔线完全对齐
+// 12 块电池片多边形:按梯形边线线性插值切分(4 列 × 3 行),与分隔线完全对齐;填充顺序横向、自上而下
 const fillCells = (() => {
   const cs = [0, 0.25, 0.5, 0.75, 1]
   const rs = [0, 1 / 3, 2 / 3, 1]
   const px = (c, r) => (1 - r) * (100 + 190 * c) + r * (138 + 132 * c)
   const py = (r) => 185 - 73 * r
   const cells = []
-  for (let ri = 0; ri < 3; ri++) {
+  for (let ri = rs.length - 2; ri >= 0; ri--) {
     for (let ci = 0; ci < 4; ci++) {
       const c0 = cs[ci]; const c1 = cs[ci + 1]
       const r0 = rs[ri]; const r1 = rs[ri + 1]
