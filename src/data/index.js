@@ -522,14 +522,14 @@ export const honors = [
 
 // 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
 import imgT2004 from '../assets/timeline/t-2004.jpg'
-import imgT2007 from '../assets/timeline/t-2007.png'
-import imgT2011 from '../assets/timeline/t-2011.png'
-import imgT2014 from '../assets/timeline/t-2014.png'
+import imgT2007 from '../assets/timeline/t-2007.jpg'
+import imgT2011 from '../assets/timeline/t-2011.jpg'
+import imgT2014 from '../assets/timeline/t-2014.jpg'
 import imgT2017 from '../assets/timeline/t-2017.jpg'
-import imgT2018 from '../assets/timeline/t-2018.png'
+import imgT2018 from '../assets/timeline/t-2018.jpg'
 import imgT2022 from '../assets/timeline/t-2022.jpg'
-import imgT2023 from '../assets/timeline/t-2023.png'
-import imgT2024 from '../assets/timeline/t-2024.png'
+import imgT2023 from '../assets/timeline/t-2023.jpg'
+import imgT2024 from '../assets/timeline/t-2024.jpg'
 import imgT2026 from '../assets/timeline/t-2026.jpg'
 import imgCompany from '../assets/banner-company.webp'
 
