@@ -4,7 +4,7 @@
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更
-- **光伏板持续仿真迭代(用户多轮反馈)**:深蓝电池片渐变+铝边框板厚+地面投影→倾角改**左低右高约 20°(朝向太阳,物理自洽)**、分栅线按平行四边形边线线性插值精确铺满、支架改**双立柱+导轨+斜撑**真实倾斜安装结构;**电池面定稿:进深改俯视视角,蓝面宽幅可见;后按用户要求移除小板,仅留单块大板**;太阳呼吸幅度加大(射线 opacity 1↔0.12+缩放、中心圆 1↔0.78+亮度)
+- **光伏板持续仿真迭代(用户多轮反馈)**:深蓝电池片渐变+铝边框板厚+地面投影→倾角改**左低右高约 20°(朝向太阳,物理自洽)**、分栅线按平行四边形边线线性插值精确铺满、支架改**双立柱+导轨+斜撑**真实倾斜安装结构;后移除小板;**最终定稿:面板正对屏幕、顶部向后倾(下宽上窄梯形透视 100,170-290,170-270,95-120,95),正面双柱支架**;太阳呼吸幅度加大(射线 opacity 1↔0.12+缩放、中心圆 1↔0.78+亮度)
 - **CTA 动画改版**:定稿为**色块纯背景层+SVG 顶层横跨**(z-index 0/1),光伏板+太阳线条动画铺满视觉区;组件自带 IntersectionObserver 触发 revealed;Home/Services 共用
 - **顺手修 Navbar 375 档横向溢出 14px(存量问题,ERR-006)**:.navbar__brand 漏加 min-width:0(当年只给了 brand-text)+name nowrap 不可截断;补 min-width:0+name ellipsis;320-375 中英双语溢出全部清零
 - **大图压缩解决加载慢**:scripts/compress-images.cjs(sharp)——timeline 11 张(限宽 1400/q78,png 照片转 jpg,data 导入同步改名)+首页轮播 6 张(限宽 1920/q75),共 11.5MB→1.9MB;dist 46MB→37MB(其余 31MB 为宣传片,本机无 ffmpeg 未压缩,挂账);banner-sunrise 已不被引用(轮播 s2 用的 banner-pv)
