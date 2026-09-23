@@ -160,7 +160,7 @@ onBeforeUnmount(() => observer?.disconnect())
 .panel__tint {
   fill: #0d2c4d;
   stroke: none;
-  opacity: 0.2;
+  opacity: 0.3;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -229,8 +229,8 @@ onBeforeUnmount(() => observer?.disconnect())
   }
 
   @keyframes cta-tint {
-    0%, 100% { opacity: 0.05; }
-    50% { opacity: 0.4; }
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.68; }
   }
 }
 
