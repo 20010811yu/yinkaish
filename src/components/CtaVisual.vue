@@ -30,14 +30,14 @@
         </g>
       </g>
       <!-- 地面投影 -->
-      <ellipse class="panel-shadow" cx="165" cy="213" rx="105" ry="6" />
-      <!-- 光伏板 A(前排大板):左低右高明显倾角,双立柱+导轨+斜撑(真实倾斜支架) -->
-      <g class="panel panel--a">
-        <path class="panel__leg" d="M100 173 V212 M228 96 V212 M100 198 L228 140" />
-        <path class="panel__edge" d="M64 178 L232 118 L232 126 L64 186 Z M64 178 L112 122 L112 130 L64 186 Z" />
-        <path class="panel__top" d="M64 178 L232 118 L280 62 L112 122 Z" />
-        <path class="panel__cell" d="M106 163 L154 107 M148 148 L196 92 M190 133 L238 77 M88 150 L256 90" />
-        <path class="panel__shine" d="M64 178 L232 118 L261 84 L93 144 Z" />
+      <ellipse class="panel-shadow" cx="195" cy="213" rx="105" ry="6" />
+      <!-- 光伏面板:正对屏幕、顶部向后倾(下宽上窄梯形),正面支架 -->
+      <g class="panel">
+        <path class="panel__leg" d="M130 176 V212 M260 176 V212 M130 196 H260" />
+        <path class="panel__edge" d="M100 170 L290 170 L290 176 L100 176 Z" />
+        <path class="panel__top" d="M100 170 L120 95 L270 95 L290 170 Z" />
+        <path class="panel__cell" d="M158 95 L148 170 M195 95 L195 170 M232 95 L242 170 M107 145 L283 145 M113 121 L277 121" />
+        <path class="panel__shine" d="M100 170 L150 95 L190 95 L140 170 Z" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
