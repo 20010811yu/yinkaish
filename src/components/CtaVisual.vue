@@ -183,7 +183,7 @@ onBeforeUnmount(() => observer?.disconnect())
   .panel__top,
   .panel__edge {
     opacity: 0;
-    transition: opacity 0.6s ease 2.4s; /* ④线条画完后填色 */
+    transition: opacity 0.6s ease 1.8s; /* ③边框+分割线画完后填色 */
   }
 
   .panel__cell,
@@ -202,16 +202,15 @@ onBeforeUnmount(() => observer?.disconnect())
     animation: cta-draw 0.9s ease forwards;
   }
 
-  /* ②板厚/支架/地线:0.9-1.5s 就位 */
-  .revealed .panel__edge,
-  .revealed .panel__leg,
-  .revealed .ground {
-    animation: cta-draw 0.6s ease 0.9s forwards;
+  /* ②电池分隔线:0.9-1.7s 描边 */
+  .revealed .panel__cell {
+    animation: cta-draw 0.8s ease 0.9s forwards;
   }
 
-  /* ③电池分隔线:1.5-2.3s 描边 */
-  .revealed .panel__cell {
-    animation: cta-draw 0.8s ease 1.5s forwards;
+  /* ④支架/地线:2.4-3s 最后绘制 */
+  .revealed .panel__leg,
+  .revealed .ground {
+    animation: cta-draw 0.6s ease 2.4s forwards;
   }
 
   @keyframes cta-draw {
