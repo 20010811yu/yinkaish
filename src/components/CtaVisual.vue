@@ -31,12 +31,17 @@
       </g>
       <!-- 地面投影 -->
       <ellipse class="panel-shadow" cx="195" cy="213" rx="105" ry="6" />
-      <!-- 光伏面板:正对屏幕、顶部向后倾,贴近地面的短柱支架(参照真实电站) -->
+      <!-- 光伏面板:正对屏幕、顶部向后倾,贴近地面的铝支架(参照真实电站) -->
       <g class="panel">
-        <path class="panel__leg" d="M130 189 V213 M260 189 V213 M130 203 H260" />
+        <!-- 支架:底部导轨+左右斜撑立柱+接地底脚 -->
+        <path class="panel__leg" d="M118 191 L272 191 L272 196 L118 196 Z" />
+        <path class="panel__leg" d="M150 191 L164 191 L134 213 L120 213 Z" />
+        <path class="panel__leg" d="M226 191 L240 191 L270 213 L256 213 Z" />
+        <path class="panel__leg" d="M114 209 H142 V215 H114 Z" />
+        <path class="panel__leg" d="M248 209 H276 V215 H248 Z" />
         <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
         <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
-        <!-- 12 块电池片:分隔线画完后按网格逐格填蓝 -->
+        <!-- 12 块电池片:边框画完后按网格逐格填蓝 -->
         <path v-for="(d, i) in fillCells" :key="i" class="panel__fillcell" :d="d" :style="{ '--i': i }" />
         <!-- 呼吸染色层:随太阳胀缩同步加深/变浅 -->
         <path class="panel__tint" d="M100 185 L138 112 L270 112 L290 185 Z" />
@@ -134,7 +139,6 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .sun__ray,
-.panel__leg,
 .ground {
   stroke: var(--c-primary-dark);
   stroke-width: 2.5;
@@ -164,9 +168,12 @@ onBeforeUnmount(() => observer?.disconnect())
   stroke-linejoin: round;
 }
 
+/* 支架:铝型材质感,绿描边 */
 .panel__leg {
-  stroke-opacity: 0.9;
-  stroke-width: 3; /* 立柱略粗,落地感更稳 */
+  fill: url(#pvEdge);
+  stroke: var(--c-primary-dark);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
 }
 
 .panel-shadow {
@@ -206,16 +213,18 @@ onBeforeUnmount(() => observer?.disconnect())
     transition: opacity 0.35s ease calc(0.9s + var(--i) * 0.07s);
   }
 
-  .panel__edge {
+  .panel__edge,
+  .panel__leg {
     opacity: 0;
-    transition: opacity 0.6s ease 0.9s; /* 边框画完后板厚上色 */
+    transition: opacity 0.6s ease 0.9s; /* 边框画完后板厚/支架上色 */
   }
 
   .panel__tint {
     opacity: 0;
   }
 
-  .revealed .panel__edge {
+  .revealed .panel__edge,
+  .revealed .panel__leg {
     opacity: 1;
   }
 
