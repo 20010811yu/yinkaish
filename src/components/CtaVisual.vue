@@ -31,13 +31,13 @@
       </g>
       <!-- 地面投影 -->
       <ellipse class="panel-shadow" cx="195" cy="213" rx="105" ry="6" />
-      <!-- 光伏面板:正对屏幕、顶部向后倾(下宽上窄梯形),正面支架 -->
+      <!-- 光伏面板:正对屏幕、顶部向后倾,贴近地面的短柱支架(参照真实电站) -->
       <g class="panel">
-        <path class="panel__leg" d="M130 176 V212 M260 176 V212 M130 196 H260" />
-        <path class="panel__edge" d="M100 170 L290 170 L290 176 L100 176 Z" />
-        <path class="panel__top" d="M100 170 L140 95 L272 95 L290 170 Z" />
-        <path class="panel__cell" d="M173 95 L148 170 M206 95 L195 170 M239 95 L243 170 M113 145 L284 145 M126 121 L278 121" />
-        <path class="panel__shine" d="M100 170 L156 95 L192 95 L136 170 Z" />
+        <path class="panel__leg" d="M130 191 V212 M260 191 V212 M130 202 H260" />
+        <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
+        <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
+        <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
+        <path class="panel__shine" d="M100 185 L150 112 L186 112 L136 185 Z" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
