@@ -31,15 +31,6 @@
       </g>
       <!-- 地面投影 -->
       <ellipse class="panel-shadow" cx="165" cy="213" rx="105" ry="6" />
-      <ellipse class="panel-shadow" cx="108" cy="213" rx="52" ry="5" />
-      <!-- 光伏板 B(后排小板):左低右高倾斜+前后腿支架 -->
-      <g class="panel panel--b">
-        <path class="panel__leg" d="M60 199 V212 M152 136 V212 M152 182 L112 162" />
-        <path class="panel__edge" d="M52 196 L140 158 L140 164 L52 202 Z M52 196 L82 160 L82 166 L52 202 Z" />
-        <path class="panel__top" d="M52 196 L140 158 L170 122 L82 160 Z" />
-        <path class="panel__cell" d="M81 184 L111 148 M110 171 L140 135 M67 178 L155 140" />
-        <path class="panel__shine" d="M52 196 L140 158 L158 136 L70 174 Z" />
-      </g>
       <!-- 光伏板 A(前排大板):左低右高明显倾角,双立柱+导轨+斜撑(真实倾斜支架) -->
       <g class="panel panel--a">
         <path class="panel__leg" d="M100 173 V212 M228 96 V212 M100 198 L228 140" />
