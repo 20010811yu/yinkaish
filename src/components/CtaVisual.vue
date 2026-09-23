@@ -40,7 +40,6 @@
         <path v-for="(d, i) in fillCells" :key="i" class="panel__fillcell" :d="d" :style="{ '--i': i }" />
         <!-- 呼吸染色层:随太阳胀缩同步加深/变浅 -->
         <path class="panel__tint" d="M100 185 L138 112 L270 112 L290 185 Z" />
-        <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
@@ -165,13 +164,6 @@ onBeforeUnmount(() => observer?.disconnect())
   stroke-linejoin: round;
 }
 
-/* 电池片分栅线:半透明白 */
-.panel__cell {
-  stroke: rgb(255 255 255 / 38%);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-}
-
 .panel__leg {
   stroke-opacity: 0.9;
   stroke-width: 3; /* 立柱略粗,落地感更稳 */
@@ -189,12 +181,11 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 分阶段绘制:①边框+支架同时描边 → ②电池分隔线 → ③逐格填色;离开视口瞬时复位,每次进入重播 */
+  /* 分阶段绘制:①边框+支架同时描边 → ②逐格填色;离开视口瞬时复位,每次进入重播 */
   .panel__top,
   .panel__edge,
   .panel__leg,
-  .ground,
-  .panel__cell {
+  .ground {
     stroke-dasharray: 900;
     stroke-dashoffset: 900;
   }
@@ -205,28 +196,26 @@ onBeforeUnmount(() => observer?.disconnect())
     stroke-dashoffset: 482;
   }
 
-  /* ③逐格填色:每格延迟 calc(1.8s + 序号×0.07s);离开视口瞬时复位,保证每次滚入都重播 */
+  /* ②逐格填色:每格延迟 calc(0.9s + 序号×0.07s),边框画完即开始;离开视口瞬时复位,保证每次滚入都重播 */
   .panel__fillcell {
     opacity: 0;
   }
 
   .revealed .panel__fillcell {
     opacity: 1;
-    transition: opacity 0.35s ease calc(1.8s + var(--i) * 0.07s);
+    transition: opacity 0.35s ease calc(0.9s + var(--i) * 0.07s);
   }
 
   .panel__edge {
     opacity: 0;
-    transition: opacity 0.6s ease 1.8s; /* 边框+分割线画完后板厚上色 */
+    transition: opacity 0.6s ease 0.9s; /* 边框画完后板厚上色 */
   }
 
-  .panel__cell,
   .panel__tint {
     opacity: 0;
   }
 
-  .revealed .panel__edge,
-  .revealed .panel__cell {
+  .revealed .panel__edge {
     opacity: 1;
   }
 
@@ -235,11 +224,6 @@ onBeforeUnmount(() => observer?.disconnect())
   .revealed .panel__leg,
   .revealed .ground {
     animation: cta-draw 0.9s ease forwards;
-  }
-
-  /* ②电池分隔线:0.9-1.7s 描边 */
-  .revealed .panel__cell {
-    animation: cta-draw 0.8s ease 0.9s forwards;
   }
 
   @keyframes cta-draw {
