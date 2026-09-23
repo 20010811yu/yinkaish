@@ -103,8 +103,8 @@ onBeforeUnmount(() => observer?.disconnect())
   position: absolute;
   inset: 0;
   z-index: 1;
-  width: 94%;
-  max-width: 560px;
+  width: 100%;
+  max-width: 660px;
   height: 100%;
   margin: 0 auto;
   left: 0;
