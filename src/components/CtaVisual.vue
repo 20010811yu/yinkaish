@@ -33,7 +33,7 @@
       <ellipse class="panel-shadow" cx="195" cy="213" rx="105" ry="6" />
       <!-- 光伏面板:正对屏幕、顶部向后倾,贴近地面的短柱支架(参照真实电站) -->
       <g class="panel">
-        <path class="panel__leg" d="M130 191 V212 M260 191 V212 M130 202 H260" />
+        <path class="panel__leg" d="M130 189 V213 M260 189 V213 M130 203 H260" />
         <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
         <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
         <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
@@ -147,7 +147,8 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .panel__leg {
-  stroke-opacity: 0.75;
+  stroke-opacity: 0.9;
+  stroke-width: 3; /* 立柱略粗,落地感更稳 */
 }
 
 .panel-shadow {
@@ -157,13 +158,6 @@ onBeforeUnmount(() => observer?.disconnect())
 .panel__shine {
   fill: rgb(255 255 255 / 30%);
   stroke: none;
-}
-
-/* 面板整体轻微左倾 */
-.panel {
-  transform: rotate(-5deg);
-  transform-box: fill-box;
-  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
