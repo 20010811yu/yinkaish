@@ -151,9 +151,10 @@ onBeforeUnmount(() => observer?.disconnect())
     to { stroke-dashoffset: 0; }
   }
 
-  /* 阳光呼吸 */
+  /* 阳光呼吸(明显胀缩+明暗) */
   .sun__ray {
     animation: cta-ray 3s ease-in-out infinite;
+    transform-origin: 66px 52px;
   }
 
   .revealed .sun__core {
@@ -163,13 +164,13 @@ onBeforeUnmount(() => observer?.disconnect())
   }
 
   @keyframes cta-ray {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.12; transform: scale(0.88); }
   }
 
   @keyframes cta-core {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.92); }
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(0.78); filter: brightness(1.3); }
   }
 
   /* 板面光泽扫过 */
