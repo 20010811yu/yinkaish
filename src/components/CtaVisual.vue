@@ -36,8 +36,9 @@
         <path class="panel__leg" d="M130 189 V213 M260 189 V213 M130 203 H260" />
         <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
         <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
+        <!-- 呼吸染色层:随太阳胀缩同步加深/变浅 -->
+        <path class="panel__tint" d="M100 185 L138 112 L270 112 L290 185 Z" />
         <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
-        <path class="panel__shine" d="M100 185 L150 112 L186 112 L136 185 Z" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
@@ -155,9 +156,11 @@ onBeforeUnmount(() => observer?.disconnect())
   fill: rgb(14 77 47 / 12%);
 }
 
-.panel__shine {
-  fill: rgb(255 255 255 / 30%);
+/* 呼吸染色层:叠在电池片上,随太阳胀缩改变面板蓝深 */
+.panel__tint {
+  fill: #0d2c4d;
   stroke: none;
+  opacity: 0.2;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -198,7 +201,7 @@ onBeforeUnmount(() => observer?.disconnect())
     to { stroke-dashoffset: 0; }
   }
 
-  /* 阳光呼吸(明显胀缩+明暗) */
+  /* 太阳呼吸:50% 时最大最亮 */
   .sun__ray {
     animation: cta-ray 3s ease-in-out infinite;
     transform-origin: 66px 52px;
@@ -211,25 +214,23 @@ onBeforeUnmount(() => observer?.disconnect())
   }
 
   @keyframes cta-ray {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.12; transform: scale(0.88); }
+    0%, 100% { opacity: 0.3; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.08); }
   }
 
   @keyframes cta-core {
-    0%, 100% { transform: scale(1); filter: brightness(1); }
-    50% { transform: scale(0.78); filter: brightness(1.3); }
+    0%, 100% { transform: scale(0.85); filter: brightness(1); }
+    50% { transform: scale(1.1); filter: brightness(1.35); }
   }
 
-  /* 板面光泽扫过 */
-  .panel__shine {
-    opacity: 0;
-    animation: cta-shine 2.8s ease-in-out 1.4s infinite;
+  /* 面板蓝深随太阳呼吸:太阳最大最亮时蓝最深 */
+  .revealed .panel__tint {
+    animation: cta-tint 3s ease-in-out infinite;
   }
 
-  @keyframes cta-shine {
-    0%, 55% { opacity: 0; }
-    25% { opacity: 1; }
-    100% { opacity: 0; }
+  @keyframes cta-tint {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: 0.4; }
   }
 }
 
