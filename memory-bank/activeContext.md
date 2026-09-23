@@ -4,6 +4,8 @@
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更
+- **大图压缩解决加载慢**:scripts/compress-images.cjs(sharp)——timeline 11 张(限宽 1400/q78,png 照片转 jpg,data 导入同步改名)+首页轮播 6 张(限宽 1920/q75),共 11.5MB→1.9MB;dist 46MB→37MB(其余 31MB 为宣传片,本机无 ffmpeg 未压缩,挂账);banner-sunrise 已不被引用(轮播 s2 用的 banner-pv)
+- YK-6W 产品图替换:用户供图(850×495 产线实拍)sharp 限宽 800 q80 覆写 yk-6w_banner.jpg(20KB),与 YK-6B 不再同图
 - 联系表单接入 Netlify Forms:index.html 影子表单(name=contact, data-netlify, hidden)+Contact.vue submit 改 fetch POST / (URLSearchParams: form-name+四字段),失败 ElMessage.error(i18n contact.form.fail 中英);收件通知已由用户在 Netlify 后台配置(lukecao@ykautomus.com + lujiacao@163.com);**表单仅在 Netlify 站生效,GitHub Pages 版提交会失败提示**
 - 邮箱定稿:contact.email=lukecao@ykautomus.com、contact.email2=lujiacao@163.com(双包+页脚+联系页均两行展示;{'@'} 转义);原 caolujia@yinkaish.cn 已删除
 - 删除旧邮箱 lujiacao@163.com 后用户要求撤销(revert e75c1e9),页脚/联系页/双语言包已恢复展示该邮箱
@@ -41,7 +43,7 @@ Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路�
 - 企业精神模块定稿:SPIRIT 标签+引言在标题与词条间(12/30px 间隔)+三行两列绿色词条 clamp(21px,2vw,32px)
 
 ## 下一步
-- 团队真实人员;产品实拍高清图替换(现 435×288 偏小,PDF 内嵌原图 800-1000px 可再提取);Netlify 自定义域名(可选)
+- 宣传片压缩(31MB→5-8MB):需安装 ffmpeg(1080p CRF23+faststart+poster 帧);团队真实人员;Netlify 自定义域名(可选)
 
 ## 决策与考量
 - 型号沿用画册 PDF(YK-6A/FC-3C/3E 系)而非源站导航的新一代(YK-7A/FC-5C/5E):图片文件名与 PDF 型号一一对应,且任务依据为画册内容
