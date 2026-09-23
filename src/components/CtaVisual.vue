@@ -34,19 +34,19 @@
       <ellipse class="panel-shadow" cx="108" cy="213" rx="52" ry="5" />
       <!-- 光伏板 B(后排小板):左低右高倾斜+前后腿支架 -->
       <g class="panel panel--b">
-        <path class="panel__leg" d="M60 199 V212 M152 156 V212 M152 190 L108 168" />
-        <path class="panel__edge" d="M52 196 L140 158 L140 164 L52 202 Z M52 196 L78 182 L78 188 L52 202 Z" />
-        <path class="panel__top" d="M52 196 L140 158 L166 144 L78 182 Z" />
-        <path class="panel__cell" d="M81 184 L107 170 M110 171 L136 157 M65 189 L153 151" />
-        <path class="panel__shine" d="M52 196 L140 158 L162 164 L74 202 Z" />
+        <path class="panel__leg" d="M60 199 V212 M152 136 V212 M152 182 L112 162" />
+        <path class="panel__edge" d="M52 196 L140 158 L140 164 L52 202 Z M52 196 L82 160 L82 166 L52 202 Z" />
+        <path class="panel__top" d="M52 196 L140 158 L170 122 L82 160 Z" />
+        <path class="panel__cell" d="M81 184 L111 148 M110 171 L140 135 M67 178 L155 140" />
+        <path class="panel__shine" d="M52 196 L140 158 L158 136 L70 174 Z" />
       </g>
       <!-- 光伏板 A(前排大板):左低右高明显倾角,双立柱+导轨+斜撑(真实倾斜支架) -->
       <g class="panel panel--a">
-        <path class="panel__leg" d="M100 173 V212 M228 127 V212 M100 198 L228 136 M92 178 L248 120" />
-        <path class="panel__edge" d="M64 178 L232 118 L232 126 L64 186 Z M64 178 L108 152 L108 160 L64 186 Z" />
-        <path class="panel__top" d="M64 178 L232 118 L276 92 L108 152 Z" />
-        <path class="panel__cell" d="M106 163 L150 137 M148 148 L192 122 M190 133 L234 107 M86 165 L254 105" />
-        <path class="panel__shine" d="M64 178 L232 118 L258 102 L90 162 Z" />
+        <path class="panel__leg" d="M100 173 V212 M228 96 V212 M100 198 L228 140" />
+        <path class="panel__edge" d="M64 178 L232 118 L232 126 L64 186 Z M64 178 L112 122 L112 130 L64 186 Z" />
+        <path class="panel__top" d="M64 178 L232 118 L280 62 L112 122 Z" />
+        <path class="panel__cell" d="M106 163 L154 107 M148 148 L196 92 M190 133 L238 77 M88 150 L256 90" />
+        <path class="panel__shine" d="M64 178 L232 118 L261 84 L93 144 Z" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
