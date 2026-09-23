@@ -35,9 +35,9 @@
       <g class="panel">
         <path class="panel__leg" d="M130 176 V212 M260 176 V212 M130 196 H260" />
         <path class="panel__edge" d="M100 170 L290 170 L290 176 L100 176 Z" />
-        <path class="panel__top" d="M100 170 L120 95 L270 95 L290 170 Z" />
-        <path class="panel__cell" d="M158 95 L148 170 M195 95 L195 170 M232 95 L242 170 M107 145 L283 145 M113 121 L277 121" />
-        <path class="panel__shine" d="M100 170 L150 95 L190 95 L140 170 Z" />
+        <path class="panel__top" d="M100 170 L140 95 L272 95 L290 170 Z" />
+        <path class="panel__cell" d="M173 95 L148 170 M206 95 L195 170 M239 95 L243 170 M113 145 L284 145 M126 121 L278 121" />
+        <path class="panel__shine" d="M100 170 L156 95 L192 95 L136 170 Z" />
       </g>
       <!-- 地平线:贯通两块 -->
       <path class="ground" d="M24 212 H336" />
@@ -157,6 +157,13 @@ onBeforeUnmount(() => observer?.disconnect())
 .panel__shine {
   fill: rgb(255 255 255 / 30%);
   stroke: none;
+}
+
+/* 面板整体轻微左倾 */
+.panel {
+  transform: rotate(-5deg);
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
