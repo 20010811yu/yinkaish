@@ -4,6 +4,8 @@
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更
+- **CTA 动画改版(用户反馈迭代)**:①初版光伏板塞在大块内→用户要求重新设计(否掉焊装机械臂方向)→②定稿为**色块纯背景层+SVG 顶层横跨**:两个圆角色块保留 z-index:0,光伏板+太阳线条动画绝对定位铺满视觉区(z-index:1,横跨大小块),地平线贯通;动画=描边进场+阳光呼吸+板面光泽扫过;组件自带 IntersectionObserver 触发 revealed;用户在 Services 页验收通过
+- **顺手修 Navbar 375 档横向溢出 14px(存量问题,ERR-006)**:.navbar__brand 漏加 min-width:0(当年只给了 brand-text)+name nowrap 不可截断;补 min-width:0+name ellipsis;320-375 中英双语溢出全部清零
 - **大图压缩解决加载慢**:scripts/compress-images.cjs(sharp)——timeline 11 张(限宽 1400/q78,png 照片转 jpg,data 导入同步改名)+首页轮播 6 张(限宽 1920/q75),共 11.5MB→1.9MB;dist 46MB→37MB(其余 31MB 为宣传片,本机无 ffmpeg 未压缩,挂账);banner-sunrise 已不被引用(轮播 s2 用的 banner-pv)
 - YK-6W 产品图替换:用户供图(850×495 产线实拍)sharp 限宽 800 q80 覆写 yk-6w_banner.jpg(20KB),与 YK-6B 不再同图
 - 联系表单接入 Netlify Forms:index.html 影子表单(name=contact, data-netlify, hidden)+Contact.vue submit 改 fetch POST / (URLSearchParams: form-name+四字段),失败 ElMessage.error(i18n contact.form.fail 中英);收件通知已由用户在 Netlify 后台配置(lukecao@ykautomus.com + lujiacao@163.com);**表单仅在 Netlify 站生效,GitHub Pages 版提交会失败提示**

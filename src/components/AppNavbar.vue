@@ -98,6 +98,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   gap: 12px;
   font-weight: 700;
   margin-left: max(0px, calc(100% / 6 - 110px));
+  min-width: 0; /* 允许收缩,否则 375 档品牌区撑破视口(ERR-002 同类) */
 }
 
 .navbar__logo-img {
@@ -120,6 +121,8 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   font-weight: 700;
   letter-spacing: 1px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 品牌区收缩时省略号截断,防横向溢出 */
 }
 
 /* 英文全称较长:窄桌面收起品牌区左侧留白,防止菜单溢出 */

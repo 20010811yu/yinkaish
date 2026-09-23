@@ -78,10 +78,7 @@
             {{ $t('services.ctaBtn') }}
           </el-button>
         </div>
-        <div class="cta-band__visual" aria-hidden="true">
-          <span class="cta-band__block cta-band__block--big"></span>
-          <span class="cta-band__block cta-band__block--small"></span>
-        </div>
+        <cta-visual class="cta-band__visual" />
       </div>
     </section>
   </div>
@@ -92,6 +89,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { productCategories, productParams } from '../data'
 import { pick } from '../data/lang'
+import CtaVisual from '../components/CtaVisual.vue'
 
 const { locale } = useI18n()
 
@@ -433,35 +431,7 @@ onBeforeUnmount(() => clearInterval(figTimer))
   line-height: 1.9;
 }
 
-/* 右侧圆角色块装饰(与首页 CTA 一致) */
-.cta-band__visual {
-  position: relative;
-  min-width: 0;
-  min-height: clamp(200px, 22vw, 300px);
-  display: flex;
-  justify-content: center;
-}
-
-.cta-band__block {
-  position: absolute;
-  border-radius: 32px;
-}
-
-.cta-band__block--big {
-  width: 78%;
-  height: 82%;
-  right: 0;
-  bottom: 0;
-  background: var(--c-primary-light);
-}
-
-.cta-band__block--small {
-  width: 46%;
-  height: 46%;
-  left: 4%;
-  bottom: -12px;
-  background: #ccefe0;
-}
+/* 右侧圆角块+光伏动画见 components/CtaVisual.vue;此处仅保留 ≤1024 顺序 */
 
 @media (max-width: 1024px) {
   .cta-band__inner {
@@ -470,7 +440,6 @@ onBeforeUnmount(() => clearInterval(figTimer))
 
   .cta-band__visual {
     order: -1;
-    min-height: 180px;
   }
 }
 

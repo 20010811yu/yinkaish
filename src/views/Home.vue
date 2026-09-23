@@ -124,10 +124,7 @@
           </el-button>
         </div>
 
-        <div class="cta__visual" aria-hidden="true">
-          <span class="cta__block cta__block--big"></span>
-          <span class="cta__block cta__block--small"></span>
-        </div>
+        <cta-visual class="cta__visual" />
       </div>
     </section>
   </div>
@@ -142,6 +139,7 @@ import {
 import { services, partners } from '../data'
 import { pick } from '../data/lang'
 import HeroCarousel from '../components/HeroCarousel.vue'
+import CtaVisual from '../components/CtaVisual.vue'
 import heroCity from '../assets/hero-city.svg'
 
 const { locale, t } = useI18n()
@@ -554,35 +552,7 @@ onBeforeUnmount(() => {
   line-height: 1.9;
 }
 
-/* 独角兽动画区:品牌绿圆角色块错位衬底 */
-.cta__visual {
-  position: relative;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-  min-height: clamp(220px, 24vw, 340px); /* 由色块撑起画面高度 */
-}
-
-.cta__block {
-  position: absolute;
-  border-radius: 32px;
-}
-
-.cta__block--big {
-  width: 78%;
-  height: 82%;
-  right: 0;
-  bottom: 0;
-  background: var(--c-primary-light);
-}
-
-.cta__block--small {
-  width: 46%;
-  height: 46%;
-  left: 4%;
-  bottom: -12px;
-  background: #ccefe0;
-}
+/* 右侧圆角块+光伏动画见 components/CtaVisual.vue;此处仅保留 ≤1024 顺序 */
 
 @media (max-width: 1024px) {
   .cards,
