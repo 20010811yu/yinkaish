@@ -36,6 +36,8 @@
         <path class="panel__leg" d="M130 189 V213 M260 189 V213 M130 203 H260" />
         <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
         <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
+        <!-- 12 块电池片:分隔线画完后按网格逐格填蓝 -->
+        <path v-for="(d, i) in fillCells" :key="i" class="panel__fillcell" :d="d" :style="{ transitionDelay: 1.8 + i * 0.07 + 's' }" />
         <!-- 呼吸染色层:随太阳胀缩同步加深/变浅 -->
         <path class="panel__tint" d="M100 185 L138 112 L270 112 L290 185 Z" />
         <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
@@ -48,6 +50,23 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+// 12 块电池片多边形:按梯形边线线性插值切分(4 列 × 3 行),与分隔线完全对齐
+const fillCells = (() => {
+  const cs = [0, 0.25, 0.5, 0.75, 1]
+  const rs = [0, 1 / 3, 2 / 3, 1]
+  const px = (c, r) => (1 - r) * (100 + 190 * c) + r * (138 + 132 * c)
+  const py = (r) => 185 - 73 * r
+  const cells = []
+  for (let ri = 0; ri < 3; ri++) {
+    for (let ci = 0; ci < 4; ci++) {
+      const c0 = cs[ci]; const c1 = cs[ci + 1]
+      const r0 = rs[ri]; const r1 = rs[ri + 1]
+      cells.push(`M${px(c0, r0)} ${py(r0)} L${px(c1, r0)} ${py(r0)} L${px(c1, r1)} ${py(r1)} L${px(c0, r1)} ${py(r1)} Z`)
+    }
+  }
+  return cells
+})()
 
 const rootRef = ref()
 let observer = null
@@ -124,12 +143,18 @@ onBeforeUnmount(() => observer?.disconnect())
   stroke-linejoin: round;
 }
 
-/* 电池片顶面:深蓝渐变+绿描边 */
+/* 面板外框:只描边,填色由 12 块电池片负责 */
 .panel__top {
-  fill: url(#pvCell);
+  fill: none;
   stroke: var(--c-primary-dark);
   stroke-width: 2;
   stroke-linejoin: round;
+}
+
+/* 电池片:深蓝渐变 */
+.panel__fillcell {
+  fill: url(#pvCell);
+  stroke: none;
 }
 
 /* 铝合金板厚侧边 */
@@ -180,10 +205,18 @@ onBeforeUnmount(() => observer?.disconnect())
     stroke-dashoffset: 482;
   }
 
-  .panel__top,
+  /* ③逐格填色:每格延迟由模板内联 transitionDelay 控制(1.8s 起逐格错峰) */
+  .panel__fillcell {
+    opacity: 0;
+  }
+
+  .revealed .panel__fillcell {
+    opacity: 1;
+  }
+
   .panel__edge {
     opacity: 0;
-    transition: opacity 0.6s ease 1.8s; /* ③边框+分割线画完后填色 */
+    transition: opacity 0.6s ease 1.8s; /* 边框+分割线画完后板厚上色 */
   }
 
   .panel__cell,
@@ -191,7 +224,6 @@ onBeforeUnmount(() => observer?.disconnect())
     opacity: 0;
   }
 
-  .revealed .panel__top,
   .revealed .panel__edge,
   .revealed .panel__cell {
     opacity: 1;
@@ -207,10 +239,10 @@ onBeforeUnmount(() => observer?.disconnect())
     animation: cta-draw 0.8s ease 0.9s forwards;
   }
 
-  /* ④支架/地线:2.4-3s 最后绘制 */
+  /* ④支架/地线:2.6-3.2s 最后绘制 */
   .revealed .panel__leg,
   .revealed .ground {
-    animation: cta-draw 0.6s ease 2.4s forwards;
+    animation: cta-draw 0.6s ease 2.6s forwards;
   }
 
   @keyframes cta-draw {
@@ -256,6 +288,10 @@ onBeforeUnmount(() => observer?.disconnect())
   .panel__leg,
   .ground {
     stroke-dasharray: none;
+  }
+
+  .panel__fillcell {
+    opacity: 1;
   }
 }
 </style>
