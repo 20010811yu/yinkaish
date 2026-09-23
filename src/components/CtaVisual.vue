@@ -5,6 +5,19 @@
     <span class="cta-visual__block cta-visual__block--small"></span>
     <!-- 顶层:光伏板+太阳线条动画,横跨两个色块 -->
     <svg class="cta-visual__art" viewBox="0 0 360 220" fill="none">
+      <defs>
+        <!-- 电池片深蓝渐变(真实单晶硅板色) -->
+        <linearGradient id="pvCell" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#173d63" />
+          <stop offset="0.55" stop-color="#1f5a8c" />
+          <stop offset="1" stop-color="#2a6fa5" />
+        </linearGradient>
+        <!-- 铝合金边框侧边 -->
+        <linearGradient id="pvEdge" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f2f7f4" />
+          <stop offset="1" stop-color="#b9cfc2" />
+        </linearGradient>
+      </defs>
       <!-- 太阳:中心圆+8条射线 -->
       <g class="sun">
         <circle cx="66" cy="52" r="17" class="sun__core" />
@@ -16,16 +29,21 @@
             :y2="52 + 33 * Math.sin((r - 1) * Math.PI / 4)" />
         </g>
       </g>
-      <!-- 光伏板 A:骑在大色块上缘 -->
+      <!-- 地面投影 -->
+      <ellipse class="panel-shadow" cx="205" cy="181" rx="96" ry="10" />
+      <ellipse class="panel-shadow" cx="102" cy="205" rx="66" ry="7" />
+      <!-- 光伏板 A:电池片顶面+铝边框板厚+支架 -->
       <g class="panel panel--a">
-        <path class="panel__frame" d="M118 148 L206 108 L292 132 L204 172 Z" />
+        <path class="panel__edge" d="M118 148 L204 172 L204 181 L118 157 Z M204 172 L292 132 L292 140 L204 181 Z" />
+        <path class="panel__top" d="M118 148 L206 108 L292 132 L204 172 Z" />
         <path class="panel__cell" d="M147 138 L235 98 M153 148 L241 108 M161 161 L249 121 M153 140 L165 153 M204 118 L216 131 M178 129 L190 142 M229 109 L241 122" />
         <path class="panel__leg" d="M180 166 L172 192 M238 142 L246 168" />
         <path class="panel__shine" d="M118 148 L206 108 L232 115 L144 155 Z" />
       </g>
-      <!-- 光伏板 B:骑在色块左下交界 -->
+      <!-- 光伏板 B -->
       <g class="panel panel--b">
-        <path class="panel__frame" d="M40 182 L104 156 L164 172 L100 198 Z" />
+        <path class="panel__edge" d="M40 182 L100 198 L100 203 L40 187 Z M100 198 L164 172 L164 177 L100 203 Z" />
+        <path class="panel__top" d="M40 182 L104 156 L164 172 L100 198 Z" />
         <path class="panel__cell" d="M62 173 L126 147 M67 182 L131 156 M73 192 L137 166 M67 175 L78 187 M104 161 L115 173 M90 168 L101 180" />
         <path class="panel__shine" d="M40 182 L104 156 L124 161 L60 187 Z" />
       </g>
@@ -105,8 +123,6 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 .sun__ray,
-.panel__frame,
-.panel__cell,
 .panel__leg,
 .ground {
   stroke: var(--c-primary-dark);
@@ -115,35 +131,73 @@ onBeforeUnmount(() => observer?.disconnect())
   stroke-linejoin: round;
 }
 
-.panel__cell,
+/* 电池片顶面:深蓝渐变+绿描边 */
+.panel__top {
+  fill: url(#pvCell);
+  stroke: var(--c-primary-dark);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* 铝合金板厚侧边 */
+.panel__edge {
+  fill: url(#pvEdge);
+  stroke: var(--c-primary-dark);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* 电池片分栅线:半透明白 */
+.panel__cell {
+  stroke: rgb(255 255 255 / 38%);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
 .panel__leg {
-  stroke-width: 1.6;
   stroke-opacity: 0.75;
 }
 
+.panel-shadow {
+  fill: rgb(14 77 47 / 12%);
+}
+
 .panel__shine {
-  fill: rgb(255 255 255 / 35%);
+  fill: rgb(255 255 255 / 30%);
   stroke: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 进场描边绘制 */
-  .panel__frame,
-  .panel__cell,
+  /* 进场描边绘制 + 顶面/侧边淡入 */
+  .panel__top,
+  .panel__edge,
   .panel__leg,
   .ground {
     stroke-dasharray: 900;
     stroke-dashoffset: 900;
   }
 
-  .revealed .panel__frame,
-  .revealed .panel__cell,
+  .panel__top,
+  .panel__edge,
+  .panel__cell {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.5s;
+  }
+
+  .revealed .panel__top,
+  .revealed .panel__edge,
+  .revealed .panel__cell {
+    opacity: 1;
+  }
+
+  .revealed .panel__top,
+  .revealed .panel__edge,
   .revealed .panel__leg,
   .revealed .ground {
     animation: cta-draw 1.1s ease forwards;
   }
 
-  .revealed .panel__cell { animation-delay: 0.35s; }
+  .revealed .panel__cell { animation: none; }
   .revealed .panel__leg { animation-delay: 0.6s; }
   .revealed .ground { animation-delay: 0.75s; }
 
@@ -187,8 +241,8 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel__frame,
-  .panel__cell,
+  .panel__top,
+  .panel__edge,
   .panel__leg,
   .ground {
     stroke-dasharray: none;
