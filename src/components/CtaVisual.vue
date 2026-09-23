@@ -37,7 +37,7 @@
         <path class="panel__edge" d="M100 185 L290 185 L290 191 L100 191 Z" />
         <path class="panel__top" d="M100 185 L138 112 L270 112 L290 185 Z" />
         <!-- 12 块电池片:分隔线画完后按网格逐格填蓝 -->
-        <path v-for="(d, i) in fillCells" :key="i" class="panel__fillcell" :d="d" :style="{ transitionDelay: 1.8 + i * 0.07 + 's' }" />
+        <path v-for="(d, i) in fillCells" :key="i" class="panel__fillcell" :d="d" :style="{ '--i': i }" />
         <!-- 呼吸染色层:随太阳胀缩同步加深/变浅 -->
         <path class="panel__tint" d="M100 185 L138 112 L270 112 L290 185 Z" />
         <path class="panel__cell" d="M171 112 L148 185 M204 112 L195 185 M237 112 L243 185 M113 161 L283 161 M125 137 L277 137" />
@@ -189,7 +189,7 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 分阶段绘制:①从一点起笔连续画边框 → ②支架/地线 → ③电池分隔线 → ④填色;离开视口复位,每次进入重播 */
+  /* 分阶段绘制:①边框+支架同时描边 → ②电池分隔线 → ③逐格填色;离开视口瞬时复位,每次进入重播 */
   .panel__top,
   .panel__edge,
   .panel__leg,
@@ -205,13 +205,14 @@ onBeforeUnmount(() => observer?.disconnect())
     stroke-dashoffset: 482;
   }
 
-  /* ③逐格填色:每格延迟由模板内联 transitionDelay 控制(1.8s 起逐格错峰) */
+  /* ③逐格填色:每格延迟 calc(1.8s + 序号×0.07s);离开视口瞬时复位,保证每次滚入都重播 */
   .panel__fillcell {
     opacity: 0;
   }
 
   .revealed .panel__fillcell {
     opacity: 1;
+    transition: opacity 0.35s ease calc(1.8s + var(--i) * 0.07s);
   }
 
   .panel__edge {
@@ -229,20 +230,16 @@ onBeforeUnmount(() => observer?.disconnect())
     opacity: 1;
   }
 
-  /* ①边框:0-0.9s 从一点连续绘制 */
-  .revealed .panel__top {
+  /* ①边框与支架同时开始:0-0.9s 支架与电池面绘制时机一致 */
+  .revealed .panel__top,
+  .revealed .panel__leg,
+  .revealed .ground {
     animation: cta-draw 0.9s ease forwards;
   }
 
   /* ②电池分隔线:0.9-1.7s 描边 */
   .revealed .panel__cell {
     animation: cta-draw 0.8s ease 0.9s forwards;
-  }
-
-  /* ④支架/地线:2.6-3.2s 最后绘制 */
-  .revealed .panel__leg,
-  .revealed .ground {
-    animation: cta-draw 0.6s ease 2.6s forwards;
   }
 
   @keyframes cta-draw {
