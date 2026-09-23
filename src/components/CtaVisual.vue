@@ -164,20 +164,25 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 进场描边绘制 + 顶面/侧边淡入 */
+  /* 分阶段绘制:①外框/支架描边 → ②电池分割线描边 → ③填色;离开视口复位,每次进入重播 */
   .panel__top,
   .panel__edge,
   .panel__leg,
-  .ground {
+  .ground,
+  .panel__cell {
     stroke-dasharray: 900;
     stroke-dashoffset: 900;
   }
 
   .panel__top,
-  .panel__edge,
-  .panel__cell {
+  .panel__edge {
     opacity: 0;
-    transition: opacity 0.6s ease 0.5s;
+    transition: opacity 0.6s ease 2s; /* ③线条画完后填色 */
+  }
+
+  .panel__cell,
+  .panel__tint {
+    opacity: 0;
   }
 
   .revealed .panel__top,
@@ -186,6 +191,7 @@ onBeforeUnmount(() => observer?.disconnect())
     opacity: 1;
   }
 
+  /* ①外框/板厚/支架/地线:0-1.1s 描边 */
   .revealed .panel__top,
   .revealed .panel__edge,
   .revealed .panel__leg,
@@ -193,9 +199,13 @@ onBeforeUnmount(() => observer?.disconnect())
     animation: cta-draw 1.1s ease forwards;
   }
 
-  .revealed .panel__cell { animation: none; }
   .revealed .panel__leg { animation-delay: 0.6s; }
   .revealed .ground { animation-delay: 0.75s; }
+
+  /* ②电池分割线:1.1-1.9s 描边 */
+  .revealed .panel__cell {
+    animation: cta-draw 0.8s ease 1.1s forwards;
+  }
 
   @keyframes cta-draw {
     to { stroke-dashoffset: 0; }
