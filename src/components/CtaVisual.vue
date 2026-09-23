@@ -164,7 +164,7 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 分阶段绘制:①外框/支架描边 → ②电池分割线描边 → ③填色;离开视口复位,每次进入重播 */
+  /* 分阶段绘制:①从一点起笔连续画边框 → ②支架/地线 → ③电池分隔线 → ④填色;离开视口复位,每次进入重播 */
   .panel__top,
   .panel__edge,
   .panel__leg,
@@ -174,10 +174,16 @@ onBeforeUnmount(() => observer?.disconnect())
     stroke-dashoffset: 900;
   }
 
+  /* 顶面周长≈482:从左下角一点起笔,一笔画完整圈边框 */
+  .panel__top {
+    stroke-dasharray: 482;
+    stroke-dashoffset: 482;
+  }
+
   .panel__top,
   .panel__edge {
     opacity: 0;
-    transition: opacity 0.6s ease 2s; /* ③线条画完后填色 */
+    transition: opacity 0.6s ease 2.4s; /* ④线条画完后填色 */
   }
 
   .panel__cell,
@@ -191,20 +197,21 @@ onBeforeUnmount(() => observer?.disconnect())
     opacity: 1;
   }
 
-  /* ①外框/板厚/支架/地线:0-1.1s 描边 */
-  .revealed .panel__top,
+  /* ①边框:0-0.9s 从一点连续绘制 */
+  .revealed .panel__top {
+    animation: cta-draw 0.9s ease forwards;
+  }
+
+  /* ②板厚/支架/地线:0.9-1.5s 就位 */
   .revealed .panel__edge,
   .revealed .panel__leg,
   .revealed .ground {
-    animation: cta-draw 1.1s ease forwards;
+    animation: cta-draw 0.6s ease 0.9s forwards;
   }
 
-  .revealed .panel__leg { animation-delay: 0.6s; }
-  .revealed .ground { animation-delay: 0.75s; }
-
-  /* ②电池分割线:1.1-1.9s 描边 */
+  /* ③电池分隔线:1.5-2.3s 描边 */
   .revealed .panel__cell {
-    animation: cta-draw 0.8s ease 1.1s forwards;
+    animation: cta-draw 0.8s ease 1.5s forwards;
   }
 
   @keyframes cta-draw {
@@ -233,9 +240,9 @@ onBeforeUnmount(() => observer?.disconnect())
     50% { transform: scale(1.1); filter: brightness(1.35); }
   }
 
-  /* 面板蓝深随太阳呼吸:太阳最大最亮时蓝最深 */
+  /* 面板蓝深随太阳呼吸:太阳最大最亮时蓝最深;延迟 3s(一个完整周期)等绘制完成后起步,相位与太阳对齐 */
   .revealed .panel__tint {
-    animation: cta-tint 3s ease-in-out infinite;
+    animation: cta-tint 3s ease-in-out 3s infinite backwards;
   }
 
   @keyframes cta-tint {
