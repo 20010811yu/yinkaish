@@ -18,9 +18,24 @@
             <p>{{ pick(featured.summary, locale) }}</p>
             <span class="featured__more">{{ $t('common.readMore') }} →</span>
           </div>
-          <div class="featured__panel" aria-hidden="true">
-            <span class="featured__day">{{ featuredDay }}</span>
-            <span class="featured__ym">{{ featuredYearMonth }}</span>
+          <div class="featured__panel">
+            <!-- 迷你日历:有新闻的日期圆点标注,点击跳详情 -->
+            <div class="mini-cal">
+              <div class="mini-cal__head">
+                <button class="mini-cal__nav" aria-label="prev month" @click.stop="calShift(-1)">‹</button>
+                <span class="mini-cal__ym">{{ calYmLabel }}</span>
+                <button class="mini-cal__nav" aria-label="next month" @click.stop="calShift(1)">›</button>
+              </div>
+              <div class="mini-cal__week">
+                <span v-for="w in weekLabels" :key="w">{{ w }}</span>
+              </div>
+              <div class="mini-cal__grid">
+                <span v-for="(d, i) in calCells" :key="i" class="mini-cal__cell" :class="d.cls" @click.stop="onPickDay(d)">
+                  <span class="mini-cal__num">{{ d.day ?? '' }}</span>
+                  <span v-if="d.newsId" class="mini-cal__dot"></span>
+                </span>
+              </div>
+            </div>
           </div>
         </article>
 
@@ -36,20 +51,79 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { news } from '../data'
 import { pick } from '../data/lang'
 import { useReveal } from '../composables/useReveal'
 import NewsCard from '../components/NewsCard.vue'
 
 const { locale } = useI18n()
+const router = useRouter()
 useReveal()
 
 const featured = computed(() => news[0])
 const rest = computed(() => news.slice(1))
 const [featuredYear, featuredMonth, featuredDay] = featured.value.date.split('-')
 const featuredYearMonth = `${featuredYear}.${featuredMonth}`
+
+/* ---- 迷你日历 ---- */
+// 新闻日期 → 新闻 id 映射
+const newsByDate = Object.fromEntries(news.map((n) => [n.date, n.id]))
+// 日历默认停在头条新闻所在月份
+const cal = ref({ y: Number(featuredYear), m: Number(featuredMonth) - 1 }) // m: 0 基
+const selected = ref('')
+
+const weekLabels = computed(() =>
+  locale.value === 'en'
+    ? ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+    : ['日', '一', '二', '三', '四', '五', '六']
+)
+const calYmLabel = computed(() => {
+  const { y, m } = cal.value
+  return locale.value === 'en'
+    ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m] + ` ${y}`
+    : `${y}.${String(m + 1).padStart(2, '0')}`
+})
+
+const calShift = (dir) => {
+  cal.value.m += dir
+  if (cal.value.m < 0) { cal.value.m = 11; cal.value.y-- }
+  if (cal.value.m > 11) { cal.value.m = 0; cal.value.y++ }
+}
+
+const pad = (n) => String(n).padStart(2, '0')
+const todayStr = new Date().toLocaleDateString('sv') // YYYY-MM-DD(本地时区)
+
+// 42 格(6 行 × 7 列,周日起):前后补上月/下月日期
+const calCells = computed(() => {
+  const { y, m } = cal.value
+  const firstDow = new Date(y, m, 1).getDay()
+  const daysInMonth = new Date(y, m + 1, 0).getDate()
+  const cells = []
+  for (let i = 0; i < 42; i++) {
+    const dayNum = i - firstDow + 1
+    const inMonth = dayNum >= 1 && dayNum <= daysInMonth
+    const dateStr = inMonth ? `${y}-${pad(m + 1)}-${pad(dayNum)}` : ''
+    const newsId = newsByDate[dateStr]
+    const cls = [
+      !inMonth && 'mini-cal__cell--out',
+      dateStr === todayStr && 'mini-cal__cell--today',
+      dateStr && selected.value === dateStr && 'mini-cal__cell--sel',
+      newsId && 'mini-cal__cell--has',
+    ].filter(Boolean)
+    cells.push({ day: inMonth ? dayNum : (dayNum <= 0 ? new Date(y, m, 0).getDate() + dayNum : dayNum - daysInMonth), newsId, cls: cls.join(' ') })
+  }
+  return cells
+})
+
+const onPickDay = (d) => {
+  if (!d.day) return
+  const dateStr = `${cal.value.y}-${pad(cal.value.m + 1)}-${pad(d.day)}`
+  selected.value = dateStr
+  if (d.newsId) router.push(`/news/${d.newsId}`)
+}
 </script>
 
 <style scoped>
@@ -121,29 +195,113 @@ const featuredYearMonth = `${featuredYear}.${featuredMonth}`
   color: var(--c-primary);
 }
 
+/* 迷你日历面板 */
 .featured__panel {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.55) 60%, var(--c-primary) 100%);
-  color: var(--c-primary);
+  background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.28) 60%, rgba(0, 166, 81, 0.55) 100%);
+  padding: clamp(18px, 2vw, 28px);
   min-height: 220px;
 }
 
-.featured__day {
-  font-size: clamp(56px, 6vw, 84px);
-  font-weight: 800;
+.mini-cal {
+  width: 100%;
+  max-width: 320px;
+  background: rgb(255 255 255 / 92%);
+  border-radius: 14px;
+  padding: 14px 16px 12px;
+  box-shadow: 0 6px 18px rgb(10 92 51 / 12%);
+}
+
+.mini-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mini-cal__ym {
+  font-weight: 700;
+  color: var(--c-primary-dark);
+  letter-spacing: 1px;
+}
+
+.mini-cal__nav {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 8px;
+  background: var(--c-primary-light);
+  color: var(--c-primary-dark);
+  font-size: 16px;
   line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mini-cal__nav:hover {
+  background: rgb(0 166 81 / 28%);
+}
+
+.mini-cal__week,
+.mini-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.mini-cal__week span {
+  text-align: center;
+  font-size: 12px;
+  color: var(--c-text-secondary);
+  padding: 4px 0;
+}
+
+.mini-cal__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 0 1px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--c-text);
+  cursor: default;
+  min-height: 34px;
+  justify-content: center;
+}
+
+.mini-cal__cell--out {
+  color: rgb(0 0 0 / 25%);
+}
+
+.mini-cal__cell--has {
+  cursor: pointer;
+  color: var(--c-primary-dark);
+  font-weight: 700;
+}
+
+.mini-cal__cell--has:hover {
+  background: var(--c-primary-light);
+}
+
+.mini-cal__cell--today {
+  box-shadow: inset 0 0 0 1.5px var(--c-primary);
+}
+
+.mini-cal__cell--sel {
+  background: var(--c-primary);
+}
+
+.mini-cal__cell--sel .mini-cal__num {
   color: #fff;
 }
 
-.featured__ym {
-  font-size: clamp(15px, 1.4vw, 18px);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.85);
+.mini-cal__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c-primary);
 }
 
 /* 新闻网格 */
