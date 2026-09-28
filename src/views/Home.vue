@@ -73,12 +73,42 @@
 
         <div class="adv__fig" data-reveal data-reveal-delay="1">
           <img :src="heroCity" alt="YINKAI smart city" />
+          <span class="fig-corner fig-corner--tl" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--tr" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--bl" aria-hidden="true"></span>
+          <span class="fig-corner fig-corner--br" aria-hidden="true"></span>
+          <span class="fig-scan" aria-hidden="true"></span>
         </div>
       </div>
 
       <div class="container">
         <div class="adv-list">
           <div v-for="(key, i) in ['a1', 'a2', 'a3', 'a4']" :key="key" class="adv-list__item" data-reveal :data-reveal-delay="(i % 3) + 1">
+            <svg class="adv-list__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <template v-if="key === 'a1'">
+                <!-- 齿轮:二十 年积淀 -->
+                <circle cx="12" cy="12" r="7" pathLength="100" class="icon-path" />
+                <circle cx="12" cy="12" r="2.5" pathLength="100" class="icon-path" />
+                <path d="M12 2.5 V5 M12 19 V21.5 M2.5 12 H5 M19 12 H21.5 M5.3 5.3 L7 7 M17 17 L18.7 18.7 M18.7 5.3 L17 7 M7 17 L5.3 18.7" pathLength="100" class="icon-path" />
+              </template>
+              <template v-else-if="key === 'a2'">
+                <!-- 上升曲线:行业领先 -->
+                <path d="M3 20 H21" pathLength="100" class="icon-path" />
+                <path d="M4 16 L10 10 L14 13 L20 6" pathLength="100" class="icon-path" />
+                <path d="M15.5 6 H20 V10.5" pathLength="100" class="icon-path" />
+              </template>
+              <template v-else-if="key === 'a3'">
+                <!-- 扫描框:精准检测 -->
+                <path d="M3 8 V4 H8 M16 4 H21 V8 M21 16 V20 H16 M8 20 H3 V16" pathLength="100" class="icon-path" />
+                <path d="M5 12 H19" pathLength="100" class="icon-path icon-path--scan" />
+              </template>
+              <template v-else>
+                <!-- 地球:国际化 -->
+                <circle cx="12" cy="12" r="9" pathLength="100" class="icon-path" />
+                <ellipse cx="12" cy="12" rx="4.2" ry="9" pathLength="100" class="icon-path" />
+                <path d="M3.5 9 H20.5 M3.5 15 H20.5" pathLength="100" class="icon-path" />
+              </template>
+            </svg>
             <span class="adv-list__num">0{{ i + 1 }}</span>
             <h3>{{ $t(`home.advantages.${key}.title`) }}</h3>
             <p>{{ $t(`home.advantages.${key}.desc`) }}</p>
@@ -390,6 +420,9 @@ onBeforeUnmount(() => {
 
 .adv__fig {
   min-width: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .adv__fig img {
@@ -398,6 +431,36 @@ onBeforeUnmount(() => {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   will-change: transform;
+}
+
+/* 取景框四角:进场时从外向内收拢 */
+.fig-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--c-primary);
+  z-index: 1;
+}
+
+.fig-corner--tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.fig-corner--tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+.fig-corner--bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
+.fig-corner--br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+
+/* 优势小图标 */
+.adv-list__icon {
+  width: 34px;
+  height: 34px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.adv-list__icon .icon-path {
+  stroke: var(--c-primary);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* 电路连线:进视口描边绘制 + 端点脉冲 */
@@ -425,6 +488,72 @@ onBeforeUnmount(() => {
   @keyframes dot-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
+  }
+
+  /* 取景框:图片进场后四角收拢 */
+  .fig-corner {
+    opacity: 0;
+    transform: scale(1.6);
+    transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
+  }
+
+  .adv__fig.revealed .fig-corner {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* 扫描光带:缓慢下扫循环 */
+  .fig-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -70px;
+    height: 64px;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(87, 227, 154, 0.16), transparent);
+    animation: fig-scan 4.5s ease-in-out 1.4s infinite;
+  }
+
+  @keyframes fig-scan {
+    0% { top: -70px; }
+    65%, 100% { top: 100%; }
+  }
+
+  /* 优势图标:描边绘制(随条目错峰) */
+  .adv-list__icon .icon-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+  }
+
+  .adv-list__item.revealed .icon-path {
+    animation: icon-draw 0.9s ease 0.4s forwards;
+  }
+
+  .adv-list__item.revealed .icon-path--scan {
+    animation: icon-draw 0.5s ease 1.2s forwards, icon-scan 2.4s ease-in-out 2s infinite;
+  }
+
+  @keyframes icon-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes icon-scan {
+    0%, 100% { stroke-opacity: 1; }
+    50% { stroke-opacity: 0.25; }
+  }
+
+  /* 序号 01-04 缓现 */
+  .adv-list__num {
+    opacity: 0;
+  }
+
+  .adv-list__item.revealed .adv-list__num {
+    animation: num-in 0.6s ease 0.2s forwards;
+  }
+
+  @keyframes num-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 0.45; transform: none; }
   }
 }
 
