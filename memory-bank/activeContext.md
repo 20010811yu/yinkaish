@@ -1,7 +1,7 @@
 # activeContext.md — 当前上下文
 
 ## 当前焦点(2026-09-28)
-加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+宽松格式/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
+加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+**大陆手机号校验(/^1[3-9]\d{9}$,座机与 +86 写法不再通过,用户要求收紧)**/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
 
 ### 最近变更
 - **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms

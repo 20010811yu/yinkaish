@@ -134,7 +134,7 @@ const rules = {
   name: [{ required: true, message: () => t('careers.form.name'), trigger: 'blur' }],
   phone: [
     { required: true, message: () => t('careers.form.phone'), trigger: 'blur' },
-    { pattern: /^[+()\d\s-]{5,20}$/, message: () => t('careers.form.phone'), trigger: 'blur' },
+    { pattern: /^1[3-9]\d{9}$/, message: () => t('careers.form.phoneRule'), trigger: 'blur' },
   ],
   email: [{ type: 'email', message: () => t('careers.form.email'), trigger: 'blur' }],
   resume: [{ required: true, message: () => t('careers.form.resume'), trigger: 'change' }],

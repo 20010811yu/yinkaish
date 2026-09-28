@@ -136,6 +136,7 @@ export default {
       position: '应聘职位',
       name: '您的姓名',
       phone: '联系电话',
+      phoneRule: '请输入 11 位中国大陆手机号',
       email: '电子邮箱（选填）',
       resume: '简历附件',
       selectFile: '选择文件',

@@ -136,6 +136,7 @@ export default {
       position: 'Position',
       name: 'Your Name',
       phone: 'Phone',
+      phoneRule: 'Please enter a valid 11-digit Chinese mobile number',
       email: 'Email (optional)',
       resume: 'Resume',
       selectFile: 'Select File',
