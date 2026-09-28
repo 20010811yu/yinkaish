@@ -209,7 +209,7 @@ const onPickDay = (d) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.28) 60%, rgba(0, 166, 81, 0.55) 100%);
+  background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.14) 60%, rgba(0, 166, 81, 0.32) 100%);
   border-radius: var(--radius);
   padding: clamp(14px, 1.6vw, 22px);
   min-height: 220px;
