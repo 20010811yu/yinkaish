@@ -108,7 +108,8 @@ const paragraphs = computed(() => {
   font-size: clamp(15px, 1vw + 8px, 17px);
   line-height: 1.95;
   color: var(--c-text);
-  margin-bottom: 20px;
+  margin-bottom: 1.95em; /* 段间空一行(与行高等同) */
+  text-indent: 2em; /* 首行缩进两字 */
   overflow-wrap: anywhere;
 }
 </style>
