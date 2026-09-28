@@ -20,7 +20,7 @@
           </div>
           <div class="featured__panel">
             <!-- 迷你日历:有新闻的日期圆点标注,点击跳详情 -->
-            <div class="mini-cal">
+            <div class="mini-cal" @click.stop>
               <div class="mini-cal__head">
                 <button class="mini-cal__nav" aria-label="prev month" @click.stop="calShift(-1)">‹</button>
                 <span class="mini-cal__ym">{{ calYmLabel }}</span>
@@ -71,8 +71,9 @@ const featuredYearMonth = `${featuredYear}.${featuredMonth}`
 /* ---- 迷你日历 ---- */
 // 新闻日期 → 新闻 id 映射
 const newsByDate = Object.fromEntries(news.map((n) => [n.date, n.id]))
-// 日历默认停在头条新闻所在月份
-const cal = ref({ y: Number(featuredYear), m: Number(featuredMonth) - 1 }) // m: 0 基
+// 日历默认显示今日所在月份
+const _today = new Date()
+const cal = ref({ y: _today.getFullYear(), m: _today.getMonth() }) // m: 0 基
 const selected = ref('')
 
 const weekLabels = computed(() =>
