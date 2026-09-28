@@ -12,7 +12,7 @@
       <div class="footer__col">
         <h4>{{ $t('footer.quickLinks') }}</h4>
         <ul>
-          <li><router-link to="/services">{{ $t('nav.services') }}</router-link></li>
+          <li><router-link to="/products">{{ $t('nav.services') }}</router-link></li>
           <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
           <li><router-link to="/news">{{ $t('nav.news') }}</router-link></li>
           <li><router-link to="/careers">{{ $t('nav.careers') }}</router-link></li>

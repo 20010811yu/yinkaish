@@ -7,7 +7,7 @@ export default {
   nav: {
     home: 'Home',
     about: 'About Yinkai',
-    services: 'Services',
+    services: 'Products',
     news: 'News',
     careers: 'Careers',
     contact: 'Contact',

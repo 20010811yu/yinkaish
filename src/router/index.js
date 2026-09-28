@@ -10,7 +10,8 @@ const routes = [
   // 首页静态导入:作为主要落地页随主包加载,避免刷新时异步分包空窗(页脚贴导航)
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: () => import('../views/About.vue') },
-  { path: '/services', name: 'Services', component: () => import('../views/Services.vue') },
+  { path: '/products', name: 'Products', component: () => import('../views/Services.vue') },
+  { path: '/services', redirect: '/products' }, // 旧路径兼容
   { path: '/news', name: 'News', component: () => import('../views/News.vue') },
   { path: '/news/:id', name: 'NewsDetail', component: () => import('../views/NewsDetail.vue') },
   { path: '/careers', name: 'Careers', component: () => import('../views/Careers.vue') },

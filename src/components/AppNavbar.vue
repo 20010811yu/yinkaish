@@ -46,7 +46,7 @@ const scrolled = ref(false)
 
 const items = [
   { to: '/', key: 'nav.home' },
-  { to: '/services', key: 'nav.services' },
+  { to: '/products', key: 'nav.services' },
   { to: '/about', key: 'nav.about' },
   { to: '/news', key: 'nav.news' },
   { to: '/careers', key: 'nav.careers' },
