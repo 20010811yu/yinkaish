@@ -17,7 +17,7 @@
           </div>
           <div class="intro__stats">
             <div v-for="stat in stats" :key="stat.label" class="intro__stat">
-              <strong>{{ stat.value }}</strong>
+              <strong class="count">{{ stat.value }}</strong>
               <span>{{ stat.label }}</span>
             </div>
           </div>
@@ -197,7 +197,8 @@ const animateCount = (el) => {
     if (document.hidden) { finish(); return }
     const k = Math.min(1, (performance.now() - start) / duration)
     const eased = 1 - Math.pow(1 - k, 3)
-    el.textContent = prefix + (target * eased).toFixed(decimals) + suffix
+    // 加号等后缀在计数完成后才显示(finish 里写入 finalText)
+    el.textContent = prefix + (target * eased).toFixed(decimals) + (k >= 1 ? suffix : '')
     if (k >= 1) finish()
   }, 16)
   document.addEventListener('visibilitychange', onVis)
