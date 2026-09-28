@@ -5,12 +5,12 @@
         <div class="detail-hero__top">
           <RouterLink class="detail-hero__back" to="/news">← {{ $t('common.backToList') }}</RouterLink>
           <span v-if="article" class="detail-hero__tag">{{ pick(article.tag, locale) }}</span>
+          <span v-if="article" class="detail-hero__meta">
+            <el-icon><Calendar /></el-icon>
+            {{ $t('newsDetail.date') }}：{{ article.date }}
+          </span>
         </div>
         <h1 class="detail-hero__title">{{ title || $t('newsDetail.notFound') }}</h1>
-        <p v-if="article" class="detail-hero__meta">
-          <el-icon><Calendar /></el-icon>
-          {{ $t('newsDetail.date') }}：{{ article.date }}
-        </p>
       </div>
     </section>
 
@@ -74,6 +74,7 @@ const paragraphs = computed(() => {
 }
 
 .detail-hero__tag {
+  margin-left: auto;
   padding: 4px 14px;
   border-radius: 999px;
   background: rgb(0 166 81 / 10%);
@@ -92,11 +93,22 @@ const paragraphs = computed(() => {
 }
 
 .detail-hero__meta {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   color: var(--c-text-secondary);
   font-size: 0.9375rem;
+}
+
+@media (max-width: 560px) {
+  .detail-hero__top {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .detail-hero__meta {
+    margin-left: auto;
+  }
 }
 
 /* 正文:限宽居中,多段落 */
