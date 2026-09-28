@@ -19,9 +19,6 @@
           <p v-for="(para, i) in paragraphs" :key="i" class="detail__content">{{ para }}</p>
         </template>
         <p v-else class="detail__content">{{ $t('newsDetail.notFound') }}</p>
-        <div class="detail__footer">
-          <el-button round @click="$router.push('/news')">← {{ $t('common.backToList') }}</el-button>
-        </div>
       </div>
     </section>
   </div>
@@ -113,12 +110,5 @@ const paragraphs = computed(() => {
   color: var(--c-text);
   margin-bottom: 20px;
   overflow-wrap: anywhere;
-}
-
-.detail__footer {
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--c-border);
-  text-align: center;
 }
 </style>
