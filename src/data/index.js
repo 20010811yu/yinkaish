@@ -616,6 +616,72 @@ export const news = [
       en: 'Yinkai\'s BIW welding business remained solid, with multiple welding lines, hemming lines and fixture projects delivered on schedule this year. Since 2004, Yinkai has served many OEMs and Tier-1 suppliers including SVW, SGM, SAIC, Geely and Great Wall, earning industry recognition with BMW-grade manufacturing standards.',
     },
   },
+  {
+    id: 7,
+    tag: { zh: '项目交付', en: 'Project Delivery' },
+    date: '2024-09-26',
+    title: { zh: '东南亚光伏组件基地边框产线完成验收', en: 'PV Frame Lines for Southeast Asia Module Plant Passed Acceptance' },
+    summary: { zh: '海外第二基地建设再下一城，产线稼动率达 98%。', en: 'Another overseas milestone with line uptime reaching 98%.' },
+    content: {
+      zh: '寅铠为东南亚某大型光伏组件基地提供的边框自动生产线项目完成终验收。产线涵盖自动上料、切割、冲孔、铆压与在线检测全流程，投产后稼动率达 98%，单线日产能满足组件基地配套需求。客户对设备的稳定性与寅铠工程师团队的远程支持能力给予高度评价，双方就后续二期扩产达成初步合作意向。',
+      en: 'The PV frame automatic lines supplied by Yinkai for a large module plant in Southeast Asia passed final acceptance. Covering auto feeding, cutting, punching, riveting and inline inspection, the line reached 98% uptime after commissioning with daily output matching the plant\'s needs. The customer highly praised equipment stability and Yinkai\'s remote support, and both parties reached preliminary intent for phase-two expansion.',
+    },
+  },
+  {
+    id: 8,
+    tag: { zh: '技术迭代', en: 'Technology' },
+    date: '2024-06-15',
+    title: { zh: 'YK-FC 复合材料产线实现多材质兼容切换', en: 'YK-FC Composite Lines Now Support Multi-Material Quick Changeover' },
+    summary: { zh: '换型时间缩短至 20 分钟以内，支持玻纤/聚氨酯共线生产。', en: 'Changeover under 20 minutes, supporting fiberglass/PU co-production.' },
+    content: {
+      zh: 'YK-FC 系列复合材料边框自动生产线完成技术升级，实现玻纤、聚氨酯等多材质边框的共线兼容生产，换型时间缩短至 20 分钟以内。升级后的产线在保证 ±0.15mm 加工精度的同时，可满足组件客户小批量、多品种的柔性生产需求，已在多家客户现场稳定运行。',
+      en: 'The YK-FC composite frame line series has been upgraded for co-production of fiberglass and polyurethane frames, cutting changeover to under 20 minutes. While maintaining ±0.15mm precision, the upgraded line meets customers\' flexible needs for small-batch, multi-variety production and has been running stably at multiple customer sites.',
+    },
+  },
+  {
+    id: 9,
+    tag: { zh: '展会活动', en: 'Exhibitions' },
+    date: '2024-05-20',
+    title: { zh: 'SNEC 光伏展完美收官，现场达成多项合作意向', en: 'SNEC PV Power Expo Concluded with Multiple Cooperation Intentions' },
+    summary: { zh: 'YK 系列全线产品集中亮相，观众超十万人次。', en: 'Full YK lineup on show with over 100,000 visitors.' },
+    content: {
+      zh: '寅铠携 YK 系列光伏边框自动生产线、视觉检测系统等全线产品亮相 SNEC 国际太阳能光伏与智慧能源大会。展台现场观众超十万人次，团队与数十家组件企业就产线规划、设备升级展开深入交流，达成多项合作意向。展会期间发布的 YK-7 系列新一代高速产线成为全场焦点。',
+      en: 'Yinkai showcased its full YK series — PV frame automatic lines and vision inspection systems — at the SNEC International Solar PV & Smart Energy Conference. The booth attracted over 100,000 visitors. The team held in-depth exchanges with dozens of module companies on line planning and upgrades, reaching multiple cooperation intentions. The newly released YK-7 high-speed line series was a highlight of the show.',
+    },
+  },
+  {
+    id: 10,
+    tag: { zh: '质量体系', en: 'Quality' },
+    date: '2024-02-28',
+    title: { zh: '获得高新技术企业认定，研发投入持续加码', en: 'Certified as High-Tech Enterprise with Rising R&D Investment' },
+    summary: { zh: '累计授权专利 60 余项，研发人员占比超 30%。', en: '60+ patents granted; R&D staff over 30% of headcount.' },
+    content: {
+      zh: '寅铠顺利通过国家高新技术企业认定。公司累计获得授权专利 60 余项，其中发明专利占比持续提升；研发人员占员工总数超过 30%。未来公司将持续加大在视觉检测算法、高速运动控制与产线数字化方向的研发投入，为客户提供更具竞争力的智能制造装备。',
+      en: 'Yinkai officially obtained the national High-Tech Enterprise certification. The company holds 60+ granted patents with a rising share of invention patents, and R&D staff account for over 30% of the workforce. Yinkai will continue increasing investment in vision inspection algorithms, high-speed motion control and line digitalization to deliver more competitive smart manufacturing equipment.',
+    },
+  },
+  {
+    id: 11,
+    tag: { zh: '公司动态', en: 'Company News' },
+    date: '2023-11-08',
+    title: { zh: '二期厂房扩建竣工，产能迈上新台阶', en: 'Phase-II Plant Expansion Completed, Capacity on a New Level' },
+    summary: { zh: '新增装配工位 20 余个，年交付产线能力提升 40%。', en: '20+ new assembly stations; annual line delivery up 40%.' },
+    content: {
+      zh: '寅铠二期厂房扩建工程正式竣工投用，新增标准化装配工位 20 余个、大型加工设备 8 台，年交付产线能力提升约 40%。新厂房配备整机老化测试区与模拟产线验证区，出厂前可对整线进行 72 小时连续运行测试，进一步保障交付设备的可靠性。',
+      en: 'Yinkai\'s phase-II plant expansion has been completed and put into operation, adding 20+ standardized assembly stations and 8 large machining machines, raising annual line delivery capacity by about 40%. The new plant features an aging test area and a simulated line validation zone, allowing 72-hour continuous full-line testing before shipment to further ensure delivery reliability.',
+    },
+  },
+  {
+    id: 12,
+    tag: { zh: '项目交付', en: 'Project Delivery' },
+    date: '2023-07-12',
+    title: { zh: '中东光伏产业园项目顺利投产', en: 'Middle East PV Industrial Park Project Commissioned' },
+    summary: { zh: '高温环境定制设计，连续运行稳定性获客户认可。', en: 'Custom design for high-temperature environments earns recognition.' },
+    content: {
+      zh: '寅铠为中东某光伏产业园定制设计的边框自动生产线顺利投产。针对当地高温、高粉尘环境，产线在散热系统、密封防护与除尘结构上做了专项设计，投产后连续运行稳定，各项指标达到合同要求。该项目的落地进一步拓展了公司在"一带一路"沿线市场的布局。',
+      en: 'The customized PV frame automatic lines supplied by Yinkai for a PV industrial park in the Middle East were successfully commissioned. Special designs for cooling, sealing and dust protection were made for the local high-temperature, high-dust environment. The line has been running stably since commissioning with all indicators meeting contract requirements, further expanding Yinkai\'s presence along the Belt and Road markets.',
+    },
+  },
 ]
 
 // 职位(desc:点击卡片展开的岗位详情,双语)
