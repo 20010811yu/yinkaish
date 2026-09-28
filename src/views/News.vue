@@ -9,16 +9,18 @@
 
     <section class="section">
       <div class="container">
-        <!-- 置顶头条(最新一条) -->
-        <article class="featured" data-reveal @click="$router.push(`/news/${featured.id}`)">
-          <div class="featured__body">
-            <span class="featured__chip">{{ $t('news.featured') }}</span>
-            <span class="featured__tag">{{ pick(featured.tag, locale) }}</span>
-            <h2>{{ pick(featured.title, locale) }}</h2>
-            <p>{{ pick(featured.summary, locale) }}</p>
-            <span class="featured__more">{{ $t('common.readMore') }} →</span>
-          </div>
-          <div class="featured__panel">
+        <!-- 置顶头条(最新一条) + 迷你日历:左右分离 -->
+        <div class="featured-row">
+          <article class="featured" data-reveal @click="$router.push(`/news/${featured.id}`)">
+            <div class="featured__body">
+              <span class="featured__chip">{{ $t('news.featured') }}</span>
+              <span class="featured__tag">{{ pick(featured.tag, locale) }}</span>
+              <h2>{{ pick(featured.title, locale) }}</h2>
+              <p>{{ pick(featured.summary, locale) }}</p>
+              <span class="featured__more">{{ $t('common.readMore') }} →</span>
+            </div>
+          </article>
+          <div class="cal-panel">
             <!-- 迷你日历:有新闻的日期圆点标注,点击跳详情 -->
             <div class="mini-cal" @click.stop>
               <div class="mini-cal__head">
@@ -37,7 +39,7 @@
               </div>
             </div>
           </div>
-        </article>
+        </div>
 
         <!-- 新闻网格 -->
         <div class="news-grid">
@@ -128,10 +130,15 @@ const onPickDay = (d) => {
 </script>
 
 <style scoped>
-/* 置顶头条:左内容 + 右品牌绿渐变日期面板 */
-.featured {
+/* 置顶头条 + 日历:左右独立两块 */
+.featured-row {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.featured {
   background: #fff;
   border: 1px solid var(--c-border);
   border-radius: var(--radius);
@@ -197,11 +204,13 @@ const onPickDay = (d) => {
 }
 
 /* 迷你日历面板 */
-.featured__panel {
+/* 日历面板:独立于头条卡片 */
+.cal-panel {
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.28) 60%, rgba(0, 166, 81, 0.55) 100%);
+  border-radius: var(--radius);
   padding: clamp(14px, 1.6vw, 22px);
   min-height: 220px;
 }
@@ -316,15 +325,8 @@ const onPickDay = (d) => {
 }
 
 @media (max-width: 1024px) {
-  .featured {
+  .featured-row {
     grid-template-columns: 1fr;
-  }
-
-  .featured__panel {
-    min-height: 140px;
-    flex-direction: row;
-    gap: 14px;
-    order: -1;
   }
 
   .news-grid {
