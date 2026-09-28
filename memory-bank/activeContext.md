@@ -1,11 +1,12 @@
 # activeContext.md — 当前上下文
 
 ## 当前焦点(2026-09-28)
-页脚高度缩至约 4/5(用户要求):AppFooter 全部垂直尺寸×0.8——grid padding 56/40→40/28、gap 40→32(移动 40/32→32/26、gap 28→22)、logo 36→29、二维码 96→77、字号降一档、底栏 18→12;1280 档实测 344→274px,四档视口零溢出。
-修复新闻分页第二页空白(ERR-006):useReveal 入场观察器只在挂载时扫描一次,翻页新渲染的 [data-reveal] 节点停留在透明态;改为返回 rescan(去重纳入观察),News.vue 翻页后 nextTick 重扫。preview 实测往返翻页正常。
+加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+宽松格式/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
 
 ### 最近变更
-- **修复新闻分页第二页空白(ERR-006)**:useReveal 改造+翻页重扫;详见 errorlog
+- **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms
+- **页脚高度缩至约 4/5(用户要求)**:AppFooter 全部垂直尺寸×0.8,1280 档实测 344→274px,四档视口零溢出
+- **修复新闻分页第二页空白(ERR-006)**:useReveal 翻页重扫;详见 errorlog
 
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 

@@ -15,6 +15,15 @@
       <input type="text" name="phone" />
       <textarea name="message"></textarea>
     </form>
+    <!-- Netlify Forms 影子表单:职位申请(含简历附件),部署时被 Netlify 解析注册;勿删 -->
+    <form name="job" data-netlify="true" netlify hidden>
+      <input type="text" name="position" />
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="file" name="resume" />
+    </form>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

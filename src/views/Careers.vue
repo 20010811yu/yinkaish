@@ -20,7 +20,7 @@
                 </p>
               </div>
               <div class="job__actions">
-                <el-button type="primary" round @click.stop="apply">{{ $t('careers.apply') }}</el-button>
+                <el-button type="primary" round @click.stop="apply(j)">{{ $t('careers.apply') }}</el-button>
                 <el-icon class="job__chevron" :class="{ 'job__chevron--open': expanded.has(j.id) }"><ArrowDown /></el-icon>
               </div>
             </div>
@@ -47,14 +47,53 @@
         </div>
       </div>
     </section>
+
+    <!-- 申请职位弹框:个人信息 + 简历附件(Netlify Forms) -->
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="min(92vw, 520px)" @closed="onDialogClosed">
+      <el-form ref="formRef" :model="form" :rules="rules" label-position="top" class="apply-form">
+        <el-form-item :label="$t('careers.form.position')">
+          <el-input :model-value="currentJob ? pick(currentJob.title, locale) : ''" disabled />
+        </el-form-item>
+        <el-form-item :label="$t('careers.form.name')" prop="name">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item :label="$t('careers.form.phone')" prop="phone">
+          <el-input v-model="form.phone" />
+        </el-form-item>
+        <el-form-item :label="$t('careers.form.email')" prop="email">
+          <el-input v-model="form.email" />
+        </el-form-item>
+        <el-form-item :label="$t('careers.form.resume')" prop="resume">
+          <el-upload :auto-upload="false" :show-file-list="false" accept=".pdf,.doc,.docx" :on-change="onResumeChange">
+            <el-button>{{ $t('careers.form.selectFile') }}</el-button>
+            <template #tip>
+              <div class="apply-form__tip">{{ $t('careers.form.resumeTip') }}</div>
+              <div v-if="resumeFile" class="apply-form__file">
+                <el-icon><Document /></el-icon>
+                <span>{{ resumeFile.name }}</span>
+                <el-icon class="apply-form__file-x" @click="removeResume"><Close /></el-icon>
+              </div>
+            </template>
+          </el-upload>
+        </el-form-item>
+        <el-form-item :label="$t('careers.form.message')" prop="message">
+          <el-input v-model="form.message" type="textarea" :rows="4" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button round @click="dialogVisible = false">{{ $t('careers.form.cancel') }}</el-button>
+        <el-button type="primary" round :loading="submitting" @click="submit">{{ $t('careers.form.submit') }}</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
+
 <script setup>
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
-  Opportunity, Coin, Umbrella, AlarmClock, Reading, Watermelon, ArrowDown,
+  Opportunity, Coin, Umbrella, AlarmClock, Reading, Watermelon, ArrowDown, Document, Close,
 } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
@@ -74,8 +113,89 @@ const toggle = (id) => {
   expanded.value = next
 }
 
-const apply = () => {
-  ElMessage.info(t('contact.form.success'))
+/* ---- 申请职位弹框 ---- */
+const dialogVisible = ref(false)
+const currentJob = ref(null)
+const formRef = ref()
+const submitting = ref(false)
+const resumeFile = ref(null) // 简历原始 File 对象
+const MAX_RESUME_SIZE = 10 * 1024 * 1024 // Netlify 单次提交上限
+
+const form = reactive({ name: '', phone: '', email: '', resume: '', message: '' })
+
+const dialogTitle = computed(() =>
+  currentJob.value
+    ? t('careers.form.title', { position: pick(currentJob.value.title, locale.value) })
+    : t('careers.apply')
+)
+
+// message 用函数保证语言切换后校验提示跟随
+const rules = {
+  name: [{ required: true, message: () => t('careers.form.name'), trigger: 'blur' }],
+  phone: [
+    { required: true, message: () => t('careers.form.phone'), trigger: 'blur' },
+    { pattern: /^[+()\d\s-]{5,20}$/, message: () => t('careers.form.phone'), trigger: 'blur' },
+  ],
+  email: [{ type: 'email', message: () => t('careers.form.email'), trigger: 'blur' }],
+  resume: [{ required: true, message: () => t('careers.form.resume'), trigger: 'change' }],
+}
+
+const apply = (j) => {
+  currentJob.value = j
+  dialogVisible.value = true
+}
+
+const onResumeChange = (uploadFile) => {
+  const raw = uploadFile?.raw
+  if (!raw) return
+  if (!/\.(pdf|docx?)$/i.test(raw.name)) {
+    ElMessage.error(t('careers.form.resumeType'))
+    return
+  }
+  if (raw.size > MAX_RESUME_SIZE) {
+    ElMessage.error(t('careers.form.resumeSize'))
+    return
+  }
+  resumeFile.value = raw
+  form.resume = raw.name
+  formRef.value?.clearValidate('resume')
+}
+
+const removeResume = () => {
+  resumeFile.value = null
+  form.resume = ''
+  formRef.value?.clearValidate('resume')
+}
+
+const onDialogClosed = () => {
+  formRef.value?.resetFields()
+  resumeFile.value = null
+}
+
+const submit = () => {
+  formRef.value.validate(async (valid) => {
+    if (!valid) return
+    submitting.value = true
+    try {
+      // 附件走 multipart:用 FormData,不手动设 Content-Type(浏览器自带 boundary)
+      const fd = new FormData()
+      fd.set('form-name', 'job')
+      fd.set('position', pick(currentJob.value.title, locale.value))
+      fd.set('name', form.name)
+      fd.set('phone', form.phone)
+      fd.set('email', form.email)
+      fd.set('message', form.message)
+      fd.set('resume', resumeFile.value, resumeFile.value.name)
+      const res = await fetch('/', { method: 'POST', body: fd })
+      if (!res.ok) throw new Error(`status ${res.status}`)
+      ElMessage.success(t('careers.form.success'))
+      dialogVisible.value = false
+    } catch {
+      ElMessage.error(t('careers.form.fail'))
+    } finally {
+      submitting.value = false
+    }
+  })
 }
 </script>
 
@@ -140,6 +260,44 @@ const apply = () => {
 .job h3 {
   font-size: 17px;
   margin-bottom: 8px;
+}
+
+/* 申请弹框 */
+.apply-form__tip {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  margin-top: 4px;
+}
+
+.apply-form__file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: var(--c-primary-light);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--c-text);
+  max-width: 100%;
+}
+
+.apply-form__file span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.apply-form__file-x {
+  margin-left: auto;
+  flex: none;
+  cursor: pointer;
+  color: var(--c-text-secondary);
+}
+
+.apply-form__file-x:hover {
+  color: var(--c-primary);
 }
 
 .job__meta {
