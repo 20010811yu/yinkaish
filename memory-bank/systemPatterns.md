@@ -3,7 +3,7 @@
 ## 架构
 Vue 3(`<script setup>`)+ Vite SPA:
 - `App.vue` = AppNavbar + AppFooter + `<router-view>`
-- 路由:`/`(Home)、`/about`、`/services`、`/team`、`/news`、`/news/:id`、`/careers`、`/contact`;createWebHistory
+- 路由:`/`(Home)、`/about`、`/products`(原 `/services`,2026-09-22 改,旧路径重定向)、`/news`、`/news/:id`、`/careers`、`/contact`;createWebHistory
 - i18n:vue-i18n 实例单例,locale 持久化 localStorage(key: `locale`),Element Plus locale 经 computed 跟随
 - 数据流:`src/data/index.js` 导出常量数组(services/milestones/team/news/jobs/welfares)→ views/components 只读消费;`src/data/lang.js` 提供 `pick(field, locale)` 取双语字段
 - 首页顶部:`components/HeroCarousel.vue`(el-carousel 全宽轮播,slides 数组图片 + i18n key,图片素材在 `src/assets/`)
