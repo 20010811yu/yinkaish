@@ -4,12 +4,12 @@
       <div class="container">
         <div class="detail-hero__top">
           <RouterLink class="detail-hero__back" to="/news">← {{ $t('common.backToList') }}</RouterLink>
-          <span v-if="article" class="detail-hero__meta">
-            <el-icon><Calendar /></el-icon>
-            {{ $t('newsDetail.date') }}：{{ article.date }}
-          </span>
         </div>
         <h1 class="detail-hero__title">{{ title || $t('newsDetail.notFound') }}</h1>
+        <div v-if="article" class="detail-hero__meta">
+          <el-icon><Calendar /></el-icon>
+          {{ $t('newsDetail.date') }}：{{ article.date }}
+        </div>
       </div>
     </section>
 
@@ -78,12 +78,14 @@ const paragraphs = computed(() => {
   color: var(--c-text);
   line-height: 1.4;
   margin-bottom: 14px;
+  text-align: center;
   overflow-wrap: anywhere;
 }
 
 .detail-hero__meta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 6px;
   color: var(--c-text-secondary);
   font-size: 0.9375rem;
