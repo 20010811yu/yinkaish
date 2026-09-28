@@ -4,7 +4,6 @@
       <div class="container">
         <div class="detail-hero__top">
           <RouterLink class="detail-hero__back" to="/news">← {{ $t('common.backToList') }}</RouterLink>
-          <span v-if="article" class="detail-hero__tag">{{ pick(article.tag, locale) }}</span>
           <span v-if="article" class="detail-hero__meta">
             <el-icon><Calendar /></el-icon>
             {{ $t('newsDetail.date') }}：{{ article.date }}
@@ -71,16 +70,6 @@ const paragraphs = computed(() => {
 
 .detail-hero__back:hover {
   color: var(--c-primary);
-}
-
-.detail-hero__tag {
-  margin-left: auto;
-  padding: 4px 14px;
-  border-radius: 999px;
-  background: rgb(0 166 81 / 10%);
-  color: var(--c-primary);
-  font-size: 0.8125rem;
-  white-space: nowrap;
 }
 
 .detail-hero__title {
