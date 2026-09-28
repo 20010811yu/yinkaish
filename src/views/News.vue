@@ -201,16 +201,16 @@ const onPickDay = (d) => {
   align-items: center;
   justify-content: center;
   background: linear-gradient(160deg, var(--c-primary-light) 0%, rgba(0, 166, 81, 0.28) 60%, rgba(0, 166, 81, 0.55) 100%);
-  padding: clamp(18px, 2vw, 28px);
+  padding: clamp(14px, 1.6vw, 22px);
   min-height: 220px;
 }
 
 .mini-cal {
   width: 100%;
-  max-width: 320px;
-  background: rgb(255 255 255 / 92%);
-  border-radius: 14px;
-  padding: 14px 16px 12px;
+  max-width: 400px;
+  background: linear-gradient(160deg, #eaf8f0 0%, #d6f0e1 60%, #c0e7d2 100%); /* 与所在面板同系的浅绿渐变 */
+  border-radius: 16px;
+  padding: clamp(16px, 2vw, 26px) clamp(18px, 2.2vw, 30px) clamp(14px, 1.8vw, 22px);
   box-shadow: 0 6px 18px rgb(10 92 51 / 12%);
 }
 
