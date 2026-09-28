@@ -73,11 +73,6 @@
 
         <div class="adv__fig" data-reveal data-reveal-delay="1">
           <img :src="heroCity" alt="YINKAI smart city" />
-          <span class="fig-corner fig-corner--tl" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--tr" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--bl" aria-hidden="true"></span>
-          <span class="fig-corner fig-corner--br" aria-hidden="true"></span>
-          <span class="fig-scan" aria-hidden="true"></span>
         </div>
       </div>
 
@@ -420,9 +415,6 @@ onBeforeUnmount(() => {
 
 .adv__fig {
   min-width: 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius);
 }
 
 .adv__fig img {
@@ -432,20 +424,6 @@ onBeforeUnmount(() => {
   box-shadow: var(--shadow);
   will-change: transform;
 }
-
-/* 取景框四角:进场时从外向内收拢 */
-.fig-corner {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border: 3px solid var(--c-primary);
-  z-index: 1;
-}
-
-.fig-corner--tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
-.fig-corner--tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
-.fig-corner--bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
-.fig-corner--br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
 
 /* 优势小图标 */
 .adv-list__icon {
@@ -488,35 +466,6 @@ onBeforeUnmount(() => {
   @keyframes dot-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
-  }
-
-  /* 取景框:图片进场后四角收拢 */
-  .fig-corner {
-    opacity: 0;
-    transform: scale(1.6);
-    transition: opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s;
-  }
-
-  .adv__fig.revealed .fig-corner {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* 扫描光带:缓慢下扫循环 */
-  .fig-scan {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -70px;
-    height: 64px;
-    z-index: 1;
-    background: linear-gradient(180deg, transparent, rgba(87, 227, 154, 0.16), transparent);
-    animation: fig-scan 4.5s ease-in-out 1.4s infinite;
-  }
-
-  @keyframes fig-scan {
-    0% { top: -70px; }
-    65%, 100% { top: 100%; }
   }
 
   /* 优势图标:描边绘制(随条目错峰) */
