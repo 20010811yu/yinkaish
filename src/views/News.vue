@@ -41,11 +41,23 @@
           </div>
         </div>
 
-        <!-- 新闻网格 -->
+        <!-- 新闻网格:每页 6 条(2 行 × 3 列),分页显示 -->
         <div class="news-grid">
-          <div v-for="(n, i) in rest" :key="n.id" data-reveal :data-reveal-delay="(i % 3) + 1">
+          <div v-for="(n, i) in pagedNews" :key="n.id" data-reveal :data-reveal-delay="(i % 3) + 1" :key-extra="page">
             <NewsCard :item="n" />
           </div>
+        </div>
+
+        <!-- 分页(仅多于一页时显示) -->
+        <div v-if="totalPages > 1" class="pager">
+          <el-pagination
+            v-model:current-page="page"
+            :page-size="pageSize"
+            :total="rest.length"
+            layout="prev, pager, next"
+            background
+            @current-change="onPageChange"
+          />
         </div>
       </div>
     </section>
@@ -69,6 +81,17 @@ const featured = computed(() => news[0])
 const rest = computed(() => news.slice(1))
 const [featuredYear, featuredMonth, featuredDay] = featured.value.date.split('-')
 const featuredYearMonth = `${featuredYear}.${featuredMonth}`
+
+/* ---- 分页:每页 6 条(2 行 × 3 列);移动端单列每页 4 条 ---- */
+const page = ref(1)
+const isMobile = () => window.matchMedia('(max-width: 768px)').matches
+const pageSize = computed(() => (isMobile() ? 4 : 6))
+const totalPages = computed(() => Math.ceil(rest.value.length / pageSize.value))
+const pagedNews = computed(() => rest.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value))
+const onPageChange = () => {
+  const el = document.querySelector('.news-grid')
+  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 140, behavior: 'smooth' })
+}
 
 /* ---- 迷你日历 ---- */
 // 新闻日期 → 新闻 id 映射
@@ -322,6 +345,13 @@ const onPickDay = (d) => {
 
 .news-grid > * {
   min-width: 0;
+}
+
+/* 分页 */
+.pager {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 3.5vw, 40px);
 }
 
 @media (max-width: 1024px) {
