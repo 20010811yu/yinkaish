@@ -69,8 +69,8 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 .footer__grid {
   display: grid;
   grid-template-columns: 1.5fr 0.9fr 1.3fr 1fr;
-  gap: 40px;
-  padding: 56px 24px 40px;
+  gap: 32px;
+  padding: 40px 24px 28px;
 }
 
 .footer__logo-row {
@@ -83,21 +83,21 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 }
 
 .footer__logo-img {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 29px;
+  height: 29px;
+  border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .footer__slogan {
-  margin-top: 12px;
-  font-size: 0.875rem;
+  margin-top: 10px;
+  font-size: 0.8125rem;
 }
 
 .footer__addr {
-  margin-top: 14px;
-  padding-top: 14px;
+  margin-top: 11px;
+  padding-top: 11px;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
   font-size: 0.875rem;
   opacity: 0.92;
@@ -107,13 +107,13 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 
 .footer__col h4 {
   color: #fff;
-  font-size: 0.9375rem;
-  margin-bottom: 14px;
+  font-size: 0.875rem;
+  margin-bottom: 9px;
 }
 
 .footer__col li {
-  font-size: 0.875rem;
-  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  margin-bottom: 5px;
 }
 
 .footer__col a:hover {
@@ -122,35 +122,35 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 
 .footer__qr {
   display: flex;
-  gap: 14px;
+  gap: 11px;
 }
 
 .footer__qr-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
 }
 
 .footer__qr-item img {
-  width: 96px;
-  height: 96px;
-  padding: 4px;
+  width: 77px;
+  height: 77px;
+  padding: 3px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   object-fit: cover;
   display: block;
 }
 
 .footer__qr-item figcaption {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
 .footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 18px 0;
+  padding: 12px 0;
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -165,8 +165,8 @@ import douyinQr from '../assets/qrcode/douyin.jpg'
 @media (max-width: 768px) {
   .footer__grid {
     grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 40px 24px 32px;
+    gap: 22px;
+    padding: 32px 24px 26px;
   }
 }
 </style>
