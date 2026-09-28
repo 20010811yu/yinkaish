@@ -207,11 +207,9 @@ const onPickDay = (d) => {
 
 .mini-cal {
   width: 100%;
-  max-width: 400px;
-  background: linear-gradient(160deg, #eaf8f0 0%, #d6f0e1 60%, #c0e7d2 100%); /* 与所在面板同系的浅绿渐变 */
-  border-radius: 16px;
-  padding: clamp(16px, 2vw, 26px) clamp(18px, 2.2vw, 30px) clamp(14px, 1.8vw, 22px);
-  box-shadow: 0 6px 18px rgb(10 92 51 / 12%);
+  max-width: 460px;
+  background: linear-gradient(180deg, #f2fbf6 0%, #d9f2e4 45%, #a8dfc2 100%); /* 自上而下渐变加深 */
+  padding: clamp(18px, 2.2vw, 30px) clamp(20px, 2.4vw, 34px) clamp(16px, 2vw, 26px);
 }
 
 .mini-cal__head {
@@ -228,13 +226,13 @@ const onPickDay = (d) => {
 }
 
 .mini-cal__nav {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   border: none;
   border-radius: 8px;
   background: var(--c-primary-light);
   color: var(--c-primary-dark);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
   transition: background 0.2s;
@@ -252,9 +250,9 @@ const onPickDay = (d) => {
 
 .mini-cal__week span {
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--c-text-secondary);
-  padding: 4px 0;
+  padding: 5px 0;
 }
 
 .mini-cal__cell {
@@ -262,9 +260,9 @@ const onPickDay = (d) => {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 3px 0 1px;
+  padding: 4px 0 2px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--c-text);
   cursor: default;
   min-height: 34px;
