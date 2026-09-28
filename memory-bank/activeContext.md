@@ -1,6 +1,11 @@
 # activeContext.md — 当前上下文
 
-## 当前焦点(2026-09-22)
+## 当前焦点(2026-09-28)
+修复新闻分页第二页空白(ERR-006):useReveal 入场观察器只在挂载时扫描一次,翻页新渲染的 [data-reveal] 节点停留在透明态;改为返回 rescan(去重纳入观察),News.vue 翻页后 nextTick 重扫。preview 实测往返翻页正常。
+
+### 最近变更
+- **修复新闻分页第二页空白(ERR-006)**:useReveal 改造+翻页重扫;详见 errorlog
+
 Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
 
 ### 最近变更

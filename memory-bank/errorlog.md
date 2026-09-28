@@ -58,7 +58,18 @@
 - **附注(2026-09-20)**:后两次修复尝试中,自研 SVG 内联方案因相对坐标取整漂移导致地图碎裂、jsvectormap 因 markers API 内部缺陷(createMarkers 遍历到 undefined config)弃用,最终采用 ECharts geo+经纬度打点方案;另发现跨 180° 经线的国家环(斐济/俄罗斯)在 ECharts 中会画出横贯线伪影,须过滤该类环
 - **状态**:🟢 已解决
 
-## 防回归清单(编码前必查)
+### ERR-006 新闻分页第二页空白([data-reveal] 入场观察器只在挂载时扫描一次)
+- **错误现象**:新闻页翻到第 2 页后网格区域完全空白(卡片在 DOM 中但透明不可见),翻回第 1 页再翻第 2 页仍空白
+- **发生上下文**:新闻网格分页功能(每页 6 条,el-pagination)交付后用户反馈
+- **发生时间**:2026-09-28
+- **根本原因**:`useReveal` 在 onMounted 时对当时存在的 `[data-reveal]` 节点做一次性 `querySelectorAll` 并观察;翻页后 v-for 渲染出全新节点,既无 `.revealed` 类也未被观察,永久停留在入场前的透明状态
+- **解决方式**:`useReveal` 改为返回 `{ rescan }`(按 `data-reveal-bound` 标记去重,把新节点纳入同一观察器;reduced-motion 下直接加 revealed);News.vue 中 `watch(page, () => nextTick(rescanReveal))` 在翻页渲染后重扫
+- **解决时间**:2026-09-28
+- **验证结果**:preview 实测第 1→2→1→2 往返翻页,第 2 页 5 张卡片全部 revealed 且可见,零横向溢出;build 通过
+- **教训**:动态重渲染(分页/筛选/加载更多)产生的 `[data-reveal]` 新节点必须在 DOM 更新后 rescan;一次性 querySelectorAll 的观察器模式对 v-for 动态内容天然失效
+- **状态**:🟢 已解决
+
+
 1. Element Plus 禁全量引入(`app.use(ElementPlus)` + 全量样式),必须 resolver 按需;ElMessage 等函数式组件需单独引入样式
 2. 文案禁止硬编码,必须入 i18n zh/en 双包;新增 key 中英同步
 3. Element Plus locale 必须跟随 vue-i18n locale 切换
@@ -70,3 +81,4 @@
 9. **布局间距禁用 100vw**(见 ERR-003):有纵向滚动条时 100vw 偏大一个滚动条宽,用 % / clamp 代替
 10. 外部 SVG 做素材时先校验 XML 完整性(网络下载可能被截断,jsdelivr 大文件曾缺尾部;用 npm pack 拿完整包),压缩空白时不得吞掉标签间必要分隔
 11. **地图打点等坐标类定位禁止目测**(见 ERR-004):百分比必须由数据源计算;容器 aspect-ratio 必须与图片真实比例一致
+12. **v-for 动态重渲染(分页/筛选/加载更多)后必须调用 useReveal 返回的 rescan()**(见 ERR-006),否则新节点停留在透明状态

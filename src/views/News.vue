@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { news } from '../data'
@@ -75,7 +75,7 @@ import NewsCard from '../components/NewsCard.vue'
 
 const { locale } = useI18n()
 const router = useRouter()
-useReveal()
+const { rescan: rescanReveal } = useReveal()
 
 const featured = computed(() => news[0])
 const rest = computed(() => news.slice(1))
@@ -88,6 +88,8 @@ const isMobile = () => window.matchMedia('(max-width: 768px)').matches
 const pageSize = computed(() => (isMobile() ? 4 : 6))
 const totalPages = computed(() => Math.ceil(rest.value.length / pageSize.value))
 const pagedNews = computed(() => rest.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value))
+// 翻页后新渲染的卡片需重新纳入入场观察器,否则停留在透明状态(第二页空白)
+watch(page, () => nextTick(rescanReveal))
 const onPageChange = () => {
   const el = document.querySelector('.news-grid')
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 140, behavior: 'smooth' })
