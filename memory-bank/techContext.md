@@ -30,3 +30,8 @@
 - **凭据**:server/.env(DB_PASSWORD 等,已 gitignore;模板 .env.example);**本机 mysql 客户端曾因 my.ini [client] 段 skip-grant-tables 全部不可用(已修,ERR-008)**
 - **前端对接**:src/api/data.js 启动水合(2.5s 超时,失败保持 src/data 静态兜底);src/data 六个动态导出为 reactive;图片文件名→URL 映射在 src/data/assets.js;dev 代理 /api→localhost:3001(vite.config.js)
 - **部署现状**:Netlify 仍是纯静态托管——线上站点走静态兜底数据,后端接口需自行部署(本地 3001 或服务器)后前端 /api 才能命中真实数据
+
+## 管理员端(2026-09-29 新增)
+- **数据库**:admins 表(username 唯一/password_hash bcrypt/is_active);迁移命令 `cd server && npm run migrate`(幂等,空表时内置默认账号 admin/admin123,提醒首登改密)
+- **后端**:jsonwebtoken(JWT 12h,密钥 server/.env 的 JWT_SECRET)+ bcryptjs;登录 POST /api/admin/login,鉴权中间件 requireAdmin 保护 /api/admin/*(除登录);CRUD 通用于 news/jobs/honors/partners/product-categories/products + 参数组整存整取(PUT products/:id/params);**news/jobs 主键非自增,新增时后端自动分配 MAX(id)+1**;news 管理列表用 DATE_FORMAT 输出日期(mysql2 DATE 默认转 Date 对象)
+- **前端**:/admin 独立布局(App.vue 对 /admin 前缀隐藏官网 Navbar/Footer);路由守卫查 localStorage yk_admin_token;src/api/admin.js 封装 fetch(401 清会话跳登录);管理页面 src/views/admin/(登录/布局/新闻/职位/产品三级/荣誉/伙伴);图片字段从 src/data/assets.js 的文件名映射下拉选择;admin.* 双语文案在 i18n zh/en 的独立导出,由 i18n/index.js 合并

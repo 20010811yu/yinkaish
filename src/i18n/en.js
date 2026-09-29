@@ -184,3 +184,30 @@ export default {
     copyright: '© 2026 Shanghai YK Precision Machinery Manufacturing Co.,Ltd. All rights reserved.',
   },
 }
+
+// Admin console (internal use)
+export const adminEn = {
+  admin: {
+    title: 'Website Content Admin',
+    menu: { news: 'News', jobs: 'Jobs', products: 'Products', honors: 'Honors', partners: 'Partners' },
+    login: { username: 'Username', password: 'Password', submit: 'Sign in', required: 'Username and password required', welcome: 'Welcome, {name}' },
+    layout: { logout: 'Sign out', changePwd: 'Change password' },
+    pwd: { new: 'New password', confirm: 'Confirm password', rule: 'New password must be at least 6 characters', mismatch: 'Passwords do not match', done: 'Password changed' },
+    common: { add: 'Add', edit: 'Edit', delete: 'Delete', save: 'Save', cancel: 'Cancel', saved: 'Saved', deleted: 'Deleted', warning: 'Confirm' },
+    fields: {
+      date: 'Date', tag: 'Tag', tagZh: 'Tag (ZH)', tagEn: 'Tag (EN)', titleZh: 'Title (ZH)', titleEn: 'Title (EN)',
+      summaryZh: 'Summary (ZH)', summaryEn: 'Summary (EN)', contentZh: 'Content (ZH)', contentEn: 'Content (EN)', published: 'Published',
+      dept: 'Dept', deptZh: 'Dept (ZH)', deptEn: 'Dept (EN)', location: 'Location', locationZh: 'Location (ZH)', locationEn: 'Location (EN)',
+      descZh: 'Description (ZH)', descEn: 'Description (EN)', active: 'Active', nameZh: 'Name (ZH)', nameEn: 'Name (EN)',
+      image: 'Image file', logo: 'Logo file', preview: 'Preview', sort: 'Sort', model: 'Model', valueZh: 'Value (ZH)', valueEn: 'Value (EN)', labelZh: 'Label (ZH)', labelEn: 'Label (EN)', actions: 'Actions',
+    },
+    rule: {
+      addCategory: 'Add Category', addProduct: 'Add Product', addParamRow: 'Add Row', params: 'Params',
+      category: 'Product Category', product: 'Product', gallery: 'Gallery (optional)',
+      titleRequired: 'Chinese and English titles are required', nameRequired: 'Chinese and English names are required', partnerRequired: 'Name and slug are required',
+      categoryRequired: 'Slug and Chinese name are required', productRequired: 'Model and image are required',
+      categoryNotEmpty: 'Category still has products; remove or move them first',
+      confirmDelete: 'Delete this record? This cannot be undone', confirmDeleteParams: 'Deleting the product also deletes its parameter rows. Continue?',
+    },
+  },
+}

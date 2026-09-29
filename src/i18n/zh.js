@@ -184,3 +184,30 @@ export default {
     copyright: '© 2026 上海寅铠精密机械制造有限公司 版权所有',
   },
 }
+
+// 管理员端(内部使用)
+export const adminZh = {
+  admin: {
+    title: '官网内容管理',
+    menu: { news: '新闻管理', jobs: '职位管理', products: '产品管理', honors: '荣誉管理', partners: '伙伴管理' },
+    login: { username: '用户名', password: '密码', submit: '登 录', required: '请输入用户名和密码', welcome: '欢迎,{name}' },
+    layout: { logout: '退出登录', changePwd: '修改密码' },
+    pwd: { new: '新密码', confirm: '确认新密码', rule: '新密码至少 6 位', mismatch: '两次输入的新密码不一致', done: '密码已修改' },
+    common: { add: '新增', edit: '编辑', delete: '删除', save: '保 存', cancel: '取 消', saved: '已保存', deleted: '已删除', warning: '确认操作' },
+    fields: {
+      date: '发布日期', tag: '分类', tagZh: '分类(中)', tagEn: '分类(英)', titleZh: '标题(中)', titleEn: '标题(英)',
+      summaryZh: '摘要(中)', summaryEn: '摘要(英)', contentZh: '正文(中)', contentEn: '正文(英)', published: '已发布',
+      dept: '部门', deptZh: '部门(中)', deptEn: '部门(英)', location: '地点', locationZh: '地点(中)', locationEn: '地点(英)',
+      descZh: '描述(中)', descEn: '描述(英)', active: '在招', nameZh: '名称(中)', nameEn: '名称(英)',
+      image: '图片文件', logo: 'Logo 文件', preview: '预览', sort: '排序', model: '型号', valueZh: '值(中)', valueEn: '值(英)', labelZh: '参数名(中)', labelEn: '参数名(英)', actions: '操作',
+    },
+    rule: {
+      addCategory: '新增分类', addProduct: '新增产品', addParamRow: '新增参数行', params: '参数',
+      category: '产品分类', product: '产品', gallery: '多图画廊(可选)',
+      titleRequired: '请填写中英文标题', nameRequired: '请填写中英文名称', partnerRequired: '请填写名称与 Slug',
+      categoryRequired: '请填写 Slug 与中文名称', productRequired: '请填写型号并选择图片',
+      categoryNotEmpty: '该分类下仍有产品,请先删除或转移产品',
+      confirmDelete: '确定删除该条数据?此操作不可恢复', confirmDeleteParams: '删除产品将同时删除其参数行,确定?',
+    },
+  },
+}

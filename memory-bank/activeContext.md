@@ -1,6 +1,6 @@
-# activeContext.md — 当前上下文
-
-## 当前焦点(2026-09-29):MySQL 数据库 + 后端内容接口
+## 当前焦点(2026-09-29):管理员端(/admin)
+官网管理员端已交付:admins 表+JWT 多账号登录(默认 admin/admin123,提醒首登改密);后端 /api/admin/* 鉴权 CRUD(新闻/职位/产品分类/产品/参数/荣誉/伙伴);前端 /admin 独立布局+五个管理页(Element Plus,admin.* 双语文案);图片字段下拉选现有素材文件名。实测:401 拦截、登录、新闻 UI 增删、参数组保存、前台即时可见。**注意:news/jobs 主键非自增,后端新增时自动 MAX(id)+1;管理列表 news_date 用 DATE_FORMAT**。暂无图片上传(素材文件名机制),后续可扩展。
+## 上一焦点(2026-09-29):MySQL 数据库 + 后端内容接口(已完成)
 用户要求把动态内容数据迁入 MySQL。方案已定并实施:
 - **数据库 yinkai_web**(utf8mb4):6 组表——news / jobs / product_categories / products(gallery JSON) / product_params / honors / partners;双语列 `_zh/_en` 后缀;图片列只存文件名。**不含发展历程(用户明确排除)**
 - **后端 server/**:Express + mysql2 + dotenv + cors,ESM;只读 GET /api/news|jobs|products|honors|partners(/api/health);端口 3001;`server/.env` 存连接信息(已 gitignore,模板 .env.example)

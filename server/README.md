@@ -29,3 +29,11 @@ Express + mysql2 只读内容接口，为官网提供新闻/职位/产品/荣誉
 - 开发：`vite.config.js` 已配置 `/api` 代理到 `http://localhost:3001`
 - 前端启动时 `src/api/data.js` 拉取各接口并原位替换 `src/data/index.js` 的 reactive 数组；接口不可用时自动保留静态兜底数据，站点功能不受影响
 - 数据库图片列只存文件名（如 `yk-6a_banner.png`），由 `src/data/assets.js` 的 glob 映射解析为打包后 URL
+
+## 管理员端(/admin)
+
+- 访问 `/admin`(如 http://localhost:5174/yinkaish/admin/login),默认账号 `admin` / `admin123`,**首次登录请立即在右上角「修改密码」改密**
+- 管理范围:新闻(增删改+发布/下架)、职位(增删改+在招/停招)、产品(分类/产品/参数三级维护)、荣誉、合作伙伴
+- 登录态为 JWT(12h),存储在浏览器 localStorage;多账号可向 admins 表插入新行(密码用 bcrypt 哈希)
+- 图片字段从现有素材文件名中选择(由前端资源映射解析为实际 URL);新增素材需放入 src/assets 对应目录
+- 迁移命令:`npm run migrate`(建 admins 表+默认账号,幂等)

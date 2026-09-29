@@ -16,6 +16,20 @@ const routes = [
   { path: '/news/:id', name: 'NewsDetail', component: () => import('../views/NewsDetail.vue') },
   { path: '/careers', name: 'Careers', component: () => import('../views/Careers.vue') },
   { path: '/contact', name: 'Contact', component: () => import('../views/Contact.vue') },
+  // 管理端(独立布局,不走官网导航;须放在通配重定向之前)
+  { path: '/admin/login', name: 'AdminLogin', component: () => import('../views/admin/AdminLogin.vue') },
+  {
+    path: '/admin',
+    component: () => import('../views/admin/AdminLayout.vue'),
+    children: [
+      { path: '', redirect: '/admin/news' },
+      { path: 'news', name: 'AdminNews', component: () => import('../views/admin/AdminNews.vue') },
+      { path: 'jobs', name: 'AdminJobs', component: () => import('../views/admin/AdminJobs.vue') },
+      { path: 'products', name: 'AdminProducts', component: () => import('../views/admin/AdminProducts.vue') },
+      { path: 'honors', name: 'AdminHonors', component: () => import('../views/admin/AdminHonors.vue') },
+      { path: 'partners', name: 'AdminPartners', component: () => import('../views/admin/AdminPartners.vue') },
+    ],
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
@@ -25,6 +39,13 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 }
   },
+})
+
+// 管理端守卫:未登录一律去登录页(登录页本身放行)
+router.beforeEach((to) => {
+  if (to.path.startsWith('/admin') && to.path !== '/admin/login' && !localStorage.getItem('yk_admin_token')) {
+    return '/admin/login'
+  }
 })
 
 export default router
