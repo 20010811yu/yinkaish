@@ -34,4 +34,5 @@
 ## 管理员端(2026-09-29 新增)
 - **数据库**:admins 表(username 唯一/password_hash bcrypt/is_active);迁移命令 `cd server && npm run migrate`(幂等,空表时内置默认账号 admin/admin123,提醒首登改密)
 - **后端**:jsonwebtoken(JWT 12h,密钥 server/.env 的 JWT_SECRET)+ bcryptjs;登录 POST /api/admin/login,鉴权中间件 requireAdmin 保护 /api/admin/*(除登录);CRUD 通用于 news/jobs/honors/partners/product-categories/products + 参数组整存整取(PUT products/:id/params);**news/jobs 主键非自增,新增时后端自动分配 MAX(id)+1**;news 管理列表用 DATE_FORMAT 输出日期(mysql2 DATE 默认转 Date 对象)
+- **登录验证**:必填校验(el-form rules)+自实现滑块拼图验证(SlideVerify.vue,canvas 挖缺口/≤6px 容差/失败回弹重置/登录失败后重置防重放;dev 构建在根节点暴露 data-dev-target 供自动化测试,生产不输出);登录按钮在滑块通过前置灰
 - **前端**:/admin 独立布局(App.vue 对 /admin 前缀隐藏官网 Navbar/Footer);路由守卫查 localStorage yk_admin_token;src/api/admin.js 封装 fetch(401 清会话跳登录);管理页面 src/views/admin/(登录/布局/新闻/职位/产品三级/荣誉/伙伴);图片字段从 src/data/assets.js 的文件名映射下拉选择;admin.* 双语文案在 i18n zh/en 的独立导出,由 i18n/index.js 合并
