@@ -9,6 +9,8 @@ router.get('/products', async (req, res, next) => {
     const categories = await query('SELECT * FROM product_categories ORDER BY sort')
     const products = await query('SELECT * FROM products ORDER BY category_id, sort')
     const params = await query('SELECT * FROM product_params ORDER BY product_id, sort')
+    // mysql2 会把 JSON 列解析为对象,保险起见兼容字符串形态
+    const parseGallery = (g) => (typeof g === 'string' ? JSON.parse(g) : g)
 
     const paramsByProduct = new Map()
     for (const p of params) {
@@ -26,7 +28,7 @@ router.get('/products', async (req, res, next) => {
         model: prod.model,
         tag: { zh: prod.tag_zh, en: prod.tag_en },
         image: prod.image,
-        gallery: prod.gallery ? JSON.parse(prod.gallery) : undefined,
+        gallery: parseGallery(prod.gallery),
         desc: { zh: prod.desc_zh, en: prod.desc_en },
         params: paramsByProduct.get(prod.id) || [],
       }
