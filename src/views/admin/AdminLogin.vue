@@ -5,7 +5,6 @@
         <img src="../../assets/logo.png" alt="logo" class="login__logo" />
         <span class="login__company">{{ $t('brand.full') }}</span>
       </div>
-      <h1 class="login__title">{{ $t('admin.title') }}</h1>
       <el-form :model="form" @submit.prevent="onSubmit">
         <el-form-item :label="$t('admin.login.username')">
           <el-input v-model="form.username" data-testid="admin-username" autocomplete="username" />
@@ -70,7 +69,7 @@ const onSubmit = async () => {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
 }
 
 .login__logo {
@@ -84,14 +83,6 @@ const onSubmit = async () => {
   font-weight: 600;
   color: var(--c-primary, #00a651);
   overflow-wrap: anywhere;
-}
-
-.login__title {
-  text-align: center;
-  margin: 0 0 20px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #909399;
 }
 
 .login__btn {
