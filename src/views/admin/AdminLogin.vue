@@ -12,9 +12,10 @@
         <el-form-item :label="$t('admin.login.password')" prop="password">
           <el-input v-model="form.password" data-testid="admin-password" type="password" show-password autocomplete="current-password" />
         </el-form-item>
-        <el-button type="primary" class="login__btn" :loading="loading" native-type="submit" data-testid="admin-login-btn">
+        <el-button type="primary" class="login__btn" :loading="loading" :disabled="!slideOk" native-type="submit" data-testid="admin-login-btn">
           {{ $t('admin.login.submit') }}
         </el-button>
+        <SlideVerify ref="slideRef" class="login__slide" @verified="slideOk = true" />
       </el-form>
     </el-card>
   </div>
@@ -26,12 +27,15 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { adminApi, setSession } from '../../api/admin'
+import SlideVerify from './SlideVerify.vue'
 
 const { t } = useI18n()
 const router = useRouter()
 const formRef = ref(null)
 const form = reactive({ username: '', password: '' })
 const loading = ref(false)
+const slideOk = ref(false)
+const slideRef = ref(null)
 
 const rules = {
   username: [{ required: true, message: () => t('admin.rule.usernameRequired'), trigger: 'blur' }],
@@ -49,6 +53,9 @@ const onSubmit = async () => {
     ElMessage.success(t('admin.login.welcome', { name: nickname || username }))
     router.push('/admin/news')
   } catch (err) {
+    // 登录失败要求重新滑块验证,防重放
+    slideOk.value = false
+    slideRef.value?.reset()
     ElMessage.error(err.message)
   } finally {
     loading.value = false
@@ -92,5 +99,9 @@ const onSubmit = async () => {
 
 .login__btn {
   width: 100%;
+}
+
+.login__slide {
+  margin-top: 12px;
 }
 </style>

@@ -192,6 +192,7 @@ export const adminZh = {
     menu: { news: '新闻管理', jobs: '职位管理', products: '产品管理', honors: '荣誉管理', partners: '伙伴管理' },
     login: { username: '用户名', password: '密码', submit: '登 录', required: '请输入用户名和密码', welcome: '欢迎,{name}' },
     layout: { logout: '退出登录', changePwd: '修改密码' },
+    slide: { hint: '拖动滑块完成拼图验证', hintOk: '验证通过', pass: '验证通过' },
     pwd: { new: '新密码', confirm: '确认新密码', rule: '新密码至少 6 位', mismatch: '两次输入的新密码不一致', done: '密码已修改' },
     common: { add: '新增', edit: '编辑', delete: '删除', save: '保 存', cancel: '取 消', saved: '已保存', deleted: '已删除', warning: '确认操作' },
     fields: {
