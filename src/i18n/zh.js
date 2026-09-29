@@ -157,6 +157,7 @@ export default {
       name: '您的姓名',
       email: '电子邮箱',
       phone: '联系电话',
+      codeRule: '请输入正确的国际区号，如 +86',
       phoneRule: '请输入正确的电话号码',
       message: '请输入您想咨询的内容',
       submit: '提交',

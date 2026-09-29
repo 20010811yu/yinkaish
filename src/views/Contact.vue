@@ -46,31 +46,35 @@
             <el-input v-model="form.email" :placeholder="$t('contact.form.email')" />
           </el-form-item>
           <el-form-item :label="$t('contact.form.phone')" prop="phone">
-            <el-input v-model="form.phone" :placeholder="$t('contact.form.phone')">
+            <el-input v-model="form.phone" :placeholder="$t('contact.form.phone')" class="phone-number">
               <template #prepend>
-                <el-select
-                  v-model="phoneRegion"
-                  class="phone-region"
-                  :aria-label="$t('contact.form.phone')"
-                  filterable
-                  allow-create
-                  default-first-option
-                  @change="formRef?.clearValidate('phone')"
-                >
-                  <template #label="{ value }">
-                    <span class="phone-region__selected">
-                      <img v-if="regions.find(r => r.iso === value)" :src="regions.find(r => r.iso === value).flag" alt="" class="phone-region__flag-img" />
-                      <span>{{ regionCode }}</span>
-                    </span>
-                  </template>
-                  <el-option v-for="r in regions" :key="r.iso" :value="r.iso" :label="locale === 'en' ? r.en : r.zh">
-                    <span class="phone-region__option">
-                      <img :src="r.flag" alt="" class="phone-region__flag-img" />
-                      <span class="phone-region__name">{{ locale === 'en' ? r.en : r.zh }}</span>
-                      <span class="phone-region__code">{{ r.code }}</span>
-                    </span>
-                  </el-option>
-                </el-select>
+                <span class="dial-code">
+                  <img v-if="flagUrl" :src="flagUrl" alt="" class="dial-code__flag" />
+                  <input
+                    v-model="form.dial"
+                    class="dial-code__input"
+                    :placeholder="'+86'"
+                    :aria-label="$t('contact.form.phone')"
+                    inputmode="tel"
+                    maxlength="6"
+                    @blur="onDialBlur"
+                  />
+                  <el-popover v-if="candidates.length > 1" placement="bottom-start" :width="200" trigger="click" popper-class="dial-code__popper">
+                    <template #reference>
+                      <button type="button" class="dial-code__arrow" :aria-label="$t('contact.form.phone')">▾</button>
+                    </template>
+                    <div
+                      v-for="c in candidates"
+                      :key="c.iso"
+                      class="dial-code__candidate"
+                      :class="{ 'dial-code__candidate--on': c.iso === selectedIso }"
+                      @click="pickCandidate(c)"
+                    >
+                      <img :src="flagOf(c.iso)" alt="" class="dial-code__flag" />
+                      <span class="dial-code__name">{{ locale === 'en' ? c.en : c.zh }}</span>
+                    </div>
+                  </el-popover>
+                </span>
               </template>
             </el-input>
           </el-form-item>
@@ -87,7 +91,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
@@ -96,72 +100,61 @@ import { Location, Phone, Message, Clock } from '@element-plus/icons-vue'
 const { t, locale } = useI18n()
 
 const formRef = ref()
-const form = reactive({ name: '', email: '', phone: '', message: '' })
+const form = reactive({ name: '', email: '', dial: '+86', phone: '', message: '' })
 
-// 国旗 SVG 来自 flag-icons 包(MIT),按引用打包
-import flagAE from 'flag-icons/flags/4x3/ae.svg'
-import flagAU from 'flag-icons/flags/4x3/au.svg'
-import flagBR from 'flag-icons/flags/4x3/br.svg'
-import flagCA from 'flag-icons/flags/4x3/ca.svg'
-import flagCN from 'flag-icons/flags/4x3/cn.svg'
-import flagDE from 'flag-icons/flags/4x3/de.svg'
-import flagEG from 'flag-icons/flags/4x3/eg.svg'
-import flagFR from 'flag-icons/flags/4x3/fr.svg'
-import flagGB from 'flag-icons/flags/4x3/gb.svg'
-import flagHK from 'flag-icons/flags/4x3/hk.svg'
-import flagIN from 'flag-icons/flags/4x3/in.svg'
-import flagJP from 'flag-icons/flags/4x3/jp.svg'
-import flagKR from 'flag-icons/flags/4x3/kr.svg'
-import flagMO from 'flag-icons/flags/4x3/mo.svg'
-import flagMY from 'flag-icons/flags/4x3/my.svg'
-import flagSG from 'flag-icons/flags/4x3/sg.svg'
-import flagTH from 'flag-icons/flags/4x3/th.svg'
-import flagTW from 'flag-icons/flags/4x3/tw.svg'
-import flagUS from 'flag-icons/flags/4x3/us.svg'
-import flagVN from 'flag-icons/flags/4x3/vn.svg'
+// 区号表(含同码多国)与国旗 URL 按需加载表
+import { dialCodes } from '../data/dialCodes'
+const flagModules = import.meta.glob('../assets/flags/*.svg', { query: '?url', import: 'default' })
+const flagCache = ref({}) // iso -> 已加载的 svg url
+const flagOf = (iso) => flagCache.value[iso] ?? ''
 
-// 电话地区区号列表(主要出口市场,双语名称按数据规范 { zh, en });
-// iso 为唯一键(value 也存 iso,+1 等同区号国家分列互不冲突);
-// 国旗用 SVG 图——Windows 无国旗 emoji 字体,emoji 只能显示成字母对
-const regions = [
-  { iso: 'cn', flag: flagCN, code: '+86', zh: '中国大陆', en: 'Mainland China' },
-  { iso: 'hk', flag: flagHK, code: '+852', zh: '中国香港', en: 'Hong Kong, China' },
-  { iso: 'mo', flag: flagMO, code: '+853', zh: '中国澳门', en: 'Macao, China' },
-  { iso: 'tw', flag: flagTW, code: '+886', zh: '中国台湾', en: 'Taiwan, China' },
-  { iso: 'sg', flag: flagSG, code: '+65', zh: '新加坡', en: 'Singapore' },
-  { iso: 'my', flag: flagMY, code: '+60', zh: '马来西亚', en: 'Malaysia' },
-  { iso: 'jp', flag: flagJP, code: '+81', zh: '日本', en: 'Japan' },
-  { iso: 'kr', flag: flagKR, code: '+82', zh: '韩国', en: 'South Korea' },
-  { iso: 'th', flag: flagTH, code: '+66', zh: '泰国', en: 'Thailand' },
-  { iso: 'vn', flag: flagVN, code: '+84', zh: '越南', en: 'Vietnam' },
-  { iso: 'in', flag: flagIN, code: '+91', zh: '印度', en: 'India' },
-  { iso: 'ae', flag: flagAE, code: '+971', zh: '阿联酋', en: 'UAE' },
-  { iso: 'eg', flag: flagEG, code: '+20', zh: '埃及', en: 'Egypt' },
-  { iso: 'de', flag: flagDE, code: '+49', zh: '德国', en: 'Germany' },
-  { iso: 'fr', flag: flagFR, code: '+33', zh: '法国', en: 'France' },
-  { iso: 'gb', flag: flagGB, code: '+44', zh: '英国', en: 'UK' },
-  { iso: 'us', flag: flagUS, code: '+1', zh: '美国', en: 'USA' },
-  { iso: 'ca', flag: flagCA, code: '+1', zh: '加拿大', en: 'Canada' },
-  { iso: 'au', flag: flagAU, code: '+61', zh: '澳大利亚', en: 'Australia' },
-  { iso: 'br', flag: flagBR, code: '+55', zh: '巴西', en: 'Brazil' },
-]
-// value 存 iso;自填区号(allow-create)时存用户键入的文本,归一化补 +
-const phoneRegion = ref('cn')
-const selectedRegion = computed(() => regions.find(r => r.iso === phoneRegion.value))
-const regionCode = computed(() => {
-  if (selectedRegion.value) return selectedRegion.value.code
-  const v = phoneRegion.value.trim()
+const normalizedDial = computed(() => {
+  const v = form.dial.replace(/[\s-]/g, '')
+  if (!v) return ''
   return v.startsWith('+') ? v : `+${v}`
 })
+// 同码候选(可能多国);空/非法时为空数组
+const candidates = computed(() => dialCodes.filter((c) => c.code === normalizedDial.value))
+const selectedIso = ref('cn')
 
-// +86:手机号/座机/400 热线(兼容分隔符);其他地区:去分隔符后 5-14 位、非 0 开头
+// 区号变化:重置候选选择(默认第一个),并预载候选国国旗;号码已填则重新校验
+watch([normalizedDial], async () => {
+  selectedIso.value = candidates.value[0]?.iso ?? ''
+  for (const c of candidates.value) {
+    if (!flagCache.value[c.iso]) {
+      const loader = flagModules[`../assets/flags/${c.iso}.svg`]
+      if (loader) flagCache.value = { ...flagCache.value, [c.iso]: await loader() }
+    }
+  }
+  if (form.phone) formRef.value?.validateField('phone').catch(() => {})
+}, { immediate: true })
+
+const flagUrl = computed(() => flagOf(selectedIso.value))
+
+const pickCandidate = (c) => {
+  selectedIso.value = c.iso
+  if (form.phone) formRef.value?.validateField('phone').catch(() => {})
+}
+
+// 区号框失焦:补 + 归一化,并触发区号/号码校验(区号非法即使号码未填也提示)
+const onDialBlur = () => {
+  const v = form.dial.replace(/[\s-]/g, '')
+  if (v && !v.startsWith('+')) form.dial = `+${v}`
+  if (form.dial || form.phone) formRef.value?.validateField('phone').catch(() => {})
+}
+
+// +86:手机号/座机/400 热线(先去分隔符再匹配);其他地区:5-14 位、非 0 开头
 const RE_MAINLAND = /^(?:1[3-9]\d{9}|0\d{2,3}\d{7,8}|400\d{7,8})$/
+const RE_DIAL = /^\+[1-9]\d{0,3}$/
 
 const validatePhone = (rule, value, callback) => {
+  if (!value && !form.dial) return callback()
+  // 区号格式:1-4 位数字、非 0 开头(带 + 号)
+  if (!RE_DIAL.test(normalizedDial.value)) return callback(new Error(t('contact.form.codeRule')))
   if (!value) return callback()
-  // 先去分隔符再匹配,手机号/座机/400 均允许带空格或横杠书写
+  // 号码:先去分隔符再按区号分支匹配
   const stripped = value.replace(/[\s-]/g, '')
-  const ok = regionCode.value === '+86'
+  const ok = normalizedDial.value === '+86'
     ? RE_MAINLAND.test(stripped)
     : /^[1-9]\d{4,13}$/.test(stripped)
   ok ? callback() : callback(new Error(t('contact.form.phoneRule')))
@@ -183,7 +176,7 @@ const submit = () => {
     try {
       // Netlify Forms 提交:POST 到站点根路径,form-name 指向 index.html 中的影子表单
       // 电话提交合并值(区号 + 号码),如 "+86 13800138000"
-      const fullPhone = form.phone.trim() ? `${regionCode.value} ${form.phone.trim()}` : ''
+      const fullPhone = form.phone.trim() ? `${normalizedDial.value} ${form.phone.trim()}` : ''
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -199,6 +192,7 @@ const submit = () => {
       ElMessage.success(t('contact.form.success'))
       form.name = ''
       form.email = ''
+      form.dial = '+86'
       form.phone = ''
       form.message = ''
     } catch {
@@ -240,19 +234,15 @@ const submit = () => {
   gap: 6px;
 }
 
-/* 电话地区选择器 */
-.phone-region {
-  width: 128px;
-}
-
-.phone-region__selected {
-  font-size: 14px;
+/* 区号输入 + 国旗 + 同码候选 */
+.dial-code {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
-.phone-region__flag-img {
+.dial-code__flag {
   width: 21px;
   height: 14px;
   border-radius: 2px;
@@ -262,27 +252,59 @@ const submit = () => {
   display: block;
 }
 
-/* 下拉选项:国旗 + 名称 + 区号 flex 排布(teleport 到 body,靠 data-v 作用域样式仍生效) */
-.phone-region__option {
+.dial-code__input {
+  width: 52px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--c-text);
+  text-align: center;
+}
+
+.dial-code__arrow {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--c-text-secondary);
+  padding: 2px 4px;
+}
+
+.dial-code__arrow:hover {
+  color: var(--c-primary);
+}
+
+.dial-code__candidate {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 0;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--c-text);
 }
 
-.phone-region__name {
-  flex: 1;
+.dial-code__candidate:hover {
+  background: var(--c-primary-light);
+}
+
+.dial-code__candidate--on {
+  background: var(--c-primary-light);
+  color: var(--c-primary-dark);
+  font-weight: 600;
+}
+
+.dial-code__name {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.phone-region__code {
-  color: var(--c-text-secondary);
-  font-size: 13px;
-  margin-left: auto;
-  padding-left: 8px;
+.phone-number :deep(.el-input-group__prepend) {
+  padding: 0 10px;
 }
 
 @media (max-width: 768px) {

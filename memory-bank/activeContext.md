@@ -4,9 +4,8 @@
 加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+**大陆手机号校验(/^1[3-9]\d{9}$,座机与 +86 写法不再通过,用户要求收紧)**/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
 
 ### 最近变更
-- **地区选择器迭代(用户要求)**:同区号国家分列(美国/加拿大各自独立,共 20 项,条目加唯一 iso 作 key/value,phoneRegion 存 iso,regionCode computed);未 listed 国家可自填区号(el-select filterable+allow-create,键入 +974 回车创建,归一化补 +,走通用校验);实测分列/创建/校验/提交合并值(+974 33123456)/375 全通过。测试注意:el-select(filterable)内部也有 .el-input__inner,选择号码输入框须排除 .phone-region 内的
-- **国旗 emoji 改 SVG 图(ERR-007)**:Windows 无 emoji 旗帜字形,联系页地区下拉改用 flag-icons 包 19 面 SVG(`<img>` 渲染),全平台一致;校验/提交/响应式回归通过
-- **联系页电话改「国旗地区选择+号码输入」(用户要求)**:el-input prepend 放 el-select(国旗+双语地区名+区号,19 国默认 +86),号码选填、填了按地区校验(+86 手机/座机/400 先去分隔符再匹配;其他地区 5-14 位非 0 开头),提交合并值如 "+86 138 0013 8000";实测各分支与 375 不破版;注意 el-select @change 需 clearValidate 清残留错误
+- **联系页区号改自行输入+自动匹配国旗(用户要求,历经 下拉→allow-create→自由输入 三轮迭代,终态)**:新增 src/data/dialCodes.js(51 国区号表,含 +1/+7 同码多国);51 面旗帜 SVG 复制入库 src/assets/flags/(import.meta.glob ?url 按需加载,已卸载 flag-icons,CREDITS.md 署名);Contact.vue prepend=国旗图+区号 input(placeholder +86),键入即匹配国旗;同码多国显示候选箭头(el-popover 点选旗帜,默认第一个);校验器合并校验区号格式(codeRule)+号码格式(phoneRule 按区号分支 +86 详细/其他通用),区号失焦/变更联动重校验号码,提交合并值(如 +61 412345678)。实测:86/1/974 旗帜匹配、美加候选切换、ab/0123 拦截、号码分支、375 全通过。**测试注意:内嵌面板隐藏时 CSS 过渡冻结在首帧,error 元素以 opacity0 残留 DOM,须读 is-error/is-success 状态类而非 error 元素存在性**
+- **国旗 emoji 改 SVG 图(ERR-007)**:Windows 无 emoji 旗帜字形,国旗一律用 SVG 图片(详见 errorlog/防回归清单)
 - **日历年月标题放大(用户要求)**:News.vue .mini-cal__ym 加 font-size clamp(17px, 1.4vw, 21px)(原继承 ~16px),1280/375 实测无破版
 - **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms
 - **页脚高度缩至约 4/5(用户要求)**:AppFooter 全部垂直尺寸×0.8,1280 档实测 344→274px,四档视口零溢出

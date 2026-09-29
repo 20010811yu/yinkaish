@@ -157,6 +157,7 @@ export default {
       name: 'Your Name',
       email: 'Email',
       phone: 'Phone',
+      codeRule: 'Enter a valid dial code, e.g. +86',
       phoneRule: 'Please enter a valid phone number',
       message: 'Please enter your inquiry',
       submit: 'Submit',
