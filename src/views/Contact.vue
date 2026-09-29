@@ -59,21 +59,25 @@
                     maxlength="6"
                     @blur="onDialBlur"
                   />
-                  <el-popover v-if="candidates.length > 1" placement="bottom-start" :width="200" trigger="click" popper-class="dial-code__popper">
-                    <template #reference>
-                      <button type="button" class="dial-code__arrow" :aria-label="$t('contact.form.phone')">▾</button>
-                    </template>
+                  <button
+                    v-if="candidates.length > 1"
+                    type="button"
+                    class="dial-code__arrow"
+                    :aria-label="$t('contact.form.phone')"
+                    @click.stop="flagOpen = !flagOpen"
+                  >▾</button>
+                  <div v-if="flagOpen && candidates.length > 1" class="dial-code__menu">
                     <div
                       v-for="c in candidates"
                       :key="c.iso"
                       class="dial-code__candidate"
                       :class="{ 'dial-code__candidate--on': c.iso === selectedIso }"
-                      @click="pickCandidate(c)"
+                      @click.stop="pickCandidate(c)"
                     >
                       <img :src="flagOf(c.iso)" alt="" class="dial-code__flag" />
                       <span class="dial-code__name">{{ locale === 'en' ? c.en : c.zh }}</span>
                     </div>
-                  </el-popover>
+                  </div>
                 </span>
               </template>
             </el-input>
@@ -100,6 +104,15 @@ import { Location, Phone, Message, Clock } from '@element-plus/icons-vue'
 const { t, locale } = useI18n()
 
 const formRef = ref()
+const flagOpen = ref(false)
+// 点击区号区域以外时关闭候选菜单
+const onDocClick = (e) => {
+  if (!e.target.closest?.('.dial-code')) flagOpen.value = false
+}
+watch(flagOpen, (open) => {
+  if (open) document.addEventListener('click', onDocClick, true)
+  else document.removeEventListener('click', onDocClick, true)
+})
 const form = reactive({ name: '', email: '', dial: '+86', phone: '', message: '' })
 
 // 区号表(含同码多国)与国旗 URL 按需加载表
@@ -133,6 +146,7 @@ const flagUrl = computed(() => flagOf(selectedIso.value))
 
 const pickCandidate = (c) => {
   selectedIso.value = c.iso
+  flagOpen.value = false // 同码候选点选后立即关闭菜单
   if (form.phone) formRef.value?.validateField('phone').catch(() => {})
 }
 
@@ -236,10 +250,25 @@ const submit = () => {
 
 /* 区号输入 + 国旗 + 同码候选 */
 .dial-code {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   min-width: 0;
+}
+
+/* 同码候选菜单:自控显隐,点选即关 */
+.dial-code__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -8px;
+  z-index: 2000;
+  min-width: 170px;
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 4px;
 }
 
 .dial-code__flag {
