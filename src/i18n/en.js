@@ -204,7 +204,7 @@ export const adminEn = {
     rule: {
       addCategory: 'Add Category', addProduct: 'Add Product', addParamRow: 'Add Row', params: 'Params',
       category: 'Product Category', product: 'Product', gallery: 'Gallery (optional)',
-      titleRequired: 'Chinese and English titles are required', nameRequired: 'Chinese and English names are required', partnerRequired: 'Name and slug are required',
+      usernameRequired: 'Username is required', passwordRequired: 'Password is required', titleRequired: 'Chinese and English titles are required', nameRequired: 'Chinese and English names are required', partnerRequired: 'Name and slug are required',
       categoryRequired: 'Slug and Chinese name are required', productRequired: 'Model and image are required',
       categoryNotEmpty: 'Category still has products; remove or move them first',
       confirmDelete: 'Delete this record? This cannot be undone', confirmDeleteParams: 'Deleting the product also deletes its parameter rows. Continue?',

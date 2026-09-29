@@ -5,11 +5,11 @@
         <img src="../../assets/logo.png" alt="logo" class="login__logo" />
         <span class="login__company">{{ $t('brand.full') }}</span>
       </div>
-      <el-form :model="form" @submit.prevent="onSubmit">
-        <el-form-item :label="$t('admin.login.username')">
+      <el-form ref="formRef" :model="form" :rules="rules" label-position="top" @submit.prevent="onSubmit">
+        <el-form-item :label="$t('admin.login.username')" prop="username">
           <el-input v-model="form.username" data-testid="admin-username" autocomplete="username" />
         </el-form-item>
-        <el-form-item :label="$t('admin.login.password')">
+        <el-form-item :label="$t('admin.login.password')" prop="password">
           <el-input v-model="form.password" data-testid="admin-password" type="password" show-password autocomplete="current-password" />
         </el-form-item>
         <el-button type="primary" class="login__btn" :loading="loading" native-type="submit" data-testid="admin-login-btn">
@@ -29,14 +29,19 @@ import { adminApi, setSession } from '../../api/admin'
 
 const { t } = useI18n()
 const router = useRouter()
+const formRef = ref(null)
 const form = reactive({ username: '', password: '' })
 const loading = ref(false)
 
+const rules = {
+  username: [{ required: true, message: () => t('admin.rule.usernameRequired'), trigger: 'blur' }],
+  password: [{ required: true, message: () => t('admin.rule.passwordRequired'), trigger: 'blur' }],
+}
+
 const onSubmit = async () => {
-  if (!form.username || !form.password) {
-    ElMessage.warning(t('admin.login.required'))
-    return
-  }
+  // 登录前前端校验:必填项不通过则不发请求
+  const valid = await formRef.value.validate().catch(() => false)
+  if (!valid) return
   loading.value = true
   try {
     const { token, nickname, username } = await adminApi.login(form.username, form.password)
