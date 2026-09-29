@@ -157,6 +157,7 @@ export default {
       name: '您的姓名',
       email: '电子邮箱',
       phone: '联系电话',
+      phoneRule: '请输入正确的电话号码',
       message: '请输入您想咨询的内容',
       submit: '提交',
       success: '提交成功，我们会尽快与您联系！',

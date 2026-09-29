@@ -157,6 +157,7 @@ export default {
       name: 'Your Name',
       email: 'Email',
       phone: 'Phone',
+      phoneRule: 'Please enter a valid phone number',
       message: 'Please enter your inquiry',
       submit: 'Submit',
       success: 'Submitted successfully! We will get back to you soon.',
