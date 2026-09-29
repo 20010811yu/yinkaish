@@ -1,6 +1,10 @@
 <template>
   <div class="login">
     <el-card class="login__card">
+      <div class="login__brand">
+        <img src="../../assets/logo.png" alt="logo" class="login__logo" />
+        <span class="login__company">{{ $t('brand.full') }}</span>
+      </div>
       <h1 class="login__title">{{ $t('admin.title') }}</h1>
       <el-form :model="form" @submit.prevent="onSubmit">
         <el-form-item :label="$t('admin.login.username')">
@@ -61,10 +65,33 @@ const onSubmit = async () => {
   width: min(380px, calc(100vw - 32px));
 }
 
+.login__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.login__logo {
+  height: 34px;
+  max-width: 120px;
+  object-fit: contain;
+}
+
+.login__company {
+  font-size: clamp(14px, 1.2vw + 8px, 17px);
+  font-weight: 600;
+  color: var(--c-primary, #00a651);
+  overflow-wrap: anywhere;
+}
+
 .login__title {
   text-align: center;
   margin: 0 0 20px;
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #909399;
 }
 
 .login__btn {
