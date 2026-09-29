@@ -256,6 +256,7 @@ const onPickDay = (d) => {
 
 .mini-cal__ym {
   font-weight: 700;
+  font-size: clamp(17px, 1.4vw, 21px);
   color: var(--c-primary-dark);
   letter-spacing: 1px;
 }

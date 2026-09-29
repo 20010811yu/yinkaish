@@ -4,6 +4,7 @@
 加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+**大陆手机号校验(/^1[3-9]\d{9}$,座机与 +86 写法不再通过,用户要求收紧)**/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
 
 ### 最近变更
+- **日历年月标题放大(用户要求)**:News.vue .mini-cal__ym 加 font-size clamp(17px, 1.4vw, 21px)(原继承 ~16px),1280/375 实测无破版
 - **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms
 - **页脚高度缩至约 4/5(用户要求)**:AppFooter 全部垂直尺寸×0.8,1280 档实测 344→274px,四档视口零溢出
 - **修复新闻分页第二页空白(ERR-006)**:useReveal 翻页重扫;详见 errorlog
