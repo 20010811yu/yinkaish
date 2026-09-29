@@ -52,14 +52,18 @@
                   v-model="phoneRegion"
                   class="phone-region"
                   :aria-label="$t('contact.form.phone')"
+                  filterable
+                  allow-create
+                  default-first-option
                   @change="formRef?.clearValidate('phone')"
                 >
                   <template #label="{ value }">
                     <span class="phone-region__selected">
-                      <img :src="regions.find(r => r.code === value)?.flag" alt="" class="phone-region__flag-img" />{{ value }}
+                      <img v-if="regions.find(r => r.iso === value)" :src="regions.find(r => r.iso === value).flag" alt="" class="phone-region__flag-img" />
+                      <span>{{ regionCode }}</span>
                     </span>
                   </template>
-                  <el-option v-for="r in regions" :key="r.code" :value="r.code" :label="r.code">
+                  <el-option v-for="r in regions" :key="r.iso" :value="r.iso" :label="locale === 'en' ? r.en : r.zh">
                     <span class="phone-region__option">
                       <img :src="r.flag" alt="" class="phone-region__flag-img" />
                       <span class="phone-region__name">{{ locale === 'en' ? r.en : r.zh }}</span>
@@ -83,7 +87,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
@@ -98,6 +102,7 @@ const form = reactive({ name: '', email: '', phone: '', message: '' })
 import flagAE from 'flag-icons/flags/4x3/ae.svg'
 import flagAU from 'flag-icons/flags/4x3/au.svg'
 import flagBR from 'flag-icons/flags/4x3/br.svg'
+import flagCA from 'flag-icons/flags/4x3/ca.svg'
 import flagCN from 'flag-icons/flags/4x3/cn.svg'
 import flagDE from 'flag-icons/flags/4x3/de.svg'
 import flagEG from 'flag-icons/flags/4x3/eg.svg'
@@ -116,29 +121,38 @@ import flagUS from 'flag-icons/flags/4x3/us.svg'
 import flagVN from 'flag-icons/flags/4x3/vn.svg'
 
 // 电话地区区号列表(主要出口市场,双语名称按数据规范 { zh, en });
+// iso 为唯一键(value 也存 iso,+1 等同区号国家分列互不冲突);
 // 国旗用 SVG 图——Windows 无国旗 emoji 字体,emoji 只能显示成字母对
 const regions = [
-  { flag: flagCN, code: '+86', zh: '中国大陆', en: 'Mainland China' },
-  { flag: flagHK, code: '+852', zh: '中国香港', en: 'Hong Kong, China' },
-  { flag: flagMO, code: '+853', zh: '中国澳门', en: 'Macao, China' },
-  { flag: flagTW, code: '+886', zh: '中国台湾', en: 'Taiwan, China' },
-  { flag: flagSG, code: '+65', zh: '新加坡', en: 'Singapore' },
-  { flag: flagMY, code: '+60', zh: '马来西亚', en: 'Malaysia' },
-  { flag: flagJP, code: '+81', zh: '日本', en: 'Japan' },
-  { flag: flagKR, code: '+82', zh: '韩国', en: 'South Korea' },
-  { flag: flagTH, code: '+66', zh: '泰国', en: 'Thailand' },
-  { flag: flagVN, code: '+84', zh: '越南', en: 'Vietnam' },
-  { flag: flagIN, code: '+91', zh: '印度', en: 'India' },
-  { flag: flagAE, code: '+971', zh: '阿联酋', en: 'UAE' },
-  { flag: flagEG, code: '+20', zh: '埃及', en: 'Egypt' },
-  { flag: flagDE, code: '+49', zh: '德国', en: 'Germany' },
-  { flag: flagFR, code: '+33', zh: '法国', en: 'France' },
-  { flag: flagGB, code: '+44', zh: '英国', en: 'UK' },
-  { flag: flagUS, code: '+1', zh: '美国/加拿大', en: 'USA/Canada' },
-  { flag: flagAU, code: '+61', zh: '澳大利亚', en: 'Australia' },
-  { flag: flagBR, code: '+55', zh: '巴西', en: 'Brazil' },
+  { iso: 'cn', flag: flagCN, code: '+86', zh: '中国大陆', en: 'Mainland China' },
+  { iso: 'hk', flag: flagHK, code: '+852', zh: '中国香港', en: 'Hong Kong, China' },
+  { iso: 'mo', flag: flagMO, code: '+853', zh: '中国澳门', en: 'Macao, China' },
+  { iso: 'tw', flag: flagTW, code: '+886', zh: '中国台湾', en: 'Taiwan, China' },
+  { iso: 'sg', flag: flagSG, code: '+65', zh: '新加坡', en: 'Singapore' },
+  { iso: 'my', flag: flagMY, code: '+60', zh: '马来西亚', en: 'Malaysia' },
+  { iso: 'jp', flag: flagJP, code: '+81', zh: '日本', en: 'Japan' },
+  { iso: 'kr', flag: flagKR, code: '+82', zh: '韩国', en: 'South Korea' },
+  { iso: 'th', flag: flagTH, code: '+66', zh: '泰国', en: 'Thailand' },
+  { iso: 'vn', flag: flagVN, code: '+84', zh: '越南', en: 'Vietnam' },
+  { iso: 'in', flag: flagIN, code: '+91', zh: '印度', en: 'India' },
+  { iso: 'ae', flag: flagAE, code: '+971', zh: '阿联酋', en: 'UAE' },
+  { iso: 'eg', flag: flagEG, code: '+20', zh: '埃及', en: 'Egypt' },
+  { iso: 'de', flag: flagDE, code: '+49', zh: '德国', en: 'Germany' },
+  { iso: 'fr', flag: flagFR, code: '+33', zh: '法国', en: 'France' },
+  { iso: 'gb', flag: flagGB, code: '+44', zh: '英国', en: 'UK' },
+  { iso: 'us', flag: flagUS, code: '+1', zh: '美国', en: 'USA' },
+  { iso: 'ca', flag: flagCA, code: '+1', zh: '加拿大', en: 'Canada' },
+  { iso: 'au', flag: flagAU, code: '+61', zh: '澳大利亚', en: 'Australia' },
+  { iso: 'br', flag: flagBR, code: '+55', zh: '巴西', en: 'Brazil' },
 ]
-const phoneRegion = ref('+86')
+// value 存 iso;自填区号(allow-create)时存用户键入的文本,归一化补 +
+const phoneRegion = ref('cn')
+const selectedRegion = computed(() => regions.find(r => r.iso === phoneRegion.value))
+const regionCode = computed(() => {
+  if (selectedRegion.value) return selectedRegion.value.code
+  const v = phoneRegion.value.trim()
+  return v.startsWith('+') ? v : `+${v}`
+})
 
 // +86:手机号/座机/400 热线(兼容分隔符);其他地区:去分隔符后 5-14 位、非 0 开头
 const RE_MAINLAND = /^(?:1[3-9]\d{9}|0\d{2,3}\d{7,8}|400\d{7,8})$/
@@ -147,7 +161,7 @@ const validatePhone = (rule, value, callback) => {
   if (!value) return callback()
   // 先去分隔符再匹配,手机号/座机/400 均允许带空格或横杠书写
   const stripped = value.replace(/[\s-]/g, '')
-  const ok = phoneRegion.value === '+86'
+  const ok = regionCode.value === '+86'
     ? RE_MAINLAND.test(stripped)
     : /^[1-9]\d{4,13}$/.test(stripped)
   ok ? callback() : callback(new Error(t('contact.form.phoneRule')))
@@ -169,7 +183,7 @@ const submit = () => {
     try {
       // Netlify Forms 提交:POST 到站点根路径,form-name 指向 index.html 中的影子表单
       // 电话提交合并值(区号 + 号码),如 "+86 13800138000"
-      const fullPhone = form.phone.trim() ? `${phoneRegion.value} ${form.phone.trim()}` : ''
+      const fullPhone = form.phone.trim() ? `${regionCode.value} ${form.phone.trim()}` : ''
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
