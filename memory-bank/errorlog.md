@@ -69,7 +69,18 @@
 - **教训**:动态重渲染(分页/筛选/加载更多)产生的 `[data-reveal]` 新节点必须在 DOM 更新后 rescan;一次性 querySelectorAll 的观察器模式对 v-for 动态内容天然失效
 - **状态**:🟢 已解决
 
+### ERR-007 国旗 emoji 在 Windows 上不显示(下拉只渲染字母对)
+- **错误现象**:联系页电话地区下拉里的 🇨🇳 等国旗 emoji 在用户(Windows)浏览器中不显示为旗帜,只显示 CN 等字母对
+- **发生上下文**:电话地区选择器交付后用户反馈「为什么没显示国旗」
+- **发生时间**:2026-09-29
+- **根本原因**:国旗 emoji 是区域指示符字符序列,Windows 系统字体(Segoe UI Emoji)不提供旗帜字形,Chrome/Edge 在 Windows 上一律渲染成两个字母;仅 macOS/iOS/Android 可显示
+- **解决方式**:改用 flag-icons 包(MIT,纯 SVG 素材)的 4x3 旗帜图——`import flagCN from 'flag-icons/flags/4x3/cn.svg'` 共 19 面,regions.flag 由 emoji 字符串换成 SVG URL,模板用 `<img>` 渲染;小图(<4KB)被 Vite 内联为 data URL,大图单独打包
+- **解决时间**:2026-09-29
+- **验证结果**:19 面下拉图 + 选中态图全部加载成功(naturalWidth>0),校验/提交/响应式回归通过
+- **教训**:面向 Windows 用户的站点,国旗一律用 SVG 图片(如 flag-icons),emoji 旗帜跨平台不可靠;另外合成事件模拟 blur 会绕过 el-input 内部焦点守卫,测试留空清错需真实焦点流程
+- **状态**:🟢 已解决
 
+## 防回归清单(编码前必查)
 1. Element Plus 禁全量引入(`app.use(ElementPlus)` + 全量样式),必须 resolver 按需;ElMessage 等函数式组件需单独引入样式
 2. 文案禁止硬编码,必须入 i18n zh/en 双包;新增 key 中英同步
 3. Element Plus locale 必须跟随 vue-i18n locale 切换
@@ -82,3 +93,4 @@
 10. 外部 SVG 做素材时先校验 XML 完整性(网络下载可能被截断,jsdelivr 大文件曾缺尾部;用 npm pack 拿完整包),压缩空白时不得吞掉标签间必要分隔
 11. **地图打点等坐标类定位禁止目测**(见 ERR-004):百分比必须由数据源计算;容器 aspect-ratio 必须与图片真实比例一致
 12. **v-for 动态重渲染(分页/筛选/加载更多)后必须调用 useReveal 返回的 rescan()**(见 ERR-006),否则新节点停留在透明状态
+13. **国旗一律用 SVG 图片(flag-icons),禁用 emoji 旗帜**(见 ERR-007):Windows 无旗帜字形,只会显示字母对

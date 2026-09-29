@@ -4,6 +4,7 @@
 - Node v24 / npm 11(Windows,Git Bash)
 - Vue 3 + Vite 5;vue-router@4;vue-i18n@9
 - element-plus@2(按需:unplugin-vue-components + ElementPlusResolver)+ @element-plus/icons-vue
+- flag-icons(MIT,国旗 SVG 素材包):按 `import x from 'flag-icons/flags/4x3/{iso}.svg'` 引用,Vite 打包;用于联系页电话地区选择(见 ERR-007,emoji 旗帜 Windows 不可用)
 - 样式:原生 CSS + design tokens,无预处理器;品牌素材(logo/轮播图)在 `src/assets/`
 - **构建约束**:`vite.config.js` 已设 `build.minify:false`——esbuild 压缩在本项目会产生变量名冲突(页脚组件渲染丢失,见 errorlog ERR-001);产物约 641KB(gzip 150KB),官网可接受,勿随意改回
 - **i18n 约束**:消息含 `@` 等保留字符需 `{'@'}` 转义(邮箱地址);main.js 的 app.config.errorHandler 用于生产排错

@@ -4,6 +4,7 @@
 加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+**大陆手机号校验(/^1[3-9]\d{9}$,座机与 +86 写法不再通过,用户要求收紧)**/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
 
 ### 最近变更
+- **国旗 emoji 改 SVG 图(ERR-007)**:Windows 无 emoji 旗帜字形,联系页地区下拉改用 flag-icons 包 19 面 SVG(`<img>` 渲染),全平台一致;校验/提交/响应式回归通过
 - **联系页电话改「国旗地区选择+号码输入」(用户要求)**:el-input prepend 放 el-select(国旗+双语地区名+区号,19 国默认 +86),号码选填、填了按地区校验(+86 手机/座机/400 先去分隔符再匹配;其他地区 5-14 位非 0 开头),提交合并值如 "+86 138 0013 8000";实测各分支与 375 不破版;注意 el-select @change 需 clearValidate 清残留错误
 - **日历年月标题放大(用户要求)**:News.vue .mini-cal__ym 加 font-size clamp(17px, 1.4vw, 21px)(原继承 ~16px),1280/375 实测无破版
 - **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms

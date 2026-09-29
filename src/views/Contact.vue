@@ -55,12 +55,16 @@
                   @change="formRef?.clearValidate('phone')"
                 >
                   <template #label="{ value }">
-                    <span class="phone-region__selected">{{ regions.find(r => r.code === value)?.flag }}{{ value }}</span>
+                    <span class="phone-region__selected">
+                      <img :src="regions.find(r => r.code === value)?.flag" alt="" class="phone-region__flag-img" />{{ value }}
+                    </span>
                   </template>
                   <el-option v-for="r in regions" :key="r.code" :value="r.code" :label="r.code">
-                    <span class="phone-region__flag">{{ r.flag }}</span>
-                    <span class="phone-region__name">{{ locale === 'en' ? r.en : r.zh }}</span>
-                    <span class="phone-region__code">{{ r.code }}</span>
+                    <span class="phone-region__option">
+                      <img :src="r.flag" alt="" class="phone-region__flag-img" />
+                      <span class="phone-region__name">{{ locale === 'en' ? r.en : r.zh }}</span>
+                      <span class="phone-region__code">{{ r.code }}</span>
+                    </span>
                   </el-option>
                 </el-select>
               </template>
@@ -90,27 +94,49 @@ const { t, locale } = useI18n()
 const formRef = ref()
 const form = reactive({ name: '', email: '', phone: '', message: '' })
 
-// 电话地区区号列表(主要出口市场,双语名称按数据规范 { zh, en })
+// 国旗 SVG 来自 flag-icons 包(MIT),按引用打包
+import flagAE from 'flag-icons/flags/4x3/ae.svg'
+import flagAU from 'flag-icons/flags/4x3/au.svg'
+import flagBR from 'flag-icons/flags/4x3/br.svg'
+import flagCN from 'flag-icons/flags/4x3/cn.svg'
+import flagDE from 'flag-icons/flags/4x3/de.svg'
+import flagEG from 'flag-icons/flags/4x3/eg.svg'
+import flagFR from 'flag-icons/flags/4x3/fr.svg'
+import flagGB from 'flag-icons/flags/4x3/gb.svg'
+import flagHK from 'flag-icons/flags/4x3/hk.svg'
+import flagIN from 'flag-icons/flags/4x3/in.svg'
+import flagJP from 'flag-icons/flags/4x3/jp.svg'
+import flagKR from 'flag-icons/flags/4x3/kr.svg'
+import flagMO from 'flag-icons/flags/4x3/mo.svg'
+import flagMY from 'flag-icons/flags/4x3/my.svg'
+import flagSG from 'flag-icons/flags/4x3/sg.svg'
+import flagTH from 'flag-icons/flags/4x3/th.svg'
+import flagTW from 'flag-icons/flags/4x3/tw.svg'
+import flagUS from 'flag-icons/flags/4x3/us.svg'
+import flagVN from 'flag-icons/flags/4x3/vn.svg'
+
+// 电话地区区号列表(主要出口市场,双语名称按数据规范 { zh, en });
+// 国旗用 SVG 图——Windows 无国旗 emoji 字体,emoji 只能显示成字母对
 const regions = [
-  { flag: '🇨🇳', code: '+86', zh: '中国大陆', en: 'Mainland China' },
-  { flag: '🇭🇰', code: '+852', zh: '中国香港', en: 'Hong Kong, China' },
-  { flag: '🇲🇴', code: '+853', zh: '中国澳门', en: 'Macao, China' },
-  { flag: '🇹🇼', code: '+886', zh: '中国台湾', en: 'Taiwan, China' },
-  { flag: '🇸🇬', code: '+65', zh: '新加坡', en: 'Singapore' },
-  { flag: '🇲🇾', code: '+60', zh: '马来西亚', en: 'Malaysia' },
-  { flag: '🇯🇵', code: '+81', zh: '日本', en: 'Japan' },
-  { flag: '🇰🇷', code: '+82', zh: '韩国', en: 'South Korea' },
-  { flag: '🇹🇭', code: '+66', zh: '泰国', en: 'Thailand' },
-  { flag: '🇻🇳', code: '+84', zh: '越南', en: 'Vietnam' },
-  { flag: '🇮🇳', code: '+91', zh: '印度', en: 'India' },
-  { flag: '🇦🇪', code: '+971', zh: '阿联酋', en: 'UAE' },
-  { flag: '🇪🇬', code: '+20', zh: '埃及', en: 'Egypt' },
-  { flag: '🇩🇪', code: '+49', zh: '德国', en: 'Germany' },
-  { flag: '🇫🇷', code: '+33', zh: '法国', en: 'France' },
-  { flag: '🇬🇧', code: '+44', zh: '英国', en: 'UK' },
-  { flag: '🇺🇸', code: '+1', zh: '美国/加拿大', en: 'USA/Canada' },
-  { flag: '🇦🇺', code: '+61', zh: '澳大利亚', en: 'Australia' },
-  { flag: '🇧🇷', code: '+55', zh: '巴西', en: 'Brazil' },
+  { flag: flagCN, code: '+86', zh: '中国大陆', en: 'Mainland China' },
+  { flag: flagHK, code: '+852', zh: '中国香港', en: 'Hong Kong, China' },
+  { flag: flagMO, code: '+853', zh: '中国澳门', en: 'Macao, China' },
+  { flag: flagTW, code: '+886', zh: '中国台湾', en: 'Taiwan, China' },
+  { flag: flagSG, code: '+65', zh: '新加坡', en: 'Singapore' },
+  { flag: flagMY, code: '+60', zh: '马来西亚', en: 'Malaysia' },
+  { flag: flagJP, code: '+81', zh: '日本', en: 'Japan' },
+  { flag: flagKR, code: '+82', zh: '韩国', en: 'South Korea' },
+  { flag: flagTH, code: '+66', zh: '泰国', en: 'Thailand' },
+  { flag: flagVN, code: '+84', zh: '越南', en: 'Vietnam' },
+  { flag: flagIN, code: '+91', zh: '印度', en: 'India' },
+  { flag: flagAE, code: '+971', zh: '阿联酋', en: 'UAE' },
+  { flag: flagEG, code: '+20', zh: '埃及', en: 'Egypt' },
+  { flag: flagDE, code: '+49', zh: '德国', en: 'Germany' },
+  { flag: flagFR, code: '+33', zh: '法国', en: 'France' },
+  { flag: flagGB, code: '+44', zh: '英国', en: 'UK' },
+  { flag: flagUS, code: '+1', zh: '美国/加拿大', en: 'USA/Canada' },
+  { flag: flagAU, code: '+61', zh: '澳大利亚', en: 'Australia' },
+  { flag: flagBR, code: '+55', zh: '巴西', en: 'Brazil' },
 ]
 const phoneRegion = ref('+86')
 
@@ -207,11 +233,27 @@ const submit = () => {
 
 .phone-region__selected {
   font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.phone-region__flag {
-  width: 22px;
+.phone-region__flag-img {
+  width: 21px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid var(--c-border);
+  object-fit: cover;
   flex: none;
+  display: block;
+}
+
+/* 下拉选项:国旗 + 名称 + 区号 flex 排布(teleport 到 body,靠 data-v 作用域样式仍生效) */
+.phone-region__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .phone-region__name {
