@@ -1,8 +1,10 @@
-// 合作伙伴 logo(官网首页合作伙伴区)
-const partnerImgs = Object.fromEntries(
-  Object.entries(import.meta.glob('../assets/partners/*.png', { eager: true, import: 'default' }))
-    .map(([path, url]) => [path.match(/(p\d+)\.png$/)[1], url])
-)
+// 合作伙伴 logo(官网首页合作伙伴区)——文件名映射表见 ./assets
+import { partnerLogos, ol2iGallery } from './assets'
+const partnerImgs = partnerLogos
+
+// 动态内容数据(新闻/职位/产品/荣誉/伙伴)导出为 reactive:src/api/data.js 启动时
+// 尝试从后端拉取并原位替换内容,失败时保持这里的静态数据兜底
+import { reactive } from 'vue'
 
 // 核心业务数据(光伏边框自动化 + 汽车焊装装备,双语)
 export const services = [
@@ -59,11 +61,10 @@ import ykOl3iImg from '../assets/products/yk-ol-3i_banner.png'
 import ykLawanImg from '../assets/products/yk-xingcailawanji_banner.png'
 import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner.jpg'
 
-// YK-OL-2I 多图画廊(本地图片库,按文件名顺序)
-const ol2iModules = import.meta.glob('../assets/products/yk-ol-2i/*.png', { eager: true, import: 'default' })
-const ykOl2iImages = Object.keys(ol2iModules).sort().map((k) => ol2iModules[k])
+// YK-OL-2I 多图画廊(本地图片库,按文件名顺序)——映射表见 ./assets
+const ykOl2iImages = ol2iGallery
 
-export const productCategories = [
+export const productCategories = reactive([
   {
     id: 'pv-alu',
     name: { zh: '光伏边框铝型材自动生产线', en: 'PV Frame Aluminium Profile Lines' },
@@ -242,12 +243,12 @@ export const productCategories = [
       },
     ],
   },
-]
+])
 
 // 产品参数表(画册"设备参数"转录;键为产品型号;值=label/value 双语行数组)
 const p = (lzh, len, vzh, ven) => ({ label: { zh: lzh, en: len }, value: { zh: vzh, en: ven ?? vzh } })
 
-export const productParams = {
+export const productParams = reactive({
   YK6A: [
     p('名称', 'Name', '铝材长边立冲生产线', 'Aluminium long-edge vertical-punch line'),
     p('加工范围 mm', 'Processing Range', '1500-2600'),
@@ -423,7 +424,7 @@ export const productParams = {
     p('应用领域', 'Application', '汽车白车身轻量化结构件', 'BIW lightweight structures'),
     p('生产方式', 'Production Mode', '自动上料 + 锁螺母 + 焊接集成', 'Integrated feeding, nut insertion and welding'),
   ],
-}
+})
 
 // 发展历程(真实大事记)
 export const milestones = [
@@ -482,7 +483,7 @@ import honor05 from '../assets/honors/honor-05.jpg'
 import honor06 from '../assets/honors/honor-06.jpg'
 import honor07 from '../assets/honors/honor-07.jpg'
 
-export const honors = [
+export const honors = reactive([
   {
     image: honor01,
     name: { zh: '综合资质证书', en: 'Certificates Overview' },
@@ -518,7 +519,7 @@ export const honors = [
     name: { zh: '专利登记簿副本', en: 'Patent Register' },
     desc: { zh: '国家知识产权局专利登记簿副本,专利权属清晰可查。', en: 'Patent register copies from CNIPA with clear ownership records.' },
   },
-]
+])
 
 // 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
 import imgT2004 from '../assets/timeline/t-2004.jpg'
@@ -549,7 +550,7 @@ export const timeline = [
 ]
 
 // 新闻(真实事件 + 行业内容)
-export const news = [
+export const news = reactive([
   {
     id: 1,
     tag: { zh: '公司动态', en: 'Company News' },
@@ -682,10 +683,10 @@ export const news = [
       en: 'The customized PV frame automatic lines supplied by Yinkai for a PV industrial park in the Middle East were successfully commissioned. Special designs for cooling, sealing and dust protection were made for the local high-temperature, high-dust environment. The line has been running stably since commissioning with all indicators meeting contract requirements, further expanding Yinkai\'s presence along the Belt and Road markets.',
     },
   },
-]
+])
 
 // 职位(desc:点击卡片展开的岗位详情,双语)
-export const jobs = [
+export const jobs = reactive([
   {
     id: 1,
     title: { zh: '机械设计工程师', en: 'Mechanical Design Engineer' },
@@ -746,7 +747,7 @@ export const jobs = [
       en: 'Responsibilities: Develop overseas markets and maintain client relationships, join technical discussions, quotations and negotiations, and follow up on contracts and payments.\nRequirements: Bachelor degree or above; fluent English and willing to travel abroad; PV or automotive equipment industry knowledge preferred; strong communication skills.',
     },
   },
-]
+])
 
 // 福利(占位)
 export const welfares = [
@@ -759,7 +760,7 @@ export const welfares = [
 ]
 
 // 合作伙伴(logo 图片来自官网 www.yinkaish.com 首页合作伙伴区)
-export const partners = [
+export const partners = reactive([
   { id: 'xinbo', image: partnerImgs.p1, name: { zh: '鑫铂股份', en: 'Xinbo Co.' } },
   { id: 'jinkosolar', image: partnerImgs.p2, name: { zh: '晶科能源', en: 'JinkoSolar' } },
   { id: 'deyilong', image: partnerImgs.p3, name: { zh: '德毅隆', en: 'Deyilong' } },
@@ -780,4 +781,4 @@ export const partners = [
   { id: 'arctech', image: partnerImgs.p18, name: { zh: '中信博', en: 'Arctech' } },
   { id: 'pingmei', image: partnerImgs.p19, name: { zh: '平煤隆基', en: 'Pingmei Longji' } },
   { id: 'chuangjia', image: partnerImgs.p20, name: { zh: '创佳型材', en: 'Chuangjia' } },
-]
+])

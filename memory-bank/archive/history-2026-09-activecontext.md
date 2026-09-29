@@ -1,0 +1,41 @@
+# 归档:2026-09-29 前的 activeContext 当前焦点原文(来源:activeContext.md 压缩改写)
+# activeContext.md — 当前上下文
+
+## 当前焦点(2026-09-28)
+加入我们页「申请职位」弹框:el-dialog + el-form——应聘职位预填(禁用)/姓名必填/电话必填+**大陆手机号校验(/^1[3-9]\d{9}$,座机与 +86 写法不再通过,用户要求收紧)**/邮箱选填+格式校验/**简历附件必填(pdf·doc·docx,≤10MB)**/个人简介选填;FormData multipart 提交 Netlify Forms 影子表单 job(含 type=file 字段);ElMessage 成功/失败提示,关框重置。实测:必填与格式校验、文件类型/大小拦截、成功/失败双分支、关框重置、375 不破版、中英文案全通过。
+
+### 最近变更
+- **地区选择终态:下拉+键入二合一(用户要求,历经 下拉→allow-create→自由输入→下拉 二轮回归)**:prepend 换回 el-select(filterable+allow-create+default-first-option)——51 国平铺为选项(同码国家不合并,美国/加拿大独立条目,选项=国旗+双语国名+区号,value 存 iso),onMounted 预载全部旗帜;键入国名过滤定位;键入未收录区号(+233)回车创建,归一化补 +,与表中同码则匹配该国国旗;选中态=国旗+区号;误创建非区号文本由 codeRule 在失焦/提交时拦截。实测:51 项全旗加载、美加切换(+1)、过滤选马来西亚(+60)、+233 创建与提交、乱创建拦截、375 全通过。**测试注意:内嵌面板隐藏时 CSS 过渡冻结在首帧,error 元素以 opacity0 残留 DOM、label 槽渲染滞后,须读 is-error/is-success 状态类与提交请求体判断**
+- **国旗 emoji 改 SVG 图(ERR-007)**:Windows 无 emoji 旗帜字形,国旗一律用 SVG 图片(详见 errorlog/防回归清单)
+- **日历年月标题放大(用户要求)**:News.vue .mini-cal__ym 加 font-size clamp(17px, 1.4vw, 21px)(原继承 ~16px),1280/375 实测无破版
+- **申请职位弹框+简历上传(Careers.vue + index.html 影子表单 job + careers.form.* i18n)**:apply(j) 带职位参数开框;上传要点见 techContext Netlify Forms
+- **页脚高度缩至约 4/5(用户要求)**:AppFooter 全部垂直尺寸×0.8,1280 档实测 344→274px,四档视口零溢出
+- **修复新闻分页第二页空白(ERR-006)**:useReveal 翻页重扫;详见 errorlog
+
+Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路径)在 Netlify 根路径部署下资源 404。改为 `base: process.env.NETLIFY ? '/' : '/yinkaish/'`(Netlify 构建环境自带 NETLIFY 变量) + 新增 netlify.toml(npm run build / dist / SPA 通配回退 200);NETLIFY=true 本地构建验证资源已指向 /assets/。GitHub Pages 与 Netlify 双平台共存,同一构建两边兼容。站点 https://yinkai.netlify.app
+
+### 最近变更
+- **光伏板持续仿真迭代(用户多轮反馈)**:深蓝电池片渐变+铝边框板厚+地面投影→倾角改**左低右高约 20°(朝向太阳,物理自洽)**、分栅线按平行四边形边线线性插值精确铺满、支架改**双立柱+导轨+斜撑**真实倾斜安装结构;后移除小板;**最终定稿:面板正对屏幕、顶部向后倾(下宽上窄梯形透视),左侧轻微内倾(顶边 138,112-270,112 非对称),面板整体下移贴近地面(底边 y=185、顶边 y=112),正面支架高级化定稿:铝导轨+双斜撑立柱+接地底脚(pvEdge 银白渐变填充);修复 .panel 遗留 rotate(-5deg)(致腿部倾斜右高)**,双腿垂直等高、脚踩地线**;太阳呼吸幅度加大并定相位(50% 最大最亮 scale 1.1/亮度 1.35);**动画改分阶段绘制:**①边框+支架同步描边(0-0.9s)→②逐格填色(0.9s 起,12 块电池片 4×3 网格插值切分,横向自上而下每格错峰 0.07s,外框纯描边;分隔线已取消);滚出视口瞬时复位保证每次滚入重播;修复:日历空白区点击冒泡致误跳详情(mini-cal 阻止冒泡,仅点击有新闻日期跳转),默认显示今日所在月份;**新闻网格分页**:每页 6 条(2 行 × 3 列,移动端 4 条),el-pagination 翻页回顶,单页自动隐藏;新增 6 条新闻(id 7-12,2023-2024 年,双语),共 12 条,分页 2 页已实测;染色层延迟 3s 起步与太阳相位对齐****;**去白影扫过,面板新增染色层 panel__tint 随呼吸同步渐变(50% 蓝最深 opacity 0.68↔0,色差明显)**
+- **首页数字卡片计数动画**:intro__stats 4 个数字(20+/150+/10000+/±0.1)加 count 类复用计数机制,进入视口重播;加号后缀在计数完成后才显示;**新闻列表头条日期面板改为自绘迷你日历(用户要求)**:日历与头条卡片分离为独立两块(featured-row 网格),去外层公共边框;去背景卡片直接浮于面板,自上而下渐变加深背景,再放大(max-width 460),月份切换/新闻日期绿点标注/点击跳详情/中英星期标签,默认停头条月份;曾修复空日期串误判选中(--sel)的 bug;**新闻详情页重设计(用户要求)**:去绿色横幅,浅色页头(返回链接+居中大标题+标题右下日历日期(分类标签已取消)),正文按
+ 拆多段限宽 720 居中,首行缩进 2em+段间空一行,文末无返回按钮(顶部保留返回链接);**优势板块动画融入(用户要求重设计布局,选融合动画方向)**:城市图图片动画已按用户要求取消(曾加四角取景框+扫描光带后移除);四优势线性图标(齿轮/上升曲线/扫描框/地球)描边绘制+序号缓现;**CTA 动画改版**::定稿为**色块纯背景层+SVG 顶层横跨**(z-index 0/1),光伏板+太阳线条动画铺满视觉区;组件自带 IntersectionObserver 触发 revealed;Home/Services 共用
+- **顺手修 Navbar 375 档横向溢出 14px(存量问题,ERR-006)**:.navbar__brand 漏加 min-width:0(当年只给了 brand-text)+name nowrap 不可截断;补 min-width:0+name ellipsis;320-375 中英双语溢出全部清零
+- **大图压缩解决加载慢**:scripts/compress-images.cjs(sharp)——timeline 11 张(限宽 1400/q78,png 照片转 jpg,data 导入同步改名)+首页轮播 6 张(限宽 1920/q75),共 11.5MB→1.9MB;dist 46MB→37MB(其余 31MB 为宣传片,本机无 ffmpeg 未压缩,挂账);banner-sunrise 已不被引用(轮播 s2 用的 banner-pv)
+- YK-6W 产品图替换:用户供图(850×495 产线实拍)sharp 限宽 800 q80 覆写 yk-6w_banner.jpg(20KB),与 YK-6B 不再同图
+- 联系表单接入 Netlify Forms:index.html 影子表单(name=contact, data-netlify, hidden)+Contact.vue submit 改 fetch POST / (URLSearchParams: form-name+四字段),失败 ElMessage.error(i18n contact.form.fail 中英);收件通知已由用户在 Netlify 后台配置(lukecao@ykautomus.com + lujiacao@163.com);**表单仅在 Netlify 站生效,GitHub Pages 版提交会失败提示**
+- 邮箱定稿:contact.email=lukecao@ykautomus.com、contact.email2=lujiacao@163.com(双包+页脚+联系页均两行展示;{'@'} 转义);原 caolujia@yinkaish.cn 已删除
+- 删除旧邮箱 lujiacao@163.com 后用户要求撤销(revert e75c1e9),页脚/联系页/双语言包已恢复展示该邮箱
+- Netlify 部署配置:vite base 环境自适应 + netlify.toml(构建命令/发布目录/SPA 通配回退)
+- 首页新增「服务与合作伙伴」模块(核心优势之后、CTA 之前):上两栏(左列 tag「服务与合作伙伴」+标题+电路连线+说明段;右列伙伴墙 4×5 细边框格子 hover 绿) + 下部通栏世界地图(品牌绿渐变+五个地点脉冲标记:上海·总部/美国/埃及/印度/马来西亚,位置百分比目测校准,≤768 只留上海标签并翻到圆点左侧)。合作伙伴名单以源站 www.yinkaish.com 首页合作伙伴区为准:20 张 logo(阿里云 OSS images/logo/1-20.png,光伏产业链客户:鑫铂股份/晶科能源/德毅隆/CIRS/鸿盛/晶科科技/合肥科晶/爱康/源盛金属/源盛/科蓝特/复睿金属/江苏月嘉/生信/高瓴新材料/艾纳新能源/中信博/平煤隆基/创佳型材,第 17 号 logo 无文字用通用 alt)下载入 src/assets/partners/;data 新增 partners(import.meta.glob 导入,含双语 name);地图素材 world-map.png(91KB,源自 npm @svg-maps/world v2.0.0 **CC-BY-4.0**,已降坐标精度/删微小岛屿/渲染为 2000px PNG,署名见 src/assets/CREDITS.md);i18n home.partners.*(中英);prefers-reduced-motion 降级;新增 home.partners 区块复用 [data-reveal]。Wikimedia SVG 直连被网络重置,改用 npm 包
+- **修复导航 1280 横向溢出 7px**:品牌区 margin-left 用 100vw(含 15px 滚动条宽度)致总宽超视口;改 calc(100%/6 - 110px) 用容器百分比。**教训:vw 单位在出现滚动条的页面必然偏大,布局间距禁用 100vw 改 %**
+- 视觉检测轮播背景替换:用户横版裁切图(3888×1797)限宽 2560 压缩为 banner-vision.jpg(269KB,替代原 png);文案不变
+- 产品图全面换为本地设备图片库(用户资料 D:\OneDrive\桌面\网站\image\设备):10 款替换(YK-6A/6B←6E图/6W/FC-3C/3D/3J/3E/3F/OF-3I←YK-OL-3I_1/锁螺母←自锁螺母),sharp 裁白边限宽 800,7 款改 .jpg 扩展名(data 导入同步);YK-6B 与 6W 的库图为同一文件(资料库本身如此);拉弯机与 AL-1 库内无图保留原图;scripts/replace-product-images.cjs 可复跑
+- YK-OL-2I 查看器悬停暂停:鼠标悬停图片时自动轮播暂停(figHover),移开后恢复 3.5s 节拍
+- YK-OL-2I 详情图改为多图查看器:用户图片库(设备/视觉检测/YK-OL-2I/1-5.png,sharp 限宽 1200 palette PNG 共 1.6MB)入 src/assets/products/yk-ol-2i/;data 用 import.meta.glob 按文件名序导入 images 数组;Services 详情区单张显示+左右箭头+「n/5」计数+3.5s 自动轮播(切产品归零,无缩略图);其他型号单图不受影响
+- YK-OL-2I 产品简介更新:改为「设备与上一工位对接…自动检测长度/漏加工/外观瑕疵…分类输送到下一工位」(用户提供的对接流程描述,中英)
+- 轮播顺序调换:第 4 张=焊装交钥匙(car.jpg)、第 5 张=寅铠精神(cooperation);左右切换箭头放大(36→56px,黑 35% 底白字,≤768 44px)
+- 首页移除「新闻动态」板块(模板/NewsCard 导入/latestNews/.news-list 样式);/news 页与 data 中 news 数据保留
+- 首页员工统计 200+→150+(与 About 页一致)
+- 首页轮播新增第 5 张「汽车焊装交钥匙」:用户供图 car_.jpg(7360×4230,5.7MB)压缩至 2560 宽 293KB 入 src/assets/banner-car.jpg;文案 s5「焊装交钥匙，智造白车身」/s5sub「服务大众、通用、上汽的焊装线智造伙伴」(中英);追加末位
+- 删除轮播第 5 张科技城市(hero-city.svg 与 home.carousel.s5 从轮播移除,i18n 清理);hero-city.svg 保留——优势板块右列插画仍引用
+- 首页轮播切换间隔 5s→3s(:interval=3000)
+- 动画改为每次进入视口都重播(用户要求):观察器去掉 unobserve——进入加 .revealed 并重跑计数,离开移除 .revealed 并把计数立即 snap 回终值(dataset.final 缓存终值+_counting 防重+可重入清理);修复后台冻结导致的计数滞留中间值(±0.0mm/8%)问题

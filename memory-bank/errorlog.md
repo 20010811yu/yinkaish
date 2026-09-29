@@ -94,3 +94,12 @@
 11. **地图打点等坐标类定位禁止目测**(见 ERR-004):百分比必须由数据源计算;容器 aspect-ratio 必须与图片真实比例一致
 12. **v-for 动态重渲染(分页/筛选/加载更多)后必须调用 useReveal 返回的 rescan()**(见 ERR-006),否则新节点停留在透明状态
 13. **国旗一律用 SVG 图片(flag-icons),禁用 emoji 旗帜**(见 ERR-007):Windows 无旗帜字形,只会显示字母对
+
+### ERR-008 本机 mysql 客户端全部不可用(my.ini [client] 段误写 skip-grant-tables)
+- **错误现象**:任何 mysql 客户端命令(含 --version)启动即报 `[ERROR] unknown option '--skip-grant-tables'` 退出
+- **发生上下文**:官网数据库迁移任务首次连接 MySQL 时发现(2026-09-29)
+- **根本原因**:D:\mysql-8.0.29-winx64\my.ini 的 [client] 段末尾误写了 mysqld 专用选项 skip-grant-tables,客户端不识别直接退出
+- **解决方式**:删除该行;已用 `--no-defaults` 验证服务端本身正常(服务名 mysql,RUNNING,3306)
+- **验证结果**:修复后客户端参数解析正常
+- **教训**:MySQL 的 my.ini 各段选项有归属,服务端选项误入 [client]/[mysql] 段会让所有客户端命令瘫痪;排障先 `--no-defaults` 二分定位是配置文件还是服务端问题
+- **状态**:🟢 已解决

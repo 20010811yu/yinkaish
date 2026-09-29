@@ -16,4 +16,10 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
   ],
+  server: {
+    proxy: {
+      // 本地开发时后端接口代理(server 目录)
+      '/api': 'http://localhost:3001',
+    },
+  },
 })

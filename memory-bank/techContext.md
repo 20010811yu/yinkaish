@@ -23,3 +23,10 @@
 ## 命令
 - dev:`npm run dev`;build:`npm run build`;preview:`npm run preview`
 - PDF 图片提取:`node scripts/extract-pdf-images.cjs <pdf> <outdir>`(对象级,支持 Flate+DCT 过滤器链);页面-图片映射:`node scripts/map-pdf-images.cjs <pdf>`(裸 Page 对象序即阅读序)
+
+## 后端与数据库(2026-09-29 新增)
+- **MySQL 8.0.29**(本机 Windows,服务名 `mysql`,端口 3306,安装目录 D:\mysql-8.0.29-winx64);库 `yinkai_web` utf8mb4;表:news/jobs/product_categories/products/product_params/honors/partners(双语 `_zh/_en` 列,图片列存文件名);**发展历程(timeline/milestones)未入库(用户排除)**
+- **server/** 目录:Express + mysql2 + dotenv + cors(ESM),只读 GET 接口(/api/news|jobs|products|honors|partners),端口 3001;`npm run setup` 执行建库+种子(scripts/setup-db.mjs);`npm start` 起服务
+- **凭据**:server/.env(DB_PASSWORD 等,已 gitignore;模板 .env.example);**本机 mysql 客户端曾因 my.ini [client] 段 skip-grant-tables 全部不可用(已修,ERR-008)**
+- **前端对接**:src/api/data.js 启动水合(2.5s 超时,失败保持 src/data 静态兜底);src/data 六个动态导出为 reactive;图片文件名→URL 映射在 src/data/assets.js;dev 代理 /api→localhost:3001(vite.config.js)
+- **部署现状**:Netlify 仍是纯静态托管——线上站点走静态兜底数据,后端接口需自行部署(本地 3001 或服务器)后前端 /api 才能命中真实数据
