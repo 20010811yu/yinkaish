@@ -1,8 +1,6 @@
-## 当前焦点(2026-09-30):新闻正文富文本编辑器(已完成)
-管理端新闻正文 textarea 换 wangEditor(@wangeditor/editor 5 + editor-for-vue 5 @next,用户确认选型):封装 RichEditor.vue(v-model HTML,工具栏无图片/视频上传,语言跟随 locale),AdminNews 弹框加 max-height+body 滚动保矮视口可达;NewsDetail 渲染端兼容(content 以 `<` 开头→v-html,否则沿用 \n 分段,存量 12 条零迁移;列表 list-style: revert 恢复圆点,ERR-011)。浏览器实测:打开→保存→库内容一致,前台富文本/纯文本两路渲染正确。注意:编辑器仅进 /admin 懒加载分包;编辑器键盘交互(Enter 分段/Ctrl+B)在自动化合成事件下不可靠,人工操作正常。
-下一步(候选):部署后端到服务器让线上 /api 命中真实数据;图片上传机制。
-追加修复(2026-09-30):刷新 /admin 页闪现官网导航/页脚——main.js 改 `router.isReady()` 后挂载(ERR-012),前台深链接刷新同类首帧问题一并消除。
-追加改版(2026-09-30):管理端布局——顶栏通栏(logo+brand.full/brand.english 居左,会话操作居右),侧边栏去掉「官网内容管理」标题(admin.title key 已从语言包删除);品牌文案复用官网 brand.* key。
+## 当前焦点(2026-09-30):管理端安全加固(已完成)
+后端五层加固落地(security.js 集中管理):JWT_SECRET 生产强制、CORS 白名单(FRONTEND_ORIGIN)、三级限速(登录 5/15min、上传 30/15min、API 120/min)、helmet 安全头 + netlify.toml 前端安全头、CRUD 入库统一校验(类型/长度 400)+ content_zh sanitize-html 消毒(存储型 XSS)、密码策略 ≥8 位含字母数字。实测:403 跨源、429 限速、400 校验、script/onclick 消毒剥离全部生效;前端 build 通过。过程坑与数据恢复见 ERR-016/ERR-017。**存量默认口令 admin/admin123 未改,提醒用户首登改密**;上线 API 时须配置 NODE_ENV/JWT_SECRET/FRONTEND_ORIGIN 并走 HTTPS。
+下一步(候选):后端部署到服务器/Serverless 让线上 /api 命中真实数据;外接 MySQL 或 Netlify Blobs 方案已调研。
 
 ## 上一焦点(2026-09-28,概要)
 - 申请职位弹框(Careers):el-dialog+el-form,大陆手机号校验/简历附件必填(≤10MB),FormData 提交 Netlify Forms 影子表单 job

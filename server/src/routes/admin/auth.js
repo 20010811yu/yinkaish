@@ -27,12 +27,17 @@ router.get('/me', async (req, res, next) => {
   } catch (err) { next(err) }
 })
 
+// 密码策略:≥8 位且同时含字母与数字
+export function validPassword(p) {
+  return typeof p === 'string' && p.length >= 8 && /[A-Za-z]/.test(p) && /\d/.test(p)
+}
+
 // 修改当前账号密码
 router.put('/password', async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body || {}
-    if (!oldPassword || !newPassword || String(newPassword).length < 6) {
-      return res.status(400).json({ error: 'old password required; new password >= 6 chars' })
+    if (!oldPassword || !validPassword(newPassword)) {
+      return res.status(400).json({ error: 'old password required; new password >= 8 chars with letters and digits' })
     }
     const rows = await query('SELECT password_hash FROM admins WHERE id = ?', [req.admin.id])
     if (!bcrypt.compareSync(oldPassword, rows[0].password_hash)) {

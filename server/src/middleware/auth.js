@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken'
 import { query } from '../db.js'
 
-const SECRET = process.env.JWT_SECRET || 'yinkai-dev-secret'
+// 生产环境缺密钥已在 middleware/security.js 启动时抛错拦截;此处兜底防止开发时静默用弱密钥
+const SECRET = process.env.JWT_SECRET || (() => {
+  if (process.env.NODE_ENV === 'production') throw new Error('JWT_SECRET must be set in production')
+  return 'yinkai-dev-secret'
+})()
 
 export function signToken(admin) {
   return jwt.sign({ sub: admin.id, username: admin.username }, SECRET, { expiresIn: '12h' })
