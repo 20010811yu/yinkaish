@@ -144,7 +144,7 @@ const savePwd = async () => {
 
 .layout__name-en {
   font-size: 11px;
-  color: var(--el-text-color-secondary);
+  color: var(--el-color-primary, #00a651);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
