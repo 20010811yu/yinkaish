@@ -13,6 +13,8 @@
           <el-input v-model="form.password" data-testid="admin-password" type="password" show-password autocomplete="current-password" />
         </el-form-item>
         <SlideVerify ref="slideRef" class="login__slide" @verified="slideOk = true" />
+        <!-- 登录失败信息内嵌常驻显示,不随时间自动消失 -->
+        <el-alert v-if="loginError" :title="loginError" type="error" show-icon :closable="false" class="login__error" />
         <el-button type="primary" class="login__btn" :loading="loading" native-type="submit" data-testid="admin-login-btn">
           {{ $t('admin.login.submit') }}
         </el-button>
@@ -22,7 +24,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
@@ -36,6 +38,10 @@ const form = reactive({ username: '', password: '' })
 const loading = ref(false)
 const slideOk = ref(false)
 const slideRef = ref(null)
+const loginError = ref('')
+
+// 重新输入凭据即清除失败提示
+watch(() => [form.username, form.password], () => { loginError.value = '' })
 
 const rules = {
   username: [{ required: true, message: () => t('admin.rule.usernameRequired'), trigger: 'blur' }],
@@ -62,7 +68,8 @@ const onSubmit = async () => {
     slideOk.value = false
     slideRef.value?.reset()
     // 服务端凭据错误为英文标识,映射为双语提示;其余(网络失败等)原样展示
-    ElMessage.error(err.message === 'invalid credentials' ? t('admin.login.invalid') : err.message)
+    loginError.value = err.message === 'invalid credentials' ? t('admin.login.invalid') : err.message
+    ElMessage.error(loginError.value)
   } finally {
     loading.value = false
   }
@@ -108,6 +115,10 @@ const onSubmit = async () => {
 }
 
 .login__slide {
+  margin-bottom: 14px;
+}
+
+.login__error {
   margin-bottom: 14px;
 }
 </style>
