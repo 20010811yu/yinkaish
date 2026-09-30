@@ -195,7 +195,7 @@ export const adminZh = {
     pwd: { new: '新密码', confirm: '确认新密码', rule: '新密码至少 6 位', mismatch: '两次输入的新密码不一致', done: '密码已修改' },
     common: { add: '新增', edit: '编辑', delete: '删除', save: '保 存', cancel: '取 消', saved: '已保存', deleted: '已删除', warning: '确认操作' },
     fields: {
-      date: '发布日期', tag: '分类', tagZh: '分类', titleZh: '标题',
+      date: '发布日期', tag: '分类', tagZh: '分类', titleZh: '标题', tagHint: '选择现有分类或输入新分类',
       summaryZh: '摘要', contentZh: '正文', published: '已发布',
       dept: '部门', deptZh: '部门', location: '地点', locationZh: '工作地点',
       descZh: '描述', active: '在招', nameZh: '名称',

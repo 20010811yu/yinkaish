@@ -25,7 +25,11 @@
 
     <el-dialog v-model="dlg" :title="form.id ? $t('admin.common.edit') : $t('admin.common.add')" width="720px" top="4vh" class="news-dlg">
       <el-form :model="form" label-width="90px">
-        <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="form.tag_zh" /></el-form-item>
+        <el-form-item :label="$t('admin.fields.tagZh')">
+          <el-select v-model="form.tag_zh" filterable allow-create default-first-option :placeholder="$t('admin.fields.tagHint')" style="width: 100%">
+            <el-option v-for="t in tagOptions" :key="t" :label="t" :value="t" />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="$t('admin.fields.date')">
           <el-date-picker v-model="form.news_date" type="date" value-format="YYYY-MM-DD" />
         </el-form-item>
@@ -45,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { adminApi } from '../../api/admin'
@@ -57,6 +61,9 @@ const loading = ref(false)
 const saving = ref(false)
 const dlg = ref(false)
 const form = reactive({})
+
+// 分类下拉选项:现有新闻分类去重(选择或手动输入新分类均可用)
+const tagOptions = computed(() => [...new Set(rows.value.map((r) => r.tag_zh).filter(Boolean))].sort())
 
 const empty = {
   id: 0, tag_zh: '', news_date: new Date().toISOString().slice(0, 10),
