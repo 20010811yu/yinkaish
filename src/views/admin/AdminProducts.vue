@@ -28,7 +28,7 @@
       </div>
       <el-table :data="productsOf(cat)" size="small" border>
         <el-table-column prop="model" :label="$t('admin.fields.model')" width="140" />
-        <el-table-column prop="tag_zh" :label="$t('admin.fields.tag')" width="120" />
+        <el-table-column prop="tag_zh" :label="$t('admin.fields.productTag')" width="120" />
         <el-table-column prop="image" :label="$t('admin.fields.image')" min-width="180" show-overflow-tooltip />
         <el-table-column prop="sort" :label="$t('admin.fields.sort')" width="70" />
         <el-table-column :label="$t('admin.fields.actions')" width="200" fixed="right">
@@ -61,7 +61,16 @@
         <div class="grid2">
           <el-form-item :label="$t('admin.fields.model')"><el-input v-model="prodForm.model" /></el-form-item>
           <el-form-item :label="$t('admin.fields.sort')"><el-input-number v-model="prodForm.sort" :min="0" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="prodForm.tag_zh" /></el-form-item>
+          <el-form-item :label="$t('admin.fields.category')">
+            <el-select v-model="prodForm.category_id" filterable style="width: 100%">
+              <el-option v-for="c in cats" :key="c.id" :label="c.name_zh" :value="c.id" />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('admin.fields.productTag')">
+            <el-select v-model="prodForm.tag_zh" filterable allow-create default-first-option :placeholder="$t('admin.fields.productTagHint')" style="width: 100%">
+              <el-option v-for="t in tagOptions" :key="t" :label="t" :value="t" />
+            </el-select>
+          </el-form-item>
         </div>
         <el-form-item :label="$t('admin.fields.image')">
           <el-select v-model="prodForm.image" filterable allow-create style="width: 100%">
@@ -111,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { adminApi } from '../../api/admin'
@@ -128,6 +137,9 @@ const galleryOptions = Object.keys(ol2iGalleryByName).sort()
 const urlOf = (name) => productBanners[name] || null
 
 const productsOf = (cat) => products.value.filter((p) => p.category_id === cat.id)
+
+// 产品标签下拉选项:现有产品标签去重(选择或手动输入新标签均可用)
+const tagOptions = computed(() => [...new Set(products.value.map((p) => p.tag_zh).filter(Boolean))].sort())
 
 /* ---- 分类 ---- */
 const catDlg = ref(false)

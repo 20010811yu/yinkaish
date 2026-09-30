@@ -195,7 +195,7 @@ export const adminEn = {
     pwd: { new: 'New password', confirm: 'Confirm password', rule: 'New password must be at least 6 characters', mismatch: 'Passwords do not match', done: 'Password changed' },
     common: { add: 'Add', edit: 'Edit', delete: 'Delete', save: 'Save', cancel: 'Cancel', saved: 'Saved', deleted: 'Deleted', warning: 'Confirm' },
     fields: {
-      date: 'Date', tag: 'Tag', tagZh: 'Tag', titleZh: 'Title', tagHint: 'Select an existing tag or type a new one',
+      date: 'Date', tag: 'Tag', tagZh: 'Tag', titleZh: 'Title', tagHint: 'Select an existing tag or type a new one', category: 'Category', productTag: 'Product tag', productTagHint: 'Select an existing tag or type a new one',
       summaryZh: 'Summary', contentZh: 'Content', published: 'Published',
       dept: 'Dept', deptZh: 'Dept', location: 'Location', locationZh: 'Work location',
       descZh: 'Description', active: 'Active', nameZh: 'Name',
