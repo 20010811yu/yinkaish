@@ -167,7 +167,8 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { adminApi, getToken } from '../../api/admin'
+import { adminApi } from '../../api/admin'
+import { useImageUpload } from '../../composables/useImageUpload'
 import { productBanners, ol2iGalleryByName } from '../../data/assets'
 
 const { t } = useI18n()
@@ -181,9 +182,8 @@ const galleryOptions = Object.keys(ol2iGalleryByName).sort()
 // 图片解析双轨:素材文件名走打包映射,/uploads 上传路径原样显示
 const urlOf = (name) => productBanners[name] || (name && name.startsWith('/') ? name : null)
 
-/* ---- 图片上传 ---- */
-const uploadAction = '/api/admin/upload'
-const uploadHeaders = { Authorization: `Bearer ${getToken()}` }
+/* ---- 图片上传(共用 composable) ---- */
+const { uploadAction, uploadHeaders, beforeImageUpload, onUploadError } = useImageUpload()
 const uploadedGallery = ref([])
 
 // 画廊统一预览项:已上传路径 + 素材选中项(解析为可显示 URL)
@@ -195,27 +195,6 @@ const removeGalleryItem = (i) => {
   const item = galleryItems.value[i]
   if (item.uploaded) uploadedGallery.value = uploadedGallery.value.filter((u) => u !== item.src)
   else prodForm.gallery = prodForm.gallery.filter((n) => (ol2iGalleryByName[n] || n) !== item.src)
-}
-
-const beforeImageUpload = (file) => {
-  const okType = ['image/png', 'image/jpeg', 'image/webp'].includes(file.type)
-  if (!okType) {
-    ElMessage.error(t('admin.rule.imageType'))
-    return false
-  }
-  if (file.size > 5 * 1024 * 1024) {
-    ElMessage.error(t('admin.rule.imageSize'))
-    return false
-  }
-  return true
-}
-const onUploadError = (err) => {
-  let msg = t('admin.rule.uploadFailed')
-  try {
-    const resp = JSON.parse(err.message)
-    if (resp?.error === 'file too large (max 5MB)') msg = t('admin.rule.imageSize')
-  } catch { /* 保留默认提示 */ }
-  ElMessage.error(msg)
 }
 
 const productsOf = (cat) => products.value.filter((p) => p.category_id === cat.id)

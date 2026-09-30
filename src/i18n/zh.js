@@ -200,7 +200,7 @@ export const adminZh = {
       dept: '部门', deptZh: '部门', location: '地点', locationZh: '工作地点',
       descZh: '描述', active: '在招', nameZh: '名称',
       image: '图片文件', logo: 'Logo 文件', preview: '预览', sort: '排序', model: '型号', valueZh: '参数值', labelZh: '参数名', actions: '操作',
-      uploadImage: '本地上传主图', uploadImages: '本地上传多图', orFromAssets: '或从素材库选择',
+      uploadImage: '本地上传主图', uploadImages: '本地上传多图', orFromAssets: '或从素材库选择', uploadHonor: '本地上传证书图片', uploadLogo: '本地上传 Logo',
     },
     rule: {
       addCategory: '新增分类', addProduct: '新增产品', addParamRow: '新增参数行', params: '参数',

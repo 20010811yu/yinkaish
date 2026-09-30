@@ -27,6 +27,7 @@
 - **ERR-012** 刷新 /admin 页闪现官网导航/页脚:main.js 先挂载后路由解析,首帧 route.path 为 '/' → isAdmin 误判;`router.isReady().then(() => app.mount())` 后挂载即正确(2026-09-30,详情见 archive)
 - **ERR-013** 删除确认框(ElMessageBox)无样式缩在左上角+按钮英文:函数式组件样式未显式引入(main.js 补 message/message-box css);EP 内置文案未接 locale(App.vue 加 el-config-provider 跟随 i18n)(2026-09-30,详情见 archive)
 - **ERR-014** YK-6A 参数变乱码:控制台内联中文发 PUT 被编码污染覆盖库数据;恢复须从 seed.sql 提取行生成带引号 SQL 文件走 mysql --default-character-set=utf8mb4,中文写库禁走控制台内联(2026-09-30,详情见 archive)
+- **ERR-015** 上传 logo 在首页伙伴墙不显示:img width/height auto 时未加载 intrinsic 为 0 → 0×0 元素被 loading=lazy 判定无可视区永不加载(死锁);修法=img 用 CSS 占满定尺寸容器(100%/100%+contain)(2026-09-30,详情见 archive)
 
 ## 防回归清单(编码前必查)
 1. Element Plus 禁全量引入(`app.use(ElementPlus)` + 全量样式),必须 resolver 按需;ElMessage 等函数式组件需单独引入样式

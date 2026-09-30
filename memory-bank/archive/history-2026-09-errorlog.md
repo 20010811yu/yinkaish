@@ -125,3 +125,13 @@
 - **解决方式**:从 server/sql/seed.sql 按行提取 product_id=1 的 18 行参数种子(awk 文件级提取,零控制台编码),生成带引号的恢复 SQL 文件(SET NAMES utf8mb4 + DELETE + INSERT),经 mysql --default-character-set=utf8mb4 执行;API 回读 18 行与种子一致、全库五接口乱码审计清零
 - **教训**:①凡涉及中文数据的写库操作,载荷必须走 UTF-8 文件(脚本文件/SQL 文件),严禁经控制台内联字面量——Windows 控制台编码转换会静默污染请求体;②测试性写库(回读验证)后必须立即回读核对内容本身,不能只看 HTTP 状态码;③恢复类 SQL 注意 seed.sql 的值未加引号是简写格式,裸执行会语法错误,须补引号
 - **状态**:🟢 已解决(2026-09-30 当日修复,摘要入 errorlog)
+
+### ERR-015 上传 logo 在首页伙伴墙不显示(lazy 图片 0×0 死锁)
+- **错误现象**:伙伴管理上传的 logo 保存后,前台首页伙伴墙该图不显示(naturalWidth 恒 0);直接 fetch 该 URL 返回 200
+- **发生上下文**:伙伴 logo 本地上传功能交付验证时发现(2026-09-30)
+- **根本原因**:`.partners__cell img` 用 `width/height:auto + max-width/max-height:100%`——图片未加载时 intrinsic 尺寸为 0,渲染成 0×0 元素;而 `loading="lazy"` 的加载判定要求元素有非零可视区域,0×0 永不触发加载 →「未加载→无尺寸→不加载」死锁(cell 本身有 aspect-ratio 5/3,但 img 没有)
+- **解决方式**:img 改为占满定尺寸容器:`width:100%; height:100%; object-fit:contain`(cell 已有 aspect-ratio)——加载前即有非零尺寸,lazy 正常触发;视觉与原 contain 缩放等价
+- **解决时间**:2026-09-30
+- **验证结果**:伙伴墙 21 张 logo(含上传图)全部 naturalWidth>0,尺寸一致;滚动到墙区后加载正常
+- **教训**:①`loading="lazy"` 的 img 必须由 CSS 保证非零尺寸(占满定尺寸父容器或显式宽高/aspect-ratio),禁止依赖图片 intrinsic;②「资源可 fetch 但 img 不加载」优先查元素 rect 是否 0×0;③此类死锁对静态兜底图同样潜伏,改尺寸方案是全量修复
+- **状态**:🟢 已解决(2026-09-30 当日修复,摘要入 errorlog)

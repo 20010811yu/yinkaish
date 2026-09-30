@@ -200,7 +200,7 @@ export const adminEn = {
       dept: 'Dept', deptZh: 'Dept', location: 'Location', locationZh: 'Work location',
       descZh: 'Description', active: 'Active', nameZh: 'Name',
       image: 'Image file', logo: 'Logo file', preview: 'Preview', sort: 'Sort', model: 'Model', valueZh: 'Value', labelZh: 'Label', actions: 'Actions',
-      uploadImage: 'Upload main image', uploadImages: 'Upload gallery images', orFromAssets: 'or pick from assets',
+      uploadImage: 'Upload main image', uploadImages: 'Upload gallery images', orFromAssets: 'or pick from assets', uploadHonor: 'Upload certificate image', uploadLogo: 'Upload logo',
     },
     rule: {
       addCategory: 'Add Category', addProduct: 'Add Product', addParamRow: 'Add Row', params: 'Params',

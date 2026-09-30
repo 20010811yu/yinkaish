@@ -590,10 +590,9 @@ onBeforeUnmount(() => {
 }
 
 .partners__cell img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  /* 占满 cell 再 contain 缩放:未加载时也有非零尺寸,避免 loading=lazy 对 0×0 图片永不触发 */
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
