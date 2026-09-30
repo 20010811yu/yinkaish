@@ -97,3 +97,13 @@
 - **解决时间**:2026-09-30
 - **验证结果**:720 视口下编辑器 288px、弹框 698px、保存按钮可见;前台详情页列表 disc 圆点恢复,纯文本老新闻渲染无回归;build 通过
 - **状态**:🟢 已解决(2026-09-30 压缩归档)
+
+### ERR-012 刷新 /admin 页闪现官网导航/页脚(main.js 先挂载后路由解析)
+- **错误现象**:刷新 /yinkaish/admin/news 时,首帧渲染官网 Navbar+Footer(中间 router-view 为空),等管理端布局分包加载完才切换;用户刷新管理端页面时截图反馈
+- **发生上下文**:富文本编辑器交付后用户报告(2026-09-30)
+- **根本原因**:main.js 先 `app.mount('#app')` 再等路由;Vue Router 4 首次导航完成前 currentRoute 为 START_LOCATION(path='/'),App.vue 的 `isAdmin = route.path.startsWith('/admin')` 首帧误判 false;AdminLayout 是懒加载分包,解析完成前窗口期内官网框架已渲染
+- **解决方式**:`router.isReady().then(() => app.mount('#app'))`——首次路由解析(守卫+懒加载分包)完成后才挂载,首帧即正确路由
+- **解决时间**:2026-09-30
+- **验证结果**:新标签页完整加载 /admin/news,3 秒 122 次采样官网 navbar/footer 零出现,管理端布局 ~824ms(dev 编译)首现;npm run build 通过
+- **教训**:useRoute() 在首次导航完成前返回初始路由 '/',任何依赖 route.path 的布局分支在挂载时机早于 router.isReady 时都会按 '/' 误判一次;深链接刷新类首帧问题(ERR-005 同族)优先检查挂载与 router.isReady 的时序
+- **状态**:🟢 已解决(2026-09-30 当日修复,摘要入 errorlog)

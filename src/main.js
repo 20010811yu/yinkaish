@@ -14,4 +14,5 @@ app.config.errorHandler = (err, _inst, info) => {
 }
 app.use(router)
 app.use(i18n)
-app.mount('#app')
+// 等首次路由解析完成再挂载:避免刷新深链接(如 /admin/*)首帧按初始路由 '/' 渲染出官网导航/页脚再切换
+router.isReady().then(() => app.mount('#app'))
