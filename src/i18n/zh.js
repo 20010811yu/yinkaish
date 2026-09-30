@@ -188,7 +188,6 @@ export default {
 // 管理员端(内部使用)
 export const adminZh = {
   admin: {
-    title: '官网内容管理',
     menu: { news: '新闻管理', jobs: '职位管理', products: '产品管理', honors: '荣誉管理', partners: '伙伴管理' },
     login: { username: '用户名', password: '密码', submit: '登 录', required: '请输入用户名和密码', welcome: '欢迎,{name}' },
     layout: { logout: '退出登录', changePwd: '修改密码' },

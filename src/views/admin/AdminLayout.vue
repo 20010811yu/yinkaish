@@ -1,23 +1,30 @@
 <template>
   <el-container class="layout">
-    <el-aside width="200px" class="layout__aside">
-      <div class="layout__brand">{{ $t('admin.title') }}</div>
-      <el-menu :default-active="route.path" router>
-        <el-menu-item index="/admin/news">{{ $t('admin.menu.news') }}</el-menu-item>
-        <el-menu-item index="/admin/jobs">{{ $t('admin.menu.jobs') }}</el-menu-item>
-        <el-menu-item index="/admin/products">{{ $t('admin.menu.products') }}</el-menu-item>
-        <el-menu-item index="/admin/honors">{{ $t('admin.menu.honors') }}</el-menu-item>
-        <el-menu-item index="/admin/partners">{{ $t('admin.menu.partners') }}</el-menu-item>
-      </el-menu>
-    </el-aside>
-    <el-container>
-      <el-header class="layout__header">
-        <span>{{ session?.nickname || session?.username || '' }}</span>
-        <div class="layout__header-actions">
-          <el-button text @click="onChangePwd">{{ $t('admin.layout.changePwd') }}</el-button>
-          <el-button text type="danger" data-testid="admin-logout" @click="onLogout">{{ $t('admin.layout.logout') }}</el-button>
+    <!-- 顶部横栏占满整行:左 logo+公司中英文名,右 会话操作 -->
+    <el-header class="layout__header">
+      <div class="layout__brand">
+        <img src="../../assets/favicon.ico" alt="logo" class="layout__logo" />
+        <div class="layout__brand-text">
+          <span class="layout__name">{{ $t('brand.full') }}</span>
+          <span class="layout__name-en">{{ $t('brand.english') }}</span>
         </div>
-      </el-header>
+      </div>
+      <div class="layout__header-actions">
+        <span class="layout__user">{{ session?.nickname || session?.username || '' }}</span>
+        <el-button text @click="onChangePwd">{{ $t('admin.layout.changePwd') }}</el-button>
+        <el-button text type="danger" data-testid="admin-logout" @click="onLogout">{{ $t('admin.layout.logout') }}</el-button>
+      </div>
+    </el-header>
+    <el-container class="layout__body">
+      <el-aside width="200px" class="layout__aside">
+        <el-menu :default-active="route.path" router>
+          <el-menu-item index="/admin/news">{{ $t('admin.menu.news') }}</el-menu-item>
+          <el-menu-item index="/admin/jobs">{{ $t('admin.menu.jobs') }}</el-menu-item>
+          <el-menu-item index="/admin/products">{{ $t('admin.menu.products') }}</el-menu-item>
+          <el-menu-item index="/admin/honors">{{ $t('admin.menu.honors') }}</el-menu-item>
+          <el-menu-item index="/admin/partners">{{ $t('admin.menu.partners') }}</el-menu-item>
+        </el-menu>
+      </el-aside>
       <el-main class="layout__main">
         <router-view />
       </el-main>
@@ -96,27 +103,71 @@ const savePwd = async () => {
   min-height: 100vh;
 }
 
-.layout__aside {
-  border-right: 1px solid #e5e7eb;
-}
-
-.layout__brand {
-  font-weight: 700;
-  padding: 18px 20px;
-  color: var(--el-color-primary, #00a651);
-}
-
+/* 顶部横栏:整行铺满,左品牌右操作 */
 .layout__header {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 16px;
   border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.layout__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.layout__logo {
+  width: 38px;
+  height: 38px;
+  flex: none;
+}
+
+.layout__brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.layout__name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--el-text-color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layout__name-en {
+  font-size: 11px;
+  color: var(--el-text-color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .layout__header-actions {
   display: flex;
+  align-items: center;
   gap: 4px;
+  flex: none;
+}
+
+.layout__user {
+  color: var(--el-text-color-regular);
+  margin-right: 4px;
+}
+
+.layout__body {
+  min-height: 0;
+}
+
+.layout__aside {
+  border-right: 1px solid #e5e7eb;
 }
 
 .layout__main {

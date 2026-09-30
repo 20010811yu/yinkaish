@@ -188,7 +188,6 @@ export default {
 // Admin console (internal use)
 export const adminEn = {
   admin: {
-    title: 'Website Content Admin',
     menu: { news: 'News', jobs: 'Jobs', products: 'Products', honors: 'Honors', partners: 'Partners' },
     login: { username: 'Username', password: 'Password', submit: 'Sign in', required: 'Username and password required', welcome: 'Welcome, {name}' },
     layout: { logout: 'Sign out', changePwd: 'Change password' },
