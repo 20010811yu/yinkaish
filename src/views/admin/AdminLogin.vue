@@ -12,10 +12,10 @@
         <el-form-item :label="$t('admin.login.password')" prop="password">
           <el-input v-model="form.password" data-testid="admin-password" type="password" show-password autocomplete="current-password" />
         </el-form-item>
+        <SlideVerify ref="slideRef" class="login__slide" @verified="slideOk = true" />
         <el-button type="primary" class="login__btn" :loading="loading" :disabled="!slideOk" native-type="submit" data-testid="admin-login-btn">
           {{ $t('admin.login.submit') }}
         </el-button>
-        <SlideVerify ref="slideRef" class="login__slide" @verified="slideOk = true" />
       </el-form>
     </el-card>
   </div>
@@ -102,6 +102,6 @@ const onSubmit = async () => {
 }
 
 .login__slide {
-  margin-top: 12px;
+  margin-bottom: 14px;
 }
 </style>

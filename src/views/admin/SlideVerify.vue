@@ -45,6 +45,8 @@ const pieceX = ref(0)
 const handleX = ref(0)
 
 const targetX = ref(0)
+// 缺口垂直位置(拼块跟随),draw() 时随机
+const notchY = ref(0)
 let startX = 0
 let img = null
 let scale = 1
@@ -78,8 +80,10 @@ function draw() {
 
   // 缺口位置(留出滑块初始区与右侧余量)
   targetX.value = 120 + Math.floor(Math.random() * (CW - PIECE - 140))
+  // 缺口垂直位置随机(上下各留 12px 安全边距)
+  notchY.value = 12 + Math.floor(Math.random() * (CH - PIECE - 24))
   bctx.save()
-  roundRect(bctx, targetX.value, 34, PIECE, PIECE, 6)
+  roundRect(bctx, targetX.value, notchY.value, PIECE, PIECE, 6)
   bctx.fillStyle = 'rgba(20,40,30,0.45)'
   bctx.fill()
   bctx.strokeStyle = 'rgba(255,255,255,0.85)'
@@ -90,13 +94,13 @@ function draw() {
   // 拼图块(与缺口同 y 取图)
   pctx.clearRect(0, 0, PIECE, CH)
   pctx.save()
-  roundRect(pctx, 0, 34, PIECE, PIECE, 6)
+  roundRect(pctx, 0, notchY.value, PIECE, PIECE, 6)
   pctx.clip()
   pctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, -targetX.value, 0, CW, CH)
   pctx.restore()
   pctx.strokeStyle = 'rgba(255,255,255,0.9)'
   pctx.lineWidth = 2
-  roundRect(pctx, 1, 35, PIECE - 2, PIECE - 2, 6)
+  roundRect(pctx, 1, notchY.value + 1, PIECE - 2, PIECE - 2, 6)
   pctx.stroke()
 }
 
