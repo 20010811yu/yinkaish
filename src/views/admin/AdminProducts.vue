@@ -90,7 +90,13 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="urlOf(prodForm.image)" :label="$t('admin.fields.preview')">
-          <el-image :src="urlOf(prodForm.image)" fit="contain" style="max-height: 100px" />
+          <el-image
+            :src="urlOf(prodForm.image)"
+            :preview-src-list="[urlOf(prodForm.image)]"
+            preview-teleported
+            fit="contain"
+            class="main-preview"
+          />
         </el-form-item>
         <el-form-item :label="$t('admin.rule.gallery')">
           <el-upload
@@ -106,10 +112,17 @@
           >
             <el-button type="primary" plain>{{ $t('admin.fields.uploadImages') }}</el-button>
           </el-upload>
-          <div v-if="uploadedGallery.length" class="gallery-uploaded">
-            <div v-for="(u, i) in uploadedGallery" :key="u" class="gallery-thumb">
-              <el-image :src="u" fit="cover" style="width: 64px; height: 64px; border-radius: 4px" />
-              <el-button text type="danger" size="small" @click="uploadedGallery.splice(i, 1)">{{ $t('admin.common.delete') }}</el-button>
+          <div v-if="galleryItems.length" class="gallery-uploaded">
+            <div v-for="(g, i) in galleryItems" :key="g.src" class="gallery-thumb">
+              <el-image
+                :src="g.src"
+                :preview-src-list="galleryItems.map((x) => x.src)"
+                :initial-index="i"
+                preview-teleported
+                fit="cover"
+                class="gallery-img"
+              />
+              <el-button text type="danger" size="small" @click="removeGalleryItem(i)">{{ $t('admin.common.delete') }}</el-button>
             </div>
           </div>
           <el-select v-model="prodForm.gallery" multiple filterable allow-create :placeholder="$t('admin.fields.orFromAssets')" style="width: 100%; margin-top: 6px">
@@ -172,6 +185,17 @@ const urlOf = (name) => productBanners[name] || (name && name.startsWith('/') ? 
 const uploadAction = '/api/admin/upload'
 const uploadHeaders = { Authorization: `Bearer ${getToken()}` }
 const uploadedGallery = ref([])
+
+// 画廊统一预览项:已上传路径 + 素材选中项(解析为可显示 URL)
+const galleryItems = computed(() => [
+  ...uploadedGallery.value.map((src) => ({ src, uploaded: true })),
+  ...(prodForm.gallery || []).map((name) => ({ src: ol2iGalleryByName[name] || name, uploaded: false, name })),
+])
+const removeGalleryItem = (i) => {
+  const item = galleryItems.value[i]
+  if (item.uploaded) uploadedGallery.value = uploadedGallery.value.filter((u) => u !== item.src)
+  else prodForm.gallery = prodForm.gallery.filter((n) => (ol2iGalleryByName[n] || n) !== item.src)
+}
 
 const beforeImageUpload = (file) => {
   const okType = ['image/png', 'image/jpeg', 'image/webp'].includes(file.type)
@@ -384,5 +408,20 @@ onMounted(load)
   flex-direction: column;
   align-items: center;
   gap: 2px;
+}
+/* 主图预览:加高完整显示,点击放大 */
+.main-preview {
+  width: 100%;
+  height: 260px;
+  background: var(--el-fill-color-light, #f5f7fa);
+  border-radius: 4px;
+  cursor: zoom-in;
+}
+.gallery-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  background: var(--el-fill-color-light, #f5f7fa);
+  cursor: zoom-in;
 }
 </style>
