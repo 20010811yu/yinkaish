@@ -4,6 +4,9 @@ import router from './router'
 import i18n from './i18n'
 import { hydrateAll } from './api/data'
 import './assets/styles/main.css'
+// 函数式组件(ElMessage/ElMessageBox)不经过模板按需引入,样式须显式引入(ERR-013)
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
 
 // 动态内容(新闻/职位/产品/荣誉/伙伴)从后端拉取,失败保持静态兜底
 hydrateAll()

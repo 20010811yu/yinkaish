@@ -107,3 +107,13 @@
 - **验证结果**:新标签页完整加载 /admin/news,3 秒 122 次采样官网 navbar/footer 零出现,管理端布局 ~824ms(dev 编译)首现;npm run build 通过
 - **教训**:useRoute() 在首次导航完成前返回初始路由 '/',任何依赖 route.path 的布局分支在挂载时机早于 router.isReady 时都会按 '/' 误判一次;深链接刷新类首帧问题(ERR-005 同族)优先检查挂载与 router.isReady 的时序
 - **状态**:🟢 已解决(2026-09-30 当日修复,摘要入 errorlog)
+
+### ERR-013 删除确认框无样式缩在左上角 + EP 内置文案英文(函数式组件样式缺失 + locale 欠账)
+- **错误现象**:管理端删除新闻时,ElMessageBox 确认框以裸 HTML 形态渲染在文档流左上角(无遮罩/背景/定位,按钮为默认样式);按钮文案为英文 OK/Cancel
+- **发生上下文**:用户删除新闻截图反馈(2026-09-30)
+- **根本原因**:①ElMessage/ElMessageBox 是函数式组件,不经过 unplugin-vue-components 的模板按需引入,其样式 css 从未被引入——§8.2/防回归清单 #1 早有此要求但管理页仅 import 了组件本身;前台 Contact/Careers 的 ElMessage 同样潜在缺失;②全站未配置 Element Plus locale(防回归清单 #3 欠账),EP 内置文案(MessageBox 按钮/分页等)回落英文默认值
+- **解决方式**:main.js 全局显式引入 `element-plus/es/components/message/style/css` 与 `message-box/style/css`(去重加载,前台 Toast 一并修复);App.vue 外层包 `<el-config-provider :locale="epLocale">`,locale 跟随 i18n(zh-cn/en)
+- **解决时间**:2026-09-30
+- **验证结果**:确认框居中、黑色半透明遮罩、白底圆角、警告图标,按钮「取消/确定」;取消不删除;主包 css 76.57KB(gzip 14.14KB);build 通过
+- **教训**:凡 import 函数式 API(ElMessage/ElMessageBox/ElNotification/ElLoading)必须同步显式引入对应样式;新增 EP 组件时先核对防回归清单 #1/#3,locale 类欠账会以"英文按钮"形式零散暴露
+- **状态**:🟢 已解决(2026-09-30 当日修复,摘要入 errorlog)

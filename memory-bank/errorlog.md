@@ -25,6 +25,7 @@
 - **ERR-009** 滑块缺口不显示:canvas 传 NaN 坐标静默失败,ref 重构后须全局 grep .value 使用点,视觉验证要像素采样
 - **ERR-011** 富文本编辑器两处样式坑:第三方组件内联 height:100% 时要在父容器定高;全局 reset(list-style:none)会波及 v-html 富文本,需 `list-style: revert` 恢复
 - **ERR-012** 刷新 /admin 页闪现官网导航/页脚:main.js 先挂载后路由解析,首帧 route.path 为 '/' → isAdmin 误判;`router.isReady().then(() => app.mount())` 后挂载即正确(2026-09-30,详情见 archive)
+- **ERR-013** 删除确认框(ElMessageBox)无样式缩在左上角+按钮英文:函数式组件样式未显式引入(main.js 补 message/message-box css);EP 内置文案未接 locale(App.vue 加 el-config-provider 跟随 i18n)(2026-09-30,详情见 archive)
 
 ## 防回归清单(编码前必查)
 1. Element Plus 禁全量引入(`app.use(ElementPlus)` + 全量样式),必须 resolver 按需;ElMessage 等函数式组件需单独引入样式
