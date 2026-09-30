@@ -1,5 +1,5 @@
 // 内容管理 CRUD:新闻/职位/荣誉/伙伴 + 分类/产品/参数
-// 全部挂载于 /api/admin,由 requireAdmin 保护;行数据保持 _zh/_en 平铺字段
+// 全部挂载于 /api/admin,由 requireAdmin 保护;行数据保持 _zh 平铺字段(库中仅存中文)
 import { Router } from 'express'
 import { query } from '../../db.js'
 
@@ -52,14 +52,14 @@ function crud(name, table, order, allowEdit, select) {
   })
 }
 
-crud('news', 'news', 'news_date DESC', ['tag_zh','tag_en','news_date','title_zh','title_en','summary_zh','summary_en','content_zh','content_en','is_published'], `SELECT id, tag_zh, tag_en, DATE_FORMAT(news_date,'%Y-%m-%d') AS news_date, title_zh, title_en, summary_zh, summary_en, content_zh, content_en, is_published FROM news`)
-crud('jobs', 'jobs', 'id', ['title_zh','title_en','dept_zh','dept_en','location_zh','location_en','desc_zh','desc_en','is_active'])
-crud('honors', 'honors', 'sort', ['name_zh','name_en','desc_zh','desc_en','image','sort'])
-crud('partners', 'partners', 'sort', ['slug','name_zh','name_en','image','sort'])
-crud('product-categories', 'product_categories', 'sort', ['slug','name_zh','name_en','desc_zh','desc_en','sort'])
+crud('news', 'news', 'news_date DESC', ['tag_zh','news_date','title_zh','summary_zh','content_zh','is_published'], `SELECT id, tag_zh, DATE_FORMAT(news_date,'%Y-%m-%d') AS news_date, title_zh, summary_zh, content_zh, is_published FROM news`)
+crud('jobs', 'jobs', 'id', ['title_zh','dept_zh','location_zh','desc_zh','is_active'])
+crud('honors', 'honors', 'sort', ['name_zh','desc_zh','image','sort'])
+crud('partners', 'partners', 'sort', ['slug','name_zh','image','sort'])
+crud('product-categories', 'product_categories', 'sort', ['slug','name_zh','desc_zh','sort'])
 
 // 产品:gallery 以 JSON 存储
-const productFields = ['category_id','model','tag_zh','tag_en','image','gallery','desc_zh','desc_en','sort']
+const productFields = ['category_id','model','tag_zh','image','gallery','desc_zh','sort']
 router.get('/products', async (req, res, next) => {
   try {
     const rows = await query('SELECT * FROM products ORDER BY category_id, sort')
@@ -105,9 +105,9 @@ router.put('/products/:id/params', async (req, res, next) => {
     await query('DELETE FROM product_params WHERE product_id=?', [req.params.id])
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i]
-      if (!r.label_zh && !r.label_en) continue
-      await query('INSERT INTO product_params (product_id,label_zh,label_en,value_zh,value_en,sort) VALUES (?,?,?,?,?,?)',
-        [req.params.id, r.label_zh || '', r.label_en || '', r.value_zh || '', r.value_en || '', i + 1])
+      if (!r.label_zh) continue
+      await query('INSERT INTO product_params (product_id,label_zh,value_zh,sort) VALUES (?,?,?,?)',
+        [req.params.id, r.label_zh || '', r.value_zh || '', i + 1])
     }
     res.json({ ok: true })
   } catch (e) { next(e) }

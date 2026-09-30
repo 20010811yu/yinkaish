@@ -6,11 +6,11 @@ const router = Router()
 // 公司荣誉(按 sort)
 router.get('/honors', async (req, res, next) => {
   try {
-    const rows = await query('SELECT name_zh, name_en, desc_zh, desc_en, image FROM honors ORDER BY sort')
+    const rows = await query('SELECT name_zh, desc_zh, image FROM honors ORDER BY sort')
     res.json({
       honors: rows.map((r) => ({
-        name: { zh: r.name_zh, en: r.name_en },
-        desc: { zh: r.desc_zh, en: r.desc_en },
+        name: { zh: r.name_zh },
+        desc: { zh: r.desc_zh },
         image: r.image,
       })),
     })
@@ -20,11 +20,11 @@ router.get('/honors', async (req, res, next) => {
 // 合作伙伴(按 sort)
 router.get('/partners', async (req, res, next) => {
   try {
-    const rows = await query('SELECT slug, name_zh, name_en, image FROM partners ORDER BY sort')
+    const rows = await query('SELECT slug, name_zh, image FROM partners ORDER BY sort')
     res.json({
       partners: rows.map((r) => ({
         id: r.slug,
-        name: { zh: r.name_zh, en: r.name_en },
+        name: { zh: r.name_zh },
         image: r.image,
       })),
     })

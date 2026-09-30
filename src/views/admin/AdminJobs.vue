@@ -10,7 +10,6 @@
       <el-table-column prop="title_zh" :label="$t('admin.fields.titleZh')" min-width="150" show-overflow-tooltip />
       <el-table-column prop="dept_zh" :label="$t('admin.fields.dept')" width="120" />
       <el-table-column prop="location_zh" :label="$t('admin.fields.location')" width="130" />
-      <el-table-column prop="title_en" :label="$t('admin.fields.titleEn')" min-width="150" show-overflow-tooltip />
       <el-table-column :label="$t('admin.fields.active')" width="90">
         <template #default="{ row }">
           <el-switch :model-value="!!row.is_active" @change="(v) => toggle(row, v)" />
@@ -28,14 +27,10 @@
       <el-form :model="form" label-width="90px">
         <div class="grid2">
           <el-form-item :label="$t('admin.fields.titleZh')"><el-input v-model="form.title_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.titleEn')"><el-input v-model="form.title_en" /></el-form-item>
           <el-form-item :label="$t('admin.fields.deptZh')"><el-input v-model="form.dept_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.deptEn')"><el-input v-model="form.dept_en" /></el-form-item>
           <el-form-item :label="$t('admin.fields.locationZh')"><el-input v-model="form.location_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.locationEn')"><el-input v-model="form.location_en" /></el-form-item>
         </div>
         <el-form-item :label="$t('admin.fields.descZh')"><el-input v-model="form.desc_zh" type="textarea" :rows="7" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.descEn')"><el-input v-model="form.desc_en" type="textarea" :rows="7" /></el-form-item>
         <el-form-item :label="$t('admin.fields.active')">
           <el-switch v-model="form.is_active" :active-value="1" :inactive-value="0" />
         </el-form-item>
@@ -62,8 +57,8 @@ const dlg = ref(false)
 const form = reactive({})
 
 const empty = {
-  id: 0, title_zh: '', title_en: '', dept_zh: '', dept_en: '',
-  location_zh: '上海·安亭', location_en: 'Anting, Shanghai', desc_zh: '', desc_en: '', is_active: 1,
+  id: 0, title_zh: '', dept_zh: '',
+  location_zh: '上海·安亭', desc_zh: '', is_active: 1,
 }
 
 const load = async () => {
@@ -88,7 +83,7 @@ const openEdit = (row) => {
 }
 
 const save = async () => {
-  if (!form.title_zh || !form.title_en) {
+  if (!form.title_zh) {
     ElMessage.warning(t('admin.rule.titleRequired'))
     return
   }

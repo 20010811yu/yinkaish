@@ -7,16 +7,16 @@ const router = Router()
 router.get('/jobs', async (req, res, next) => {
   try {
     const rows = await query(
-      `SELECT id, title_zh, title_en, dept_zh, dept_en, location_zh, location_en, desc_zh, desc_en
+      `SELECT id, title_zh, dept_zh, location_zh, desc_zh
          FROM jobs WHERE is_active = 1 ORDER BY id`
     )
     res.json({
       jobs: rows.map((r) => ({
         id: r.id,
-        title: { zh: r.title_zh, en: r.title_en },
-        dept: { zh: r.dept_zh, en: r.dept_en },
-        location: { zh: r.location_zh, en: r.location_en },
-        desc: { zh: r.desc_zh, en: r.desc_en },
+        title: { zh: r.title_zh },
+        dept: { zh: r.dept_zh },
+        location: { zh: r.location_zh },
+        desc: { zh: r.desc_zh },
       })),
     })
   } catch (err) { next(err) }

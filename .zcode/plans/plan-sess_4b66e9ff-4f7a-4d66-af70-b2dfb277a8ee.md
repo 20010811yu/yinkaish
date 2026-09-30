@@ -1,17 +1,21 @@
-# 修复管理端无法登录
+# 管理端 + 后端只做中文版
 
-## 1. 修复 api/admin.js 的 401 跳转 bug（代码缺陷）
-- 现状：`location.pathname.startsWith('/admin/login')` 在 base=`/yinkaish/` 下永不匹配 → 密码错一次就整页跳到脱离 base 的 `/admin/login`
-- 修复：用 `import.meta.env.BASE_URL` 拼接登录页路径判断（`/yinkaish/admin/login`），跳转也用 BASE_URL 前缀
+## 1. 数据库（server/sql/）
+- schema.sql：7 张内容表删除全部 `_en` 列，表注释标「仅中文」
+- seed.sql：INSERT 改为仅中文列
+- 线上库用 `ALTER TABLE ... DROP COLUMN` 逐列删 `_en`，**不动 admins 表**（保留你已修改的管理员密码）
 
-## 2. 启动后端并验证
-- `cd server && npm start`（后台），确认 3001 监听、`/api/health` 返回 ok
-- 若后端启动报数据库连接错误：按 .env 的 DB_PORT 排查 MySQL 服务（netstat 查实际端口/sc query mysql）
+## 2. 后端接口（server/src/routes/）
+- 公开 news/jobs/products/content：响应双语字段只含 `{ zh }`（前端 pick() 英文时自动回退中文）
+- 管理接口 admin/content.js：白名单/SELECT/参数保存全部去 `_en` 字段
 
-## 3. 端到端验证
-- curl 实测 POST /api/admin/login（admin/admin123）：200 返回 token；若 401 说明密码已被修改，再与你确认是否重置
-- 浏览器实测：登录页滑块→登录→进入 /admin/news；密码错误场景不再整页跳走，只弹错误提示
+## 3. 管理端界面（src/views/admin/）——只做中文版
+- AdminLogin / AdminLayout / AdminNews / AdminJobs / AdminProducts / AdminHonors / AdminPartners / SlideVerify：界面文案从 `$t('admin.*')` 改为直接写中文（不再跟随官网中英切换）；删除全部英文输入框（title_en/name_en/tag_en/value_en…），校验仅必填中文
+- i18n 中 admin.* 双语键移除（界面不再引用）
 
-## 4. 收尾
-- `npm run build` 验证；git 提交推送
-- 记忆库：errorlog 记录 401 跳转路径 bug（ERR-010），techContext 补一句
+## 4. 前台官网
+- 不动：静态文案仍双语；库驱动内容在英文语言下由 pick() 回退显示中文
+
+## 5. 验证与收尾
+- ALTER 后重启后端；curl 验证登录（admin/你的密码）、/api/news、/api/products 返回仅中文结构；若登录仍失败（MySQL 服务可能仍未启动）会提示你
+- `npm run build`；progress/techContext 记录「管理端+后端仅中文」约束；git 提交推送

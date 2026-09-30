@@ -16,8 +16,8 @@ router.get('/products', async (req, res, next) => {
     for (const p of params) {
       if (!paramsByProduct.has(p.product_id)) paramsByProduct.set(p.product_id, [])
       paramsByProduct.get(p.product_id).push({
-        label: { zh: p.label_zh, en: p.label_en },
-        value: { zh: p.value_zh, en: p.value_en },
+        label: { zh: p.label_zh },
+        value: { zh: p.value_zh },
       })
     }
 
@@ -26,10 +26,10 @@ router.get('/products', async (req, res, next) => {
     for (const prod of products) {
       const item = {
         model: prod.model,
-        tag: { zh: prod.tag_zh, en: prod.tag_en },
+        tag: { zh: prod.tag_zh },
         image: prod.image,
         gallery: parseGallery(prod.gallery),
-        desc: { zh: prod.desc_zh, en: prod.desc_en },
+        desc: { zh: prod.desc_zh },
         params: paramsByProduct.get(prod.id) || [],
       }
       if (!productsByCategory.has(prod.category_id)) productsByCategory.set(prod.category_id, [])
@@ -39,8 +39,8 @@ router.get('/products', async (req, res, next) => {
     res.json({
       categories: categories.map((c) => ({
         id: c.slug,
-        name: { zh: c.name_zh, en: c.name_en },
-        desc: { zh: c.desc_zh, en: c.desc_en },
+        name: { zh: c.name_zh },
+        desc: { zh: c.desc_zh },
         products: productsByCategory.get(c.id) || [],
       })),
     })

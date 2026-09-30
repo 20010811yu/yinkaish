@@ -10,7 +10,6 @@
       <el-table-column prop="news_date" :label="$t('admin.fields.date')" width="110" />
       <el-table-column prop="tag_zh" :label="$t('admin.fields.tag')" width="110" />
       <el-table-column prop="title_zh" :label="$t('admin.fields.titleZh')" min-width="200" show-overflow-tooltip />
-      <el-table-column prop="title_en" :label="$t('admin.fields.titleEn')" min-width="200" show-overflow-tooltip />
       <el-table-column :label="$t('admin.fields.published')" width="90">
         <template #default="{ row }">
           <el-switch :model-value="!!row.is_published" @change="(v) => toggle(row, v)" />
@@ -26,19 +25,13 @@
 
     <el-dialog v-model="dlg" :title="form.id ? $t('admin.common.edit') : $t('admin.common.add')" width="720px" top="6vh">
       <el-form :model="form" label-width="90px">
-        <div class="grid2">
-          <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="form.tag_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.tagEn')"><el-input v-model="form.tag_en" /></el-form-item>
-        </div>
+        <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="form.tag_zh" /></el-form-item>
         <el-form-item :label="$t('admin.fields.date')">
           <el-date-picker v-model="form.news_date" type="date" value-format="YYYY-MM-DD" />
         </el-form-item>
         <el-form-item :label="$t('admin.fields.titleZh')"><el-input v-model="form.title_zh" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.titleEn')"><el-input v-model="form.title_en" /></el-form-item>
         <el-form-item :label="$t('admin.fields.summaryZh')"><el-input v-model="form.summary_zh" type="textarea" :rows="2" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.summaryEn')"><el-input v-model="form.summary_en" type="textarea" :rows="2" /></el-form-item>
         <el-form-item :label="$t('admin.fields.contentZh')"><el-input v-model="form.content_zh" type="textarea" :rows="6" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.contentEn')"><el-input v-model="form.content_en" type="textarea" :rows="6" /></el-form-item>
         <el-form-item :label="$t('admin.fields.published')">
           <el-switch v-model="form.is_published" :active-value="1" :inactive-value="0" />
         </el-form-item>
@@ -65,8 +58,8 @@ const dlg = ref(false)
 const form = reactive({})
 
 const empty = {
-  id: 0, tag_zh: '', tag_en: '', news_date: new Date().toISOString().slice(0, 10),
-  title_zh: '', title_en: '', summary_zh: '', summary_en: '', content_zh: '', content_en: '', is_published: 1,
+  id: 0, tag_zh: '', news_date: new Date().toISOString().slice(0, 10),
+  title_zh: '', summary_zh: '', content_zh: '', is_published: 1,
 }
 
 const load = async () => {
@@ -91,7 +84,7 @@ const openEdit = (row) => {
 }
 
 const save = async () => {
-  if (!form.title_zh || !form.title_en) {
+  if (!form.title_zh) {
     ElMessage.warning(t('admin.rule.titleRequired'))
     return
   }
@@ -144,10 +137,5 @@ onMounted(load)
 .bar h2 {
   margin: 0;
   font-size: 18px;
-}
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 16px;
 }
 </style>

@@ -10,7 +10,6 @@
       <el-table-column prop="id" label="ID" width="60" />
       <el-table-column prop="slug" label="Slug" width="110" />
       <el-table-column prop="name_zh" :label="$t('admin.fields.nameZh')" min-width="180" show-overflow-tooltip />
-      <el-table-column prop="name_en" :label="$t('admin.fields.nameEn')" min-width="180" show-overflow-tooltip />
       <el-table-column prop="sort" :label="$t('admin.fields.sort')" width="70" />
       <el-table-column :label="$t('admin.fields.actions')" width="230" fixed="right">
         <template #default="{ row }">
@@ -24,7 +23,7 @@
     <!-- 分类下产品列表 -->
     <template v-for="cat in cats" :key="cat.id">
       <div class="subbar">
-        <h3>{{ cat.name_zh }} / {{ cat.name_en }}</h3>
+        <h3>{{ cat.name_zh }}</h3>
         <el-button size="small" type="primary" plain @click="openProdAdd(cat)">{{ $t('admin.rule.addProduct') }}</el-button>
       </div>
       <el-table :data="productsOf(cat)" size="small" border>
@@ -46,12 +45,8 @@
     <el-dialog v-model="catDlg" :title="$t('admin.rule.category')" width="640px">
       <el-form :model="catForm" label-width="90px">
         <el-form-item label="Slug"><el-input v-model="catForm.slug" /></el-form-item>
-        <div class="grid2">
-          <el-form-item :label="$t('admin.fields.nameZh')"><el-input v-model="catForm.name_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.nameEn')"><el-input v-model="catForm.name_en" /></el-form-item>
-        </div>
+        <el-form-item :label="$t('admin.fields.nameZh')"><el-input v-model="catForm.name_zh" /></el-form-item>
         <el-form-item :label="$t('admin.fields.descZh')"><el-input v-model="catForm.desc_zh" type="textarea" :rows="2" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.descEn')"><el-input v-model="catForm.desc_en" type="textarea" :rows="2" /></el-form-item>
         <el-form-item :label="$t('admin.fields.sort')"><el-input-number v-model="catForm.sort" :min="0" /></el-form-item>
       </el-form>
       <template #footer>
@@ -67,7 +62,6 @@
           <el-form-item :label="$t('admin.fields.model')"><el-input v-model="prodForm.model" /></el-form-item>
           <el-form-item :label="$t('admin.fields.sort')"><el-input-number v-model="prodForm.sort" :min="0" /></el-form-item>
           <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="prodForm.tag_zh" /></el-form-item>
-          <el-form-item :label="$t('admin.fields.tagEn')"><el-input v-model="prodForm.tag_en" /></el-form-item>
         </div>
         <el-form-item :label="$t('admin.fields.image')">
           <el-select v-model="prodForm.image" filterable allow-create style="width: 100%">
@@ -83,7 +77,6 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('admin.fields.descZh')"><el-input v-model="prodForm.desc_zh" type="textarea" :rows="4" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.descEn')"><el-input v-model="prodForm.desc_en" type="textarea" :rows="4" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="prodDlg = false">{{ $t('admin.common.cancel') }}</el-button>
@@ -97,14 +90,8 @@
         <el-table-column :label="$t('admin.fields.labelZh')" min-width="150">
           <template #default="{ row }"><el-input v-model="row.label_zh" size="small" /></template>
         </el-table-column>
-        <el-table-column :label="$t('admin.fields.labelEn')" min-width="150">
-          <template #default="{ row }"><el-input v-model="row.label_en" size="small" /></template>
-        </el-table-column>
         <el-table-column :label="$t('admin.fields.valueZh')" min-width="180">
           <template #default="{ row }"><el-input v-model="row.value_zh" size="small" /></template>
-        </el-table-column>
-        <el-table-column :label="$t('admin.fields.valueEn')" min-width="180">
-          <template #default="{ row }"><el-input v-model="row.value_en" size="small" /></template>
         </el-table-column>
         <el-table-column :label="$t('admin.fields.actions')" width="70">
           <template #default="{ $index }">
@@ -112,7 +99,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button class="addrow" size="small" @click="paramRows.push({ label_zh: '', label_en: '', value_zh: '', value_en: '' })">
+      <el-button class="addrow" size="small" @click="paramRows.push({ label_zh: '', value_zh: '' })">
         {{ $t('admin.rule.addParamRow') }}
       </el-button>
       <template #footer>
@@ -145,7 +132,7 @@ const productsOf = (cat) => products.value.filter((p) => p.category_id === cat.i
 /* ---- 分类 ---- */
 const catDlg = ref(false)
 const catForm = reactive({})
-const emptyCat = { id: 0, slug: '', name_zh: '', name_en: '', desc_zh: '', desc_en: '', sort: 0 }
+const emptyCat = { id: 0, slug: '', name_zh: '', desc_zh: '', sort: 0 }
 
 const openCatAdd = () => {
   Object.assign(catForm, emptyCat)
@@ -193,7 +180,7 @@ const removeCat = async (row) => {
 /* ---- 产品 ---- */
 const prodDlg = ref(false)
 const prodForm = reactive({})
-const emptyProd = { id: 0, category_id: 0, model: '', tag_zh: '', tag_en: '', image: '', gallery: [], desc_zh: '', desc_en: '', sort: 0 }
+const emptyProd = { id: 0, category_id: 0, model: '', tag_zh: '', image: '', gallery: [], desc_zh: '', sort: 0 }
 
 const openProdAdd = (cat) => {
   Object.assign(prodForm, emptyProd, { category_id: cat.id, sort: productsOf(cat).length + 1 })
