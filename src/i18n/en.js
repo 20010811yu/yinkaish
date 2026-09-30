@@ -189,7 +189,7 @@ export default {
 export const adminEn = {
   admin: {
     menu: { news: 'News', jobs: 'Jobs', products: 'Products', honors: 'Honors', partners: 'Partners' },
-    login: { username: 'Username', password: 'Password', submit: 'Sign in', required: 'Username and password required', welcome: 'Welcome, {name}', invalid: 'Invalid username or password' },
+    login: { username: 'Username', password: 'Password', submit: 'Sign in', required: 'Username and password required', welcome: 'Welcome, {name}', invalid: 'Invalid username or password', slideFirst: 'Please complete the slider verification first' },
     layout: { logout: 'Sign out', changePwd: 'Change password' },
     slide: { hint: 'Slide to complete the puzzle', hintOk: 'Verified', pass: 'Verified' },
     pwd: { new: 'New password', confirm: 'Confirm password', rule: 'New password must be at least 6 characters', mismatch: 'Passwords do not match', done: 'Password changed' },

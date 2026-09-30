@@ -13,7 +13,7 @@
           <el-input v-model="form.password" data-testid="admin-password" type="password" show-password autocomplete="current-password" />
         </el-form-item>
         <SlideVerify ref="slideRef" class="login__slide" @verified="slideOk = true" />
-        <el-button type="primary" class="login__btn" :loading="loading" :disabled="!slideOk" native-type="submit" data-testid="admin-login-btn">
+        <el-button type="primary" class="login__btn" :loading="loading" native-type="submit" data-testid="admin-login-btn">
           {{ $t('admin.login.submit') }}
         </el-button>
       </el-form>
@@ -46,6 +46,11 @@ const onSubmit = async () => {
   // 登录前前端校验:必填项不通过则不发请求
   const valid = await formRef.value.validate().catch(() => false)
   if (!valid) return
+  // 滑块未通过(含失败后重置未重拖)时给出明确提示,而不是静默无反应
+  if (!slideOk.value) {
+    ElMessage.warning(t('admin.login.slideFirst'))
+    return
+  }
   loading.value = true
   try {
     const { token, nickname, username } = await adminApi.login(form.username, form.password)
