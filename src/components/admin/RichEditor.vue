@@ -70,4 +70,9 @@ onBeforeUnmount(() => {
   flex: 1;
   overflow-y: auto;
 }
+/* 全屏时盖过 el-dialog(z-index ~2004),避免表单控件(如「已发布」开关)浮在编辑器上层 */
+.rich-editor.w-e-full-screen-container,
+.rich-editor :deep(.w-e-full-screen-container) {
+  z-index: 3000;
+}
 </style>
