@@ -1,6 +1,8 @@
 // 管理端接口封装:自动附带 JWT,401 时清除会话并跳转登录页
 const TOKEN_KEY = 'yk_admin_token'
 const USER_KEY = 'yk_admin_user'
+// 登录页完整路径需带站点 base(开发/GitHub Pages 为 /yinkaish/,Netlify 为 /)
+const LOGIN_PATH = `${import.meta.env.BASE_URL}admin/login`
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY)
@@ -24,7 +26,7 @@ async function request(path, { method = 'GET', body } = {}) {
   const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined })
   if (res.status === 401) {
     clearSession()
-    if (!location.pathname.startsWith('/admin/login')) location.href = '/admin/login'
+    if (!location.pathname.startsWith(LOGIN_PATH)) location.href = LOGIN_PATH
     throw new Error('登录已失效,请重新登录')
   }
   const data = await res.json().catch(() => ({}))

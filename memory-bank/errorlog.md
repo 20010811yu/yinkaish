@@ -112,3 +112,12 @@
 - **验证结果**:notch 像素 [118,74,44,255]、piece 像素 [199,102,54,255],拖动 state=done,截图缺口拼块均可见
 - **教训**:①canvas 绘制坐标传 NaN 是静默失败,视觉验证必须做像素采样而非只看逻辑判定;②变量重构为 ref 后必须全局 grep 该标识符检查所有 .value 使用点,模板自动解包会掩盖遗漏
 - **状态**:🟢 已解决
+
+### ERR-010 管理端密码错误一次即整页跳转白屏(401 处理未含站点 base)
+- **错误现象**:管理端登录时密码输错一次,页面整页跳转到脱离 base 的 /admin/login 白屏,而非仅弹错误提示
+- **发生上下文**:排查"无法正常登录"时由 Explore 代理核实 src/api/admin.js 发现(2026-09-30)
+- **根本原因**:401 处理用 location.pathname.startsWith('/admin/login') 判断是否已在登录页,但站点 base 为 /yinkaish/(vite base + GH Pages),实际 pathname 是 /yinkaish/admin/login,永不匹配;任何 401(含后端不可用的代理 500 之外的 401)都会 location.href 跳到脱离 base 的路径
+- **解决方式**:改用 import.meta.env.BASE_URL 拼接 LOGIN_PATH 判断与跳转(api/admin.js)
+- **验证结果**:npm run build 通过;待后端恢复后浏览器复核
+- **教训**:涉及 location.pathname 的判断必须考虑站点 base,统一用 import.meta.env.BASE_URL 拼接
+- **状态**:🟡 规避中(待浏览器复核转🟢)

@@ -1,18 +1,17 @@
-# 登录页滑块验证:移到登录按钮上方 + 缺口/拼块位置随机
+# 修复管理端无法登录
 
-## 1. AdminLogin.vue — 布局调整
-把 `<SlideVerify>` 从登录按钮下方移到按钮上方（用户名/密码之后、按钮之前），删除多余的 `.login__slide` 顶部间距样式（改为按钮上移后的间距）。
+## 1. 修复 api/admin.js 的 401 跳转 bug（代码缺陷）
+- 现状：`location.pathname.startsWith('/admin/login')` 在 base=`/yinkaish/` 下永不匹配 → 密码错一次就整页跳到脱离 base 的 `/admin/login`
+- 修复：用 `import.meta.env.BASE_URL` 拼接登录页路径判断（`/yinkaish/admin/login`），跳转也用 BASE_URL 前缀
 
-## 2. SlideVerify.vue — 缺口垂直位置随机
-现状：缺口水平位置随机（targetX），垂直位置固定 y=34。
-改动：
-- 新增 `notchY = ref(0)`，draw() 时随机：`12 + Math.floor(Math.random() * (CH - PIECE - 24))`（上下各留 12px 安全边距）
-- 缺口绘制（roundRect）与拼块绘制（clip 区域、取图偏移）全部使用 `notchY.value`，白边描边同步跟随
-- 拼块垂直位置随缺口联动（拖动仍只水平移动）
-- **吸取 ERR-009 教训**：改完后 grep `notchY` 全量检查每个使用点都带 `.value`（模板自动解包除外）
+## 2. 启动后端并验证
+- `cd server && npm start`（后台），确认 3001 监听、`/api/health` 返回 ok
+- 若后端启动报数据库连接错误：按 .env 的 DB_PORT 排查 MySQL 服务（netstat 查实际端口/sc query mysql）
 
-## 3. 验证
-- `npm run build` 通过
-- 浏览器刷新登录页：确认拼图在登录按钮上方；连续 reset 几次确认缺口垂直位置每次随机变化
-- 像素采样确认缺口/拼块绘出、拖动判定通过
-- git 提交推送
+## 3. 端到端验证
+- curl 实测 POST /api/admin/login（admin/admin123）：200 返回 token；若 401 说明密码已被修改，再与你确认是否重置
+- 浏览器实测：登录页滑块→登录→进入 /admin/news；密码错误场景不再整页跳走，只弹错误提示
+
+## 4. 收尾
+- `npm run build` 验证；git 提交推送
+- 记忆库：errorlog 记录 401 跳转路径 bug（ERR-010），techContext 补一句
