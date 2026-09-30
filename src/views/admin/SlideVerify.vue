@@ -79,7 +79,7 @@ function draw() {
   // 缺口位置(留出滑块初始区与右侧余量)
   targetX.value = 120 + Math.floor(Math.random() * (CW - PIECE - 140))
   bctx.save()
-  roundRect(bctx, targetX, 34, PIECE, PIECE, 6)
+  roundRect(bctx, targetX.value, 34, PIECE, PIECE, 6)
   bctx.fillStyle = 'rgba(20,40,30,0.45)'
   bctx.fill()
   bctx.strokeStyle = 'rgba(255,255,255,0.85)'
@@ -92,7 +92,7 @@ function draw() {
   pctx.save()
   roundRect(pctx, 0, 34, PIECE, PIECE, 6)
   pctx.clip()
-  pctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, -targetX, 0, CW, CH)
+  pctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, -targetX.value, 0, CW, CH)
   pctx.restore()
   pctx.strokeStyle = 'rgba(255,255,255,0.9)'
   pctx.lineWidth = 2
