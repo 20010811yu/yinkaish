@@ -43,6 +43,11 @@ const loginError = ref('')
 // 重新输入凭据即清除失败提示
 watch(() => [form.username, form.password], () => { loginError.value = '' })
 
+// 用户名/密码自动删除空格(含首尾与中间,粘贴/自动填充同样生效)
+const stripSpaces = (v) => v.replace(/\s+/g, '')
+watch(() => form.username, (v) => { const s = stripSpaces(v); if (s !== v) form.username = s })
+watch(() => form.password, (v) => { const s = stripSpaces(v); if (s !== v) form.password = s })
+
 const rules = {
   username: [{ required: true, message: () => t('admin.rule.usernameRequired'), trigger: 'blur' }],
   password: [{ required: true, message: () => t('admin.rule.passwordRequired'), trigger: 'blur' }],
