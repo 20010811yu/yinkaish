@@ -200,6 +200,7 @@ export const adminEn = {
       dept: 'Dept', deptZh: 'Dept', location: 'Location', locationZh: 'Work location',
       descZh: 'Description', active: 'Active', nameZh: 'Name',
       image: 'Image file', logo: 'Logo file', preview: 'Preview', sort: 'Sort', model: 'Model', valueZh: 'Value', labelZh: 'Label', actions: 'Actions',
+      uploadImage: 'Upload main image', uploadImages: 'Upload gallery images', orFromAssets: 'or pick from assets',
     },
     rule: {
       addCategory: 'Add Category', addProduct: 'Add Product', addParamRow: 'Add Row', params: 'Params',
@@ -207,6 +208,7 @@ export const adminEn = {
       usernameRequired: 'Username is required', passwordRequired: 'Password is required', titleRequired: 'Title is required', nameRequired: 'Name is required', partnerRequired: 'Name and slug are required',
       categoryRequired: 'Slug and Chinese name are required', productRequired: 'Model and image are required',
       categoryNotEmpty: 'Category still has products; remove or move them first',
+      imageType: 'Only png/jpg/webp images are allowed', imageSize: 'Image must be 5MB or less', uploadFailed: 'Upload failed, please retry',
       confirmDelete: 'Delete this record? This cannot be undone', confirmDeleteParams: 'Deleting the product also deletes its parameter rows. Continue?',
     },
   },

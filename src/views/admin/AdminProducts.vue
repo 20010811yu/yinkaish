@@ -73,7 +73,19 @@
           </el-form-item>
         </div>
         <el-form-item :label="$t('admin.fields.image')">
-          <el-select v-model="prodForm.image" filterable allow-create style="width: 100%">
+          <el-upload
+            :action="uploadAction"
+            :headers="uploadHeaders"
+            name="file"
+            accept="image/png,image/jpeg,image/webp"
+            :show-file-list="false"
+            :before-upload="beforeImageUpload"
+            :on-success="(res) => (prodForm.image = res.url)"
+            :on-error="onUploadError"
+          >
+            <el-button type="primary" plain>{{ $t('admin.fields.uploadImage') }}</el-button>
+          </el-upload>
+          <el-select v-model="prodForm.image" filterable allow-create :placeholder="$t('admin.fields.orFromAssets')" style="width: 100%; margin-top: 6px">
             <el-option v-for="f in bannerOptions" :key="f" :label="f" :value="f" />
           </el-select>
         </el-form-item>
@@ -81,7 +93,26 @@
           <el-image :src="urlOf(prodForm.image)" fit="contain" style="max-height: 100px" />
         </el-form-item>
         <el-form-item :label="$t('admin.rule.gallery')">
-          <el-select v-model="prodForm.gallery" multiple filterable allow-create style="width: 100%">
+          <el-upload
+            :action="uploadAction"
+            :headers="uploadHeaders"
+            name="file"
+            multiple
+            accept="image/png,image/jpeg,image/webp"
+            :show-file-list="false"
+            :before-upload="beforeImageUpload"
+            :on-success="(res) => uploadedGallery.push(res.url)"
+            :on-error="onUploadError"
+          >
+            <el-button type="primary" plain>{{ $t('admin.fields.uploadImages') }}</el-button>
+          </el-upload>
+          <div v-if="uploadedGallery.length" class="gallery-uploaded">
+            <div v-for="(u, i) in uploadedGallery" :key="u" class="gallery-thumb">
+              <el-image :src="u" fit="cover" style="width: 64px; height: 64px; border-radius: 4px" />
+              <el-button text type="danger" size="small" @click="uploadedGallery.splice(i, 1)">{{ $t('admin.common.delete') }}</el-button>
+            </div>
+          </div>
+          <el-select v-model="prodForm.gallery" multiple filterable allow-create :placeholder="$t('admin.fields.orFromAssets')" style="width: 100%; margin-top: 6px">
             <el-option v-for="f in galleryOptions" :key="f" :label="f" :value="f" />
           </el-select>
         </el-form-item>
@@ -123,7 +154,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { adminApi } from '../../api/admin'
+import { adminApi, getToken } from '../../api/admin'
 import { productBanners, ol2iGalleryByName } from '../../data/assets'
 
 const { t } = useI18n()
@@ -134,7 +165,34 @@ const saving = ref(false)
 
 const bannerOptions = Object.keys(productBanners).sort()
 const galleryOptions = Object.keys(ol2iGalleryByName).sort()
-const urlOf = (name) => productBanners[name] || null
+// 图片解析双轨:素材文件名走打包映射,/uploads 上传路径原样显示
+const urlOf = (name) => productBanners[name] || (name && name.startsWith('/') ? name : null)
+
+/* ---- 图片上传 ---- */
+const uploadAction = '/api/admin/upload'
+const uploadHeaders = { Authorization: `Bearer ${getToken()}` }
+const uploadedGallery = ref([])
+
+const beforeImageUpload = (file) => {
+  const okType = ['image/png', 'image/jpeg', 'image/webp'].includes(file.type)
+  if (!okType) {
+    ElMessage.error(t('admin.rule.imageType'))
+    return false
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    ElMessage.error(t('admin.rule.imageSize'))
+    return false
+  }
+  return true
+}
+const onUploadError = (err) => {
+  let msg = t('admin.rule.uploadFailed')
+  try {
+    const resp = JSON.parse(err.message)
+    if (resp?.error === 'file too large (max 5MB)') msg = t('admin.rule.imageSize')
+  } catch { /* 保留默认提示 */ }
+  ElMessage.error(msg)
+}
 
 const productsOf = (cat) => products.value.filter((p) => p.category_id === cat.id)
 
@@ -196,11 +254,16 @@ const emptyProd = { id: 0, category_id: 0, model: '', tag_zh: '', image: '', gal
 
 const openProdAdd = (cat) => {
   Object.assign(prodForm, emptyProd, { category_id: cat.id, sort: productsOf(cat).length + 1 })
+  uploadedGallery.value = []
   prodDlg.value = true
 }
 const openProdEdit = (row) => {
   const g = row.gallery
-  Object.assign(prodForm, emptyProd, row, { gallery: g ? (typeof g === 'string' ? JSON.parse(g) : g) : [] })
+  const list = g ? (typeof g === 'string' ? JSON.parse(g) : g) : []
+  // 画廊双轨拆分:/uploads 上传路径进已上传列表,其余按素材文件名进多选
+  uploadedGallery.value = list.filter((v) => typeof v === 'string' && v.startsWith('/'))
+  const assetNames = list.filter((v) => typeof v === 'string' && !v.startsWith('/'))
+  Object.assign(prodForm, emptyProd, row, { gallery: assetNames })
   prodDlg.value = true
 }
 const saveProd = async () => {
@@ -210,8 +273,10 @@ const saveProd = async () => {
   }
   saving.value = true
   try {
-    if (prodForm.id) await adminApi.update('products', prodForm.id, prodForm)
-    else await adminApi.create('products', prodForm)
+    // 画廊 = 素材选中项 + 已上传路径 合并保存
+    const payload = { ...prodForm, gallery: [...(prodForm.gallery || []), ...uploadedGallery.value] }
+    if (prodForm.id) await adminApi.update('products', prodForm.id, payload)
+    else await adminApi.create('products', payload)
     ElMessage.success(t('admin.common.saved'))
     prodDlg.value = false
     await load()
@@ -306,5 +371,18 @@ onMounted(load)
 }
 .addrow {
   margin-top: 10px;
+}
+.gallery-uploaded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+}
+.gallery-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 </style>

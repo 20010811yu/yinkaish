@@ -18,8 +18,9 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      // 本地开发时后端接口代理(server 目录)
+      // 本地开发时后端接口代理(server 目录);/uploads 为上传图片的静态托管
       '/api': 'http://localhost:3001',
+      '/uploads': 'http://localhost:3001',
     },
   },
 })

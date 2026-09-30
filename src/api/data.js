@@ -1,7 +1,7 @@
 // 启动时尝试从后端 API 拉取动态内容并原位替换 src/data 中的 reactive 数组;
 // 任一接口失败(无后端/超时)则保持静态兜底数据,官网功能不受影响
 import { news, jobs, productCategories, productParams, honors, partners } from '../data'
-import { productBanners, partnerLogos, honorImages, ol2iGalleryByName } from '../data/assets'
+import { productBanners, partnerLogos, honorImages, ol2iGalleryByName, resolveImage } from '../data/assets'
 
 const TIMEOUT_MS = 2500
 
@@ -22,10 +22,10 @@ function replaceList(list, items) {
   list.splice(0, list.length, ...items)
 }
 
-// 数据库图片列存文件名,这里映射回打包资源 URL;未知文件名回退为 undefined
-const productImage = (name) => productBanners[name]
+// 数据库图片列存文件名(素材)或 /uploads 路径(后端上传),这里解析为可显示 URL
+const productImage = (name) => resolveImage(name, productBanners)
 const galleryImages = (names) =>
-  Array.isArray(names) && names.length ? names.map((n) => ol2iGalleryByName[n]).filter(Boolean) : undefined
+  Array.isArray(names) && names.length ? names.map((n) => resolveImage(n, ol2iGalleryByName)).filter(Boolean) : undefined
 
 export async function hydrateNews() {
   const { news: rows } = await getJSON('/api/news')
@@ -71,7 +71,7 @@ export async function hydrateHonors() {
   const { honors: rows } = await getJSON('/api/honors')
   replaceList(
     honors,
-    rows.map((h) => ({ ...h, image: honorImages[h.image] }))
+    rows.map((h) => ({ ...h, image: resolveImage(h.image, honorImages) }))
   )
 }
 
@@ -79,7 +79,7 @@ export async function hydratePartners() {
   const { partners: rows } = await getJSON('/api/partners')
   replaceList(
     partners,
-    rows.map((p) => ({ ...p, image: partnerLogos[p.image] }))
+    rows.map((p) => ({ ...p, image: resolveImage(p.image, partnerLogos) }))
   )
 }
 

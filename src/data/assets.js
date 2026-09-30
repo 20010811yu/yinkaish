@@ -20,3 +20,10 @@ export const ol2iGallery = Object.keys(ol2iModules).sort().map((k) => ol2iModule
 export const ol2iGalleryByName = Object.fromEntries(
   Object.entries(ol2iModules).map(([path, url]) => [path.split('/').pop(), url])
 )
+
+// 双轨解析:根路径/绝对 URL(后端上传图,如 /uploads/img-xxx.png)原样返回;否则查素材映射
+export function resolveImage(value, map) {
+  if (!value) return value
+  if (/^(https?:)?\/\//.test(value) || value.startsWith('/')) return value
+  return map[value]
+}

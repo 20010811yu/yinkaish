@@ -200,6 +200,7 @@ export const adminZh = {
       dept: '部门', deptZh: '部门', location: '地点', locationZh: '工作地点',
       descZh: '描述', active: '在招', nameZh: '名称',
       image: '图片文件', logo: 'Logo 文件', preview: '预览', sort: '排序', model: '型号', valueZh: '参数值', labelZh: '参数名', actions: '操作',
+      uploadImage: '本地上传主图', uploadImages: '本地上传多图', orFromAssets: '或从素材库选择',
     },
     rule: {
       addCategory: '新增分类', addProduct: '新增产品', addParamRow: '新增参数行', params: '参数',
@@ -207,6 +208,7 @@ export const adminZh = {
       usernameRequired: '请输入用户名', passwordRequired: '请输入密码', titleRequired: '请填写标题', nameRequired: '请填写名称', partnerRequired: '请填写名称与 Slug',
       categoryRequired: '请填写 Slug 与中文名称', productRequired: '请填写型号并选择图片',
       categoryNotEmpty: '该分类下仍有产品,请先删除或转移产品',
+      imageType: '仅支持 png/jpg/webp 图片', imageSize: '图片不能超过 5MB', uploadFailed: '上传失败,请重试',
       confirmDelete: '确定删除该条数据?此操作不可恢复', confirmDeleteParams: '删除产品将同时删除其参数行,确定?',
     },
   },
