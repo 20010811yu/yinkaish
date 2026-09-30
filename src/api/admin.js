@@ -24,7 +24,8 @@ async function request(path, { method = 'GET', body } = {}) {
   const token = getToken()
   if (token) headers.Authorization = `Bearer ${token}`
   const res = await fetch(path, { method, headers, body: body ? JSON.stringify(body) : undefined })
-  if (res.status === 401) {
+  // 登录接口的 401 是"凭据错误",不是会话过期,交由调用方按服务端 error 提示
+  if (res.status === 401 && path !== '/api/admin/login') {
     clearSession()
     if (!location.pathname.startsWith(LOGIN_PATH)) location.href = LOGIN_PATH
     throw new Error('登录已失效,请重新登录')

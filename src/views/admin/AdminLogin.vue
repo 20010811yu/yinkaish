@@ -56,7 +56,8 @@ const onSubmit = async () => {
     // 登录失败要求重新滑块验证,防重放
     slideOk.value = false
     slideRef.value?.reset()
-    ElMessage.error(err.message)
+    // 服务端凭据错误为英文标识,映射为双语提示;其余(网络失败等)原样展示
+    ElMessage.error(err.message === 'invalid credentials' ? t('admin.login.invalid') : err.message)
   } finally {
     loading.value = false
   }
