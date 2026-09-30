@@ -1,9 +1,6 @@
-## 当前焦点(2026-09-30):数据库与后端仅存中文(已完成,待浏览器复核转🟢)
-用户要求库中不再存英文。已落地:① schema/seed 全部去 `_en` 列(7 表 17 列已用 ALTER TABLE DROP COLUMN 从线上库删除,admins 表不动);② 后端 5 路由只查 `_zh`,API 返回 `{zh}`(前端 pick() 缺 en 自动回退 zh,src/data/lang.js);③ admin 5 页删英文输入框、校验只留中文必填,i18n 清理 *En key 并去"(中)"后缀;④ curl 实测 5 公开接口中文 UTF-8 无 en 字段、登录+admin news 列表+参数组回读正常。npm run build 通过。
-下一步:新闻正文富文本编辑器(wangEditor,已与用户确认选型+渲染端兼容方案)。
-
-## 上一焦点(2026-09-29,概要):管理员端(/admin)交付
-admins 表+JWT 多账号登录(默认 admin/admin123);后端 /api/admin/* 鉴权 CRUD(新闻/职位/产品分类/产品/参数/荣誉/伙伴);前端 /admin 独立布局+五个管理页。**注意:news/jobs 主键非自增,后端新增时自动 MAX(id)+1;管理列表 news_date 用 DATE_FORMAT**。暂无图片上传(素材文件名机制)。
+## 当前焦点(2026-09-30):新闻正文富文本编辑器(已完成)
+管理端新闻正文 textarea 换 wangEditor(@wangeditor/editor 5 + editor-for-vue 5 @next,用户确认选型):封装 RichEditor.vue(v-model HTML,工具栏无图片/视频上传,语言跟随 locale),AdminNews 弹框加 max-height+body 滚动保矮视口可达;NewsDetail 渲染端兼容(content 以 `<` 开头→v-html,否则沿用 \n 分段,存量 12 条零迁移;列表 list-style: revert 恢复圆点,ERR-011)。浏览器实测:打开→保存→库内容一致,前台富文本/纯文本两路渲染正确。注意:编辑器仅进 /admin 懒加载分包;编辑器键盘交互(Enter 分段/Ctrl+B)在自动化合成事件下不可靠,人工操作正常。
+下一步(候选):部署后端到服务器让线上 /api 命中真实数据;图片上传机制。
 
 ## 上一焦点(2026-09-28,概要)
 - 申请职位弹框(Careers):el-dialog+el-form,大陆手机号校验/简历附件必填(≤10MB),FormData 提交 Netlify Forms 影子表单 job

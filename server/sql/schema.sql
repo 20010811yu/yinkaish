@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS news (
   news_date DATE NOT NULL COMMENT '发布日期',
   title_zh VARCHAR(255) NOT NULL COMMENT '标题',
   summary_zh VARCHAR(500) NOT NULL COMMENT '摘要(列表页展示)',
-  content_zh MEDIUMTEXT NOT NULL COMMENT '正文(按换行分段)',
+  content_zh MEDIUMTEXT NOT NULL COMMENT '正文(富文本 HTML,管理端 wangEditor 产出;兼容存量按换行分段纯文本)',
   is_published TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否发布(1是 0否)',
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='新闻表-官网新闻动态,按日期倒序展示,仅中文';

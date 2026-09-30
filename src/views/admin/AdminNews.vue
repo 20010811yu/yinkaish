@@ -23,7 +23,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dlg" :title="form.id ? $t('admin.common.edit') : $t('admin.common.add')" width="720px" top="6vh">
+    <el-dialog v-model="dlg" :title="form.id ? $t('admin.common.edit') : $t('admin.common.add')" width="720px" top="4vh" class="news-dlg">
       <el-form :model="form" label-width="90px">
         <el-form-item :label="$t('admin.fields.tagZh')"><el-input v-model="form.tag_zh" /></el-form-item>
         <el-form-item :label="$t('admin.fields.date')">
@@ -31,7 +31,7 @@
         </el-form-item>
         <el-form-item :label="$t('admin.fields.titleZh')"><el-input v-model="form.title_zh" /></el-form-item>
         <el-form-item :label="$t('admin.fields.summaryZh')"><el-input v-model="form.summary_zh" type="textarea" :rows="2" /></el-form-item>
-        <el-form-item :label="$t('admin.fields.contentZh')"><el-input v-model="form.content_zh" type="textarea" :rows="6" /></el-form-item>
+        <el-form-item :label="$t('admin.fields.contentZh')"><RichEditor v-model="form.content_zh" /></el-form-item>
         <el-form-item :label="$t('admin.fields.published')">
           <el-switch v-model="form.is_published" :active-value="1" :inactive-value="0" />
         </el-form-item>
@@ -49,6 +49,7 @@ import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { adminApi } from '../../api/admin'
+import RichEditor from '../../components/admin/RichEditor.vue'
 
 const { t } = useI18n()
 const rows = ref([])
@@ -137,5 +138,14 @@ onMounted(load)
 .bar h2 {
   margin: 0;
   font-size: 18px;
+}
+/* 富文本编辑器使弹框变高:矮视口下限制总高,表体内部滚动,保证底部按钮可达 */
+.news-dlg {
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+.news-dlg :deep(.el-dialog__body) {
+  overflow-y: auto;
 }
 </style>

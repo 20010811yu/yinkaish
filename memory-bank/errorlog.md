@@ -1,84 +1,29 @@
 # errorlog.md — 问题与解决的唯一事实来源
 
+> 🟢 已解决条目压缩为一行摘要(§4.1),完整版在 `archive/history-2026-09-errorlog.md`;🔴🟡 条目与防回归清单保留完整版。
+
 ## 错误条目
 
-### ERR-001 页脚生产环境渲染丢失(vue-i18n 邮箱 @ 符号解析错误)
-- **错误现象**:生产构建页面页脚完全不渲染(DOM 中为空注释节点),dev 模式正常;无肉眼可见报错
-- **发生上下文**:导航/页脚文案调整任务验证时发现;此前长期存在但页面截图均未覆盖页脚,一直未察觉
-- **发生时间**:2026-09-17
-- **根本原因**:i18n 消息 `contact.email` 值含邮箱 `caolujia@yinkaish.cn`,vue-i18n 运行时编译器把 `@` 解析为链接消息(linked message)语法,抛出 "Invalid linked format";页脚渲染该消息时抛错,Vue 生产模式将渲染失败的组件静默渲染为注释节点
-- **解决方式**:消息中 `@` 用字面量插值转义为 `{'@'}`(即 `caolujia{'@'}yinkaish.cn`);同时在 main.js 增加 `app.config.errorHandler` 把渲染错误存到 `window.__renderErr` 便于排查;构建改为 `minify:false`(排查中发现 esbuild 压缩产物存在变量名冲突异常,一并规避)
-- **解决时间**:2026-09-17
-- **验证结果**:build 后页脚正常渲染,`window.__renderErr` 为空
-- **教训**:vue-i18n 消息中的 `@`、`{`、`}`、`|`、`$` 是保留语法字符,写入邮箱等含 `@` 文案必须转义;生产渲染失败是静默的,必须有全局 errorHandler
-- **状态**:🟢 已解决
+### ERR-010 管理端密码错误一次即整页跳转白屏(401 处理未含站点 base)
+- **错误现象**:管理端登录时密码输错一次,页面整页跳转到脱离 base 的 /admin/login 白屏,而非仅弹错误提示
+- **发生上下文**:排查"无法正常登录"时由 Explore 代理核实 src/api/admin.js 发现(2026-09-30)
+- **根本原因**:401 处理用 location.pathname.startsWith('/admin/login') 判断是否已在登录页,但站点 base 为 /yinkaish/(vite base + GH Pages),实际 pathname 是 /yinkaish/admin/login,永不匹配;任何 401 都会 location.href 跳到脱离 base 的路径
+- **解决方式**:改用 import.meta.env.BASE_URL 拼接 LOGIN_PATH 判断与跳转(api/admin.js)
+- **验证结果**:npm run build 通过;待后端恢复后浏览器复核(2026-09-30 浏览器实测登录链路正常)
+- **教训**:涉及 location.pathname 的判断必须考虑站点 base,统一用 import.meta.env.BASE_URL 拼接
+- **状态**:🟡 规避中(待复测错误密码分支后转🟢)
 
-### ERR-002 荣誉相册 375px 横向溢出 386px(1fr 网格轨道被 min-content 撑破)
-- **错误现象**:375px 视口下 About 页横向滚动 386px,`.gallery__viewer` 及整个相册区被撑到 721px 宽;桌面/平板宽度不明显
-- **发生上下文**:全站弹性布局改造的四档宽度(1280/1024/768/375)×8 页面 scrollWidth 普查中发现
-- **发生时间**:2026-09-18
-- **根本原因**:`.gallery` 单列 `1fr` 轨道实际是 `minmax(auto, 1fr)`,最小尺寸为内容 min-content;1024 断点下 `.gallery__thumbs` 变横向 flex 且 `.gallery__thumb` 设了 `flex-shrink: 0`(7×90px+gap≈702px),该 min-content 沿 `.gallery__side`(网格项,overflow visible)传导,把轨道撑到 721px
-- **解决方式**:`.gallery__side` 与 `.gallery__viewer` 加 `min-width: 0` 打断 min-content 传导,缩略图行由自身 `overflow-x: auto` 滚动
-- **解决时间**:2026-09-18
-- **验证结果**:四档宽度 × 8 页面 scrollWidth==clientWidth,零溢出
-- **教训**:给网格项写 `min-width: 0` 是弹性布局标配;含 flex-shrink:0 子元素的横滚容器必须保证祖先轨道可收缩;弹性验收必须做小宽度(≤375)普测,桌面正常≠小屏不破
-- **状态**:🟢 已解决
-
-### ERR-003 导航栏 1280px 横向溢出 7px(margin 用 100vw 含滚动条宽度)
-- **错误现象**:1280 视口英文版 scrollWidth 1272 > clientWidth 1265,页面底部出现横向滚动条
-- **发生上下文**:首页新增合作伙伴模块后的溢出自查中发现;此前一直存在,仅英文(内容更宽)时溢出
-- **发生时间**:2026-09-20
-- **根本原因**:AppNavbar 品牌区 `margin-left: max(0px, calc(100vw/6 - 110px))` 中 100vw 包含滚动条宽度(15px),比 clientWidth 大,导致整行总宽超出可视区
-- **解决方式**:改用容器百分比 `calc(100%/6 - 110px)`(flex 子项的 % 相对父容器内容宽,不含滚动条)
-- **解决时间**:2026-09-20
-- **验证结果**:scrollWidth==clientWidth==1265
-- **教训**:出现纵向滚动条的页面上 100vw 必然比可用宽度大一个滚动条宽,布局间距禁用 vw 单位,改 % 或 clamp
-- **状态**:🟢 已解决
-
-### ERR-005 刷新页面先显示页脚、轮播图最后出现(首屏加载体验,多因素)
-- **错误现象**:刷新首页时先看到「导航+页脚」贴在一起的骨架,轮播图和主内容最后才出现;期间还有深绿色大块闪现
-- **发生上下文**:用户刷新首页反馈,经三轮修复(压图、禁滚动恢复、路由静态导入)逐步定位,2026-09-21 最终解决
-- **发生时间**:2026-09-21
-- **根本原因**(多因素叠加):①轮播首图 banner-home.jpg 2.6MB、banner-pv.png 2.35MB,慢网络下载数秒 ②路由全懒加载,刷新时导航/页脚骨架先渲染而 Home 分包未到,路由区为空、页脚贴导航 ③浏览器 scrollRestoration=auto 刷新时先恢复到底部旧位置再跳顶 ④轮播深绿兜底色在图片未到时形成大块深色
-- **解决方式**:①两张大图 sharp 压至 2560 宽 q80(2.6MB→407KB、2.35MB→340KB) ②首页路由改静态 import 随主包加载(其余页面保持懒加载) ③router/index.js 设 `history.scrollRestoration='manual'` ④轮播改 LQIP——5 张图各生成 32px 模糊占位图 base64 内联(~2KB),background 双层(高清在上/占位在下),首图 `<img fetchpriority="high">` 加载后淡入,兜底色改浅色
-- **解决时间**:2026-09-21
-- **验证结果**:滚到底刷新后 scrollY=0、首屏轮播立即渲染,无页脚闪现与深色大块
-- **教训**:①SPA 刷新闪现类问题必须真实复现抓帧定位,不能只凭猜测逐层修(本例先后误判为图片体积、滚动恢复) ②主要落地页路由不要懒加载,避免骨架先渲染的空窗 ③首屏大图必须压缩并 preload/fetchpriority,配 LQIP 占位 ④刷新表现问题记得检查 scrollRestoration
-- **状态**:🟢 已解决
-
-### ERR-004 世界地图标记全部错位(目测百分比 + 容器比例与素材不一致)
-- **错误现象**:首页世界地图五个地点标记(美国/埃及/印度/马来西亚/上海)全部偏离正确地理位置——美国点落在加拿大、埃及点落在巴尔干、上海点落在蒙古一带
-- **发生上下文**:世界地图标记功能交付后用户指出「所标注的位置完全不对」,并要求缩放时标记必须跟随图片
-- **发生时间**:2026-09-20
-- **根本原因**:①标记的 left/top 百分比是对照渲染图目测估计的,没有基于地图投影数据换算;②`.worldmap` 容器 `aspect-ratio: 1010/560` 与地图图片真实比例 1010/666 不一致,地图被纵向压扁,进一步放大偏差
-- **解决方式**:从 @svg-maps/world 源包提取五国 path 解析出数学包围盒,结合米勒投影公式(y=285.1px↔53.5N,175.9px/单位)按真实经纬度换算百分比——上海(83.8%,54.8%)、美国(22.8%,51.3%)、埃及(55.6%,57.8%)、印度(70%,60.1%)、吉隆坡(75.3%,68.6%);容器 aspect-ratio 改为 1010/666
-- **解决时间**:2026-09-20
-- **验证结果**:1280 档截图逐一比对,五点分别落在堪萨斯/尼罗河畔/印度中部/马来半岛/长江口;百分比定位随容器等比缩放,任意窗口宽度均对应正确地理位置
-- **教训**:地图打点等「坐标必须精确」的 UI,百分比必须从数据源(国家 path 包围盒/投影公式)计算得出,禁止目测;容器宽高比必须与素材真实比例一致,否则拉伸会让位置整体漂移
-- **附注(2026-09-20)**:后两次修复尝试中,自研 SVG 内联方案因相对坐标取整漂移导致地图碎裂、jsvectormap 因 markers API 内部缺陷(createMarkers 遍历到 undefined config)弃用,最终采用 ECharts geo+经纬度打点方案;另发现跨 180° 经线的国家环(斐济/俄罗斯)在 ECharts 中会画出横贯线伪影,须过滤该类环
-- **状态**:🟢 已解决
-
-### ERR-006 新闻分页第二页空白([data-reveal] 入场观察器只在挂载时扫描一次)
-- **错误现象**:新闻页翻到第 2 页后网格区域完全空白(卡片在 DOM 中但透明不可见),翻回第 1 页再翻第 2 页仍空白
-- **发生上下文**:新闻网格分页功能(每页 6 条,el-pagination)交付后用户反馈
-- **发生时间**:2026-09-28
-- **根本原因**:`useReveal` 在 onMounted 时对当时存在的 `[data-reveal]` 节点做一次性 `querySelectorAll` 并观察;翻页后 v-for 渲染出全新节点,既无 `.revealed` 类也未被观察,永久停留在入场前的透明状态
-- **解决方式**:`useReveal` 改为返回 `{ rescan }`(按 `data-reveal-bound` 标记去重,把新节点纳入同一观察器;reduced-motion 下直接加 revealed);News.vue 中 `watch(page, () => nextTick(rescanReveal))` 在翻页渲染后重扫
-- **解决时间**:2026-09-28
-- **验证结果**:preview 实测第 1→2→1→2 往返翻页,第 2 页 5 张卡片全部 revealed 且可见,零横向溢出;build 通过
-- **教训**:动态重渲染(分页/筛选/加载更多)产生的 `[data-reveal]` 新节点必须在 DOM 更新后 rescan;一次性 querySelectorAll 的观察器模式对 v-for 动态内容天然失效
-- **状态**:🟢 已解决
-
-### ERR-007 国旗 emoji 在 Windows 上不显示(下拉只渲染字母对)
-- **错误现象**:联系页电话地区下拉里的 🇨🇳 等国旗 emoji 在用户(Windows)浏览器中不显示为旗帜,只显示 CN 等字母对
-- **发生上下文**:电话地区选择器交付后用户反馈「为什么没显示国旗」
-- **发生时间**:2026-09-29
-- **根本原因**:国旗 emoji 是区域指示符字符序列,Windows 系统字体(Segoe UI Emoji)不提供旗帜字形,Chrome/Edge 在 Windows 上一律渲染成两个字母;仅 macOS/iOS/Android 可显示
-- **解决方式**:改用 flag-icons 包(MIT,纯 SVG 素材)的 4x3 旗帜图——`import flagCN from 'flag-icons/flags/4x3/cn.svg'` 共 19 面,regions.flag 由 emoji 字符串换成 SVG URL,模板用 `<img>` 渲染;小图(<4KB)被 Vite 内联为 data URL,大图单独打包
-- **解决时间**:2026-09-29
-- **验证结果**:19 面下拉图 + 选中态图全部加载成功(naturalWidth>0),校验/提交/响应式回归通过
-- **教训**:面向 Windows 用户的站点,国旗一律用 SVG 图片(如 flag-icons),emoji 旗帜跨平台不可靠;另外合成事件模拟 blur 会绕过 el-input 内部焦点守卫,测试留空清错需真实焦点流程
-- **状态**:🟢 已解决
+## 🟢 已解决(一行摘要,详情见 archive/history-2026-09-errorlog.md)
+- **ERR-001** 页脚生产渲染丢失:vue-i18n 消息含 `@` 必须转义 `{'@'}`,生产渲染失败是静默的,须有全局 errorHandler
+- **ERR-002** 荣誉相册 375px 横向溢出:网格项加 `min-width: 0` 防 min-content 撑破轨道,弹性验收必做 ≤375 普测
+- **ERR-003** 导航 1280px 溢出 7px:布局间距禁用 100vw(含滚动条宽),用 % / clamp
+- **ERR-004** 世界地图标记全错位:坐标类定位禁止目测,必须由数据源计算;容器比例须与素材一致(该功能后已移除)
+- **ERR-005** 刷新首页骨架闪现:大图压缩+LQIP、主落地页路由静态导入、scrollRestoration=manual
+- **ERR-006** 新闻翻页第二页空白:v-for 动态重渲染后必须调用 useReveal 的 rescan()
+- **ERR-007** Windows 国旗 emoji 不显示:国旗一律用 SVG 图片(flag-icons),禁用 emoji 旗帜
+- **ERR-008** mysql 客户端全不可用:my.ini 各段选项有归属,服务端选项误入 [client] 段会瘫痪所有客户端
+- **ERR-009** 滑块缺口不显示:canvas 传 NaN 坐标静默失败,ref 重构后须全局 grep .value 使用点,视觉验证要像素采样
+- **ERR-011** 富文本编辑器两处样式坑:第三方组件内联 height:100% 时要在父容器定高;全局 reset(list-style:none)会波及 v-html 富文本,需 `list-style: revert` 恢复
 
 ## 防回归清单(编码前必查)
 1. Element Plus 禁全量引入(`app.use(ElementPlus)` + 全量样式),必须 resolver 按需;ElMessage 等函数式组件需单独引入样式
@@ -94,30 +39,5 @@
 11. **地图打点等坐标类定位禁止目测**(见 ERR-004):百分比必须由数据源计算;容器 aspect-ratio 必须与图片真实比例一致
 12. **v-for 动态重渲染(分页/筛选/加载更多)后必须调用 useReveal 返回的 rescan()**(见 ERR-006),否则新节点停留在透明状态
 13. **国旗一律用 SVG 图片(flag-icons),禁用 emoji 旗帜**(见 ERR-007):Windows 无旗帜字形,只会显示字母对
-
-### ERR-008 本机 mysql 客户端全部不可用(my.ini [client] 段误写 skip-grant-tables)
-- **错误现象**:任何 mysql 客户端命令(含 --version)启动即报 `[ERROR] unknown option '--skip-grant-tables'` 退出
-- **发生上下文**:官网数据库迁移任务首次连接 MySQL 时发现(2026-09-29)
-- **根本原因**:D:\mysql-8.0.29-winx64\my.ini 的 [client] 段末尾误写了 mysqld 专用选项 skip-grant-tables,客户端不识别直接退出
-- **解决方式**:删除该行;已用 `--no-defaults` 验证服务端本身正常(服务名 mysql,RUNNING,3306)
-- **验证结果**:修复后客户端参数解析正常
-- **教训**:MySQL 的 my.ini 各段选项有归属,服务端选项误入 [client]/[mysql] 段会让所有客户端命令瘫痪;排障先 `--no-defaults` 二分定位是配置文件还是服务端问题
-- **状态**:🟢 已解决
-
-### ERR-009 滑块验证缺口/拼块不显示(ref 丢 .value 传入 canvas 绘制)
-- **错误现象**:管理端登录滑块拼图验证只有背景图,缺口和拼块全部不可见,但拖动判定逻辑仍能通过
-- **发生上下文**:滑块验证交付后用户反馈「滑块没有缺口」(2026-09-30)
-- **根本原因**:把 targetX 从普通变量重构为 ref 时,canvas 绘制代码里两处漏加 .value——roundRect(bctx, targetX,...) 与 pctx.drawImage(..., -targetX, ...) 把 Ref 对象当坐标传入得 NaN;canvas 对 NaN 坐标静默不绘制(不报错),而判定逻辑用的是 targetX.value 所以仍能通过,形成「逻辑正常、视觉消失」的假象
-- **解决方式**:两处补 .value(SlideVerify.vue L82/L95);像素级验证缺口中心与拼块内部均不透明,拖动+截图复核通过
-- **验证结果**:notch 像素 [118,74,44,255]、piece 像素 [199,102,54,255],拖动 state=done,截图缺口拼块均可见
-- **教训**:①canvas 绘制坐标传 NaN 是静默失败,视觉验证必须做像素采样而非只看逻辑判定;②变量重构为 ref 后必须全局 grep 该标识符检查所有 .value 使用点,模板自动解包会掩盖遗漏
-- **状态**:🟢 已解决
-
-### ERR-010 管理端密码错误一次即整页跳转白屏(401 处理未含站点 base)
-- **错误现象**:管理端登录时密码输错一次,页面整页跳转到脱离 base 的 /admin/login 白屏,而非仅弹错误提示
-- **发生上下文**:排查"无法正常登录"时由 Explore 代理核实 src/api/admin.js 发现(2026-09-30)
-- **根本原因**:401 处理用 location.pathname.startsWith('/admin/login') 判断是否已在登录页,但站点 base 为 /yinkaish/(vite base + GH Pages),实际 pathname 是 /yinkaish/admin/login,永不匹配;任何 401(含后端不可用的代理 500 之外的 401)都会 location.href 跳到脱离 base 的路径
-- **解决方式**:改用 import.meta.env.BASE_URL 拼接 LOGIN_PATH 判断与跳转(api/admin.js)
-- **验证结果**:npm run build 通过;待后端恢复后浏览器复核
-- **教训**:涉及 location.pathname 的判断必须考虑站点 base,统一用 import.meta.env.BASE_URL 拼接
-- **状态**:🟡 规避中(待浏览器复核转🟢)
+14. **数据库/后端仅存中文,API 返回 `{zh}`**:新增内容表列不再建 `_en`;前端取双语字段统一走 `pick()`(缺 en 自动回退 zh),禁止直接 `field.en`
+15. **wangEditor 富文本**:Editor 根节点内联 height:100%,定高要放在父容器(RichEditor 根)上;新增 v-html 渲染富文本时逐项核对全局 reset 影响并 `:deep()` 恢复(见 ERR-011);工具栏保持排除图片/视频上传(图片走素材文件名机制)
