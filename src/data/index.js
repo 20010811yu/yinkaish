@@ -67,7 +67,7 @@ const ykOl2iImages = ol2iGallery
 export const productCategories = reactive([
   {
     id: 'pv-alu',
-    name: { zh: '光伏边框铝型材自动生产线', en: 'PV Frame Aluminium Profile Lines' },
+    name: { zh: '光伏边框铝型材料自动生产线', en: 'PV Frame Aluminium Profile Lines' },
     desc: {
       zh: '面向长边/短边铝型材边框的自动冲切、铆接全线装备，自动送料、切割、冲压、铆接、检测全流程覆盖。',
       en: 'Complete lines for long/short aluminium PV frames covering auto feeding, cutting, stamping, riveting and inspection.',
