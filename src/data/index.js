@@ -6,6 +6,15 @@ const partnerImgs = partnerLogos
 // 尝试从后端拉取并原位替换内容,失败时保持这里的静态数据兜底
 import { reactive } from 'vue'
 
+// API 仅返回中文({zh}),水合时会按业务键用 *Seed 里的 en 字段补回英文(见 src/api/data.js),
+// 故种子与 reactive 兜底副本必须相互独立:水合只替换副本,种子保持原样
+const cloneData = (v) =>
+  Array.isArray(v)
+    ? v.map(cloneData)
+    : v && typeof v === 'object'
+      ? Object.fromEntries(Object.entries(v).map(([k, val]) => [k, cloneData(val)]))
+      : v
+
 // 核心业务数据(光伏边框自动化 + 汽车焊装装备,双语)
 export const services = [
   {
@@ -64,7 +73,7 @@ import ykLuomuImg from '../assets/products/yk-zidongsuoluomushengchanxian_banner
 // YK-OL-2I 多图画廊(本地图片库,按文件名顺序)——映射表见 ./assets
 const ykOl2iImages = ol2iGallery
 
-export const productCategories = reactive([
+export const productCategoriesSeed = [
   {
     id: 'pv-alu',
     name: { zh: '光伏边框铝型材料自动生产线', en: 'PV Frame Aluminium Profile Lines' },
@@ -243,12 +252,14 @@ export const productCategories = reactive([
       },
     ],
   },
-])
+]
+
+export const productCategories = reactive(cloneData(productCategoriesSeed))
 
 // 产品参数表(画册"设备参数"转录;键为产品型号;值=label/value 双语行数组)
 const p = (lzh, len, vzh, ven) => ({ label: { zh: lzh, en: len }, value: { zh: vzh, en: ven ?? vzh } })
 
-export const productParams = reactive({
+export const productParamsSeed = {
   YK6A: [
     p('名称', 'Name', '铝材长边立冲生产线', 'Aluminium long-edge vertical-punch line'),
     p('加工范围 mm', 'Processing Range', '1500-2600'),
@@ -424,7 +435,9 @@ export const productParams = reactive({
     p('应用领域', 'Application', '汽车白车身轻量化结构件', 'BIW lightweight structures'),
     p('生产方式', 'Production Mode', '自动上料 + 锁螺母 + 焊接集成', 'Integrated feeding, nut insertion and welding'),
   ],
-})
+}
+
+export const productParams = reactive(cloneData(productParamsSeed))
 
 // 发展历程(真实大事记)
 export const milestones = [
@@ -483,7 +496,7 @@ import honor05 from '../assets/honors/honor-05.jpg'
 import honor06 from '../assets/honors/honor-06.jpg'
 import honor07 from '../assets/honors/honor-07.jpg'
 
-export const honors = reactive([
+export const honorsSeed = [
   {
     image: honor01,
     name: { zh: '综合资质证书', en: 'Certificates Overview' },
@@ -519,7 +532,9 @@ export const honors = reactive([
     name: { zh: '专利登记簿副本', en: 'Patent Register' },
     desc: { zh: '国家知识产权局专利登记簿副本,专利权属清晰可查。', en: 'Patent register copies from CNIPA with clear ownership records.' },
   },
-])
+]
+
+export const honors = reactive(cloneData(honorsSeed))
 
 // 发展历程时间线(About 页纵向图文时间线,双语;image 为可选配图)
 import imgT2004 from '../assets/timeline/t-2004.jpg'
@@ -550,7 +565,7 @@ export const timeline = [
 ]
 
 // 新闻(真实事件 + 行业内容)
-export const news = reactive([
+export const newsSeed = [
   {
     id: 1,
     tag: { zh: '公司动态', en: 'Company News' },
@@ -683,10 +698,12 @@ export const news = reactive([
       en: 'The customized PV frame automatic lines supplied by Yinkai for a PV industrial park in the Middle East were successfully commissioned. Special designs for cooling, sealing and dust protection were made for the local high-temperature, high-dust environment. The line has been running stably since commissioning with all indicators meeting contract requirements, further expanding Yinkai\'s presence along the Belt and Road markets.',
     },
   },
-])
+]
+
+export const news = reactive(cloneData(newsSeed))
 
 // 职位(desc:点击卡片展开的岗位详情,双语)
-export const jobs = reactive([
+export const jobsSeed = [
   {
     id: 1,
     title: { zh: '机械设计工程师', en: 'Mechanical Design Engineer' },
@@ -747,7 +764,9 @@ export const jobs = reactive([
       en: 'Responsibilities: Develop overseas markets and maintain client relationships, join technical discussions, quotations and negotiations, and follow up on contracts and payments.\nRequirements: Bachelor degree or above; fluent English and willing to travel abroad; PV or automotive equipment industry knowledge preferred; strong communication skills.',
     },
   },
-])
+]
+
+export const jobs = reactive(cloneData(jobsSeed))
 
 // 福利(占位)
 export const welfares = [
@@ -760,7 +779,7 @@ export const welfares = [
 ]
 
 // 合作伙伴(logo 图片来自官网 www.yinkaish.com 首页合作伙伴区)
-export const partners = reactive([
+export const partnersSeed = [
   { id: 'xinbo', image: partnerImgs.p1, name: { zh: '鑫铂股份', en: 'Xinbo Co.' } },
   { id: 'jinkosolar', image: partnerImgs.p2, name: { zh: '晶科能源', en: 'JinkoSolar' } },
   { id: 'deyilong', image: partnerImgs.p3, name: { zh: '德毅隆', en: 'Deyilong' } },
@@ -781,4 +800,6 @@ export const partners = reactive([
   { id: 'arctech', image: partnerImgs.p18, name: { zh: '中信博', en: 'Arctech' } },
   { id: 'pingmei', image: partnerImgs.p19, name: { zh: '平煤隆基', en: 'Pingmei Longji' } },
   { id: 'chuangjia', image: partnerImgs.p20, name: { zh: '创佳型材', en: 'Chuangjia' } },
-])
+]
+
+export const partners = reactive(cloneData(partnersSeed))

@@ -12,7 +12,7 @@ Vue 3(`<script setup>`)+ Vite SPA:
 1. Element Plus 按需引入:unplugin-vue-components + ElementPlusResolver;函数式组件(ElMessage 等)单独引入样式
 2. 主题:覆盖 Element Plus CSS 变量(--el-color-primary 系列)于 `assets/styles/main.css`,品牌主色 #00a651 绿色系(呼应公司 logo);禁 `!important` 硬覆盖
 3. 样式:design tokens CSS 变量(:root)+ scoped 页面样式;断点 ≤768 / 769–1024 / >1024;**弹性布局硬约束见 AGENTS.md §11 v1.2**——容器 max-width、多列 fr/minmax、大高度/字号 clamp() 流式(根字号 clamp 惯例)、导航抽屉断点 1024(7 链接+长品牌名在更窄区间放不下)
-4. 双语字段:静态数据 `{ zh: '', en: '' }`;**数据库/后端 API 仅存/返回中文(`{zh}`,2026-09-30 起)**,`pick(field, locale)` 对缺失 en 自动回退 zh;模板文案全部走 i18n key(`页面.区块.字段`)
+4. 双语字段:静态数据 `{ zh: '', en: '' }`;**数据库/后端 API 仅存/返回中文(`{zh}`,2026-09-30 起)**,但水合时按业务键把静态种子(src/data 的 `*Seed`)的 en 字段合并回 API 行(src/api/data.js `withEn`,2026-10-23,ERR-019)——英文界面显示英文,仅管理端新增且无种子翻译的内容由 `pick(field, locale)` 回退 zh;模板文案全部走 i18n key(`页面.区块.字段`)
 5. 管理端 CRUD:server/src/routes/admin/content.js 的 `crud()` 按表配置 allowEdit 白名单+SHOW COLUMNS 过滤,新增列只需改白名单;news/jobs 主键非自增,新增自动 MAX(id)+1
 
 ## 已知陷阱与规避模式
