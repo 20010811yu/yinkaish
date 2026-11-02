@@ -13,24 +13,27 @@
 - 仓库:D:\yinkai_web,远程 git@github.com:20010811yu/yinkaish.git,分支 main
 - 规则文件:仓库根 AGENTS.md(工作流 P0–P5 + 项目规范)
 - 构建验证:`npm run build` 必须通过;本地验证 `npm run dev`
-- **部署(双平台)**:
+- **部署(三平台,共用一套代码,靠构建参数区分)**:
   - GitHub Pages:GitHub Actions(.github/workflows/deploy.yml)push main 自动构建并发布;站点 https://20010811yu.github.io/yinkaish/ ;SPA 深链靠 dist/404.html 回退(workflow 中 cp)
   - Netlify:Git 连接持续部署(main),站点 https://yinkai.netlify.app ;netlify.toml 定义 build(npm run build)/publish(dist)/SPA 通配 redirect 200
-  - **Netlify Forms 联系表单**:index.html 内置隐藏影子表单(name=contact, data-netlify)供部署时注册;Contact.vue 以 fetch POST '/' + URLSearchParams(form-name=contact)提交;邮件通知在 Netlify 后台 Forms→Settings 配置(lukecao@ykautomus.com / lujiacao@163.com);**该功能仅 Netlify 生效,GitHub Pages 版提交会失败**(SPA 静态托管无表单后端)
-  - **Netlify Forms 职位申请表单(含附件)**:index.html 影子表单 name=job(position/name/phone/email/message 隐藏字段 + `<input type="file" name="resume">`);Careers.vue 申请弹框以 FormData multipart 提交(fetch 不手动设 Content-Type,浏览器自带 boundary);简历限 pdf/doc/docx、≤10MB(Netlify 单次提交上限);**同样仅 Netlify 域名生效**
-  - **vite base 环境自适应**:`process.env.NETLIFY ? '/' : '/yinkaish/'`——Netlify 构建环境自带 NETLIFY 变量取根路径,GitHub Pages 取子路径;改仓库名需同步改 /yinkaish/
+  - **VPS 整站(方案一,2026-11-02 代码适配+物料就绪,待用户上机)**:手册 `deploy/README.md`;Nginx 托管 dist(根路径)+ 反代 `/api`、`/uploads` → pm2 进程 `yinkai-api`(`server/ecosystem.config.cjs`,cwd 固定 server/ 供 dotenv 读 .env,注入 NODE_ENV=production),MySQL 同机仅 127.0.0.1;站点模板 `deploy/nginx.conf`(占位 `__DOMAIN__`,client_max_body_size 12m,gzip,assets 长缓存,index.html no-cache,certbot 加 TLS);发版脚本 `deploy/update-server.sh`(git pull → `VITE_DEPLOY=vps npm run build` → server npm ci → pm2 reload → health);server/.env 上线必填 JWT_SECRET/FRONTEND_ORIGIN(站点域名)/SMTP_*/MAIL_TO;`.gitattributes` 强制 `*.sh`/`*.conf` LF
+  - **Netlify Forms 联系表单**:index.html 内置隐藏影子表单(name=contact, data-netlify)供部署时注册;邮件通知在 Netlify 后台 Forms→Settings 配置(lukecao@ykautomus.com / lujiacao@163.com);**纯静态托管下仅 Netlify 生效,GitHub Pages 版提交会失败**
+  - **Netlify Forms 职位申请表单(含附件)**:index.html 影子表单 name=job(position/name/phone/email/message 隐藏字段 + `<input type="file" name="resume">`);简历限 pdf/doc/docx、≤10MB(Netlify 单次提交上限,自建后端同限)
+  - **表单双通道(2026-11-02)**:`src/api/forms.js` 的 `submitContact`/`submitApplication` 先 POST 自建后端 `/api/contact`(JSON)/`/api/apply`(FormData),拿不到 JSON 应答(静态托管回 index.html/404)或网络失败才回退 Netlify 影子表单;后端一旦给出 JSON(含 4xx/5xx)即最终结论,不再回退。Contact.vue/Careers.vue 只调这两个函数
+  - **vite base 按部署目标**:`process.env.VITE_DEPLOY === 'vps' || process.env.NETLIFY ? '/' : '/yinkaish/'`——VPS 构建传枚举 `VITE_DEPLOY=vps`;**禁止 `VITE_BASE=/` 之类路径值**(Git Bash/MSYS 会把 `/` 开头的环境变量值转成 Windows 路径 `D:/Git/`,见 ERR-021;必要时 `MSYS_NO_PATHCONV=1` 可关闭转换);改仓库名需同步改 /yinkaish/
 
 ## 命令
-- dev:`npm run dev`;build:`npm run build`;preview:`npm run preview`
+- dev:`npm run dev`;build:`npm run build`(GitHub Pages 子路径)/ `VITE_DEPLOY=vps npm run build`(VPS 根路径);preview:`npm run preview`
 - PDF 图片提取:`node scripts/extract-pdf-images.cjs <pdf> <outdir>`(对象级,支持 Flate+DCT 过滤器链);页面-图片映射:`node scripts/map-pdf-images.cjs <pdf>`(裸 Page 对象序即阅读序)
 
 ## 后端与数据库(2026-09-29 新增,2026-09-30 改为仅中文)
 - **MySQL 8.0.29**(本机 Windows,服务名 `mysql`,端口 3306,安装目录 D:\mysql-8.0.29-winx64);库 `yinkai_web` utf8mb4;表:news/jobs/product_categories/products/product_params/honors/partners/admins;**内容表仅中文列(`_zh` 后缀,2026-09-30 起,原 `_en` 列已 ALTER TABLE DROP COLUMN 删除,admins 表保留)**,图片列存文件名;**发展历程(timeline/milestones)未入库(用户排除)**
 - **中英文策略**:库与 API 只存/返回中文(`{zh}` 形态);前端水合时按业务键把静态双语种子(src/data 的 `*Seed`,reactive 兜底改为其深拷贝)的 en 字段合并回 API 行(src/api/data.js `withEn`,2026-10-23 ERR-019)——英文界面显示英文,仅无种子翻译的新增内容由 `pick()`(src/data/lang.js)回退中文
-- **server/** 目录:Express + mysql2 + dotenv + cors(ESM),只读 GET 接口(/api/news|jobs|products|honors|partners),端口 3001;`npm run setup` 执行建库+种子(scripts/setup-db.mjs);`npm start` 起服务
-- **凭据**:server/.env(DB_PASSWORD 等,已 gitignore;模板 .env.example);**本机 mysql 客户端曾因 my.ini [client] 段 skip-grant-tables 全部不可用(已修,ERR-008)**
+- **server/** 目录:Express + mysql2 + dotenv + cors(ESM),只读 GET 接口(/api/news|jobs|products|honors|partners),端口 3001;`npm run setup` 执行建库+种子(scripts/setup-db.mjs);`npm start` 起服务;**`app.set('trust proxy', 1)`(2026-11-02,Nginx 反代后限速器取真实 IP,不得移除)**
+- **表单邮件后端(2026-11-02)**:`server/src/routes/forms.js`——POST /api/contact(JSON)与 /api/apply(multipart,multer 内存态收简历 pdf/doc/docx ≤10MB 作附件,**`defParamCharset:'utf8'` 否则 busboy 按 latin1 解码中文文件名乱码**),nodemailer@10 经 SMTP 发到 MAIL_TO,formLimiter 每 IP 15 分钟 10 次(两路由共享计数);SMTP_HOST/MAIL_TO 未配置返回 503;简历不落盘(server/uploads 为公开静态目录)
+- **凭据**:server/.env(DB_PASSWORD、JWT_SECRET、FRONTEND_ORIGIN、SMTP_* 等,已 gitignore;模板 .env.example);**本机 mysql 客户端曾因 my.ini [client] 段 skip-grant-tables 全部不可用(已修,ERR-008)**
 - **前端对接**:src/api/data.js 启动水合(2.5s 超时,失败保持 src/data 静态兜底);src/data 六个动态导出为 reactive;图片文件名→URL 映射在 src/data/assets.js;dev 代理 /api→localhost:3001(vite.config.js)
-- **部署现状**:Netlify 仍是纯静态托管——线上站点走静态兜底数据,后端接口需自行部署(本地 3001 或服务器)后前端 /api 才能命中真实数据
+- **部署现状**:Netlify/GitHub Pages 仍是纯静态托管——线上走静态兜底数据;整站 VPS 方案(Nginx 同源反代,前端 /api 相对路径零改动命中真实数据)代码与物料已就绪,待用户按 deploy/README.md 上机
 
 ## 管理员端(2026-09-29 新增)
 - **数据库**:admins 表(username 唯一/password_hash bcrypt/is_active);迁移命令 `cd server && npm run migrate`(幂等,空表时内置默认账号 admin/admin123,提醒首登改密)

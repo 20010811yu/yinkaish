@@ -39,3 +39,7 @@ Netlify 部署修复:白屏原因是 vite base '/yinkaish/'(GitHub Pages 子路�
 - 删除轮播第 5 张科技城市(hero-city.svg 与 home.carousel.s5 从轮播移除,i18n 清理);hero-city.svg 保留——优势板块右列插画仍引用
 - 首页轮播切换间隔 5s→3s(:interval=3000)
 - 动画改为每次进入视口都重播(用户要求):观察器去掉 unobserve——进入加 .revealed 并重跑计数,离开移除 .revealed 并把计数立即 snap 回终值(dataset.final 缓存终值+_counting 防重+可重入清理);修复后台冻结导致的计数滞留中间值(±0.0mm/8%)问题
+
+## 上一焦点概要(2026-09-28 / 2026-09-30,2026-11-02 自 activeContext.md 裁剪搬入)
+- 2026-09-30:管理端安全加固五层落地(security.js:JWT/CORS 白名单/三级限速/helmet/CRUD 校验/富文本消毒);存量 admin/admin123 未改,上线需配 NODE_ENV/JWT_SECRET/FRONTEND_ORIGIN(ERR-016/017)
+- 2026-09-28:Careers 申请弹框(Netlify Forms 附件提交);电话区号 51 国下拉+国旗 SVG;新闻迷你日历标题放大

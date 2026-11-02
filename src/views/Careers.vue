@@ -99,6 +99,7 @@ import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
 import { jobs, welfares } from '../data'
 import { pick } from '../data/lang'
+import { submitApplication } from '../api/forms'
 
 const { locale, t } = useI18n()
 
@@ -119,7 +120,7 @@ const currentJob = ref(null)
 const formRef = ref()
 const submitting = ref(false)
 const resumeFile = ref(null) // 简历原始 File 对象
-const MAX_RESUME_SIZE = 10 * 1024 * 1024 // Netlify 单次提交上限
+const MAX_RESUME_SIZE = 10 * 1024 * 1024 // Netlify 单次提交上限,自建后端 /api/apply 同限
 
 const form = reactive({ name: '', phone: '', email: '', resume: '', message: '' })
 
@@ -177,17 +178,18 @@ const submit = () => {
     if (!valid) return
     submitting.value = true
     try {
-      // 附件走 multipart:用 FormData,不手动设 Content-Type(浏览器自带 boundary)
-      const fd = new FormData()
-      fd.set('form-name', 'job')
-      fd.set('position', pick(currentJob.value.title, locale.value))
-      fd.set('name', form.name)
-      fd.set('phone', form.phone)
-      fd.set('email', form.email)
-      fd.set('message', form.message)
-      fd.set('resume', resumeFile.value, resumeFile.value.name)
-      const res = await fetch('/', { method: 'POST', body: fd })
-      if (!res.ok) throw new Error(`status ${res.status}`)
+      // 提交链路(先自建后端、再回退 Netlify Forms)见 src/api/forms.js
+      const ok = await submitApplication(
+        {
+          position: pick(currentJob.value.title, locale.value),
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          message: form.message,
+        },
+        resumeFile.value,
+      )
+      if (!ok) throw new Error('submit failed')
       ElMessage.success(t('careers.form.success'))
       dialogVisible.value = false
     } catch {

@@ -60,6 +60,15 @@ export const uploadLimiter = rateLimit({
   handler: jsonMsg('too many uploads, try later'),
 })
 
+// 官网表单(联系/职位申请):每 IP 15 分钟 10 次,防刷邮件
+export const formLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  handler: jsonMsg('too many submissions, try later'),
+})
+
 // 全局 API:每 IP 每分钟 120 次
 export const apiLimiter = rateLimit({
   windowMs: 60 * 1000,

@@ -78,7 +78,7 @@
           <el-form-item :label="$t('contact.form.message')" prop="message">
             <el-input v-model="form.message" type="textarea" :rows="5" :placeholder="$t('contact.form.message')" />
           </el-form-item>
-          <el-button type="primary" size="large" round @click="submit">
+          <el-button type="primary" size="large" round :loading="submitting" @click="submit">
             {{ $t('contact.form.submit') }}
           </el-button>
         </el-form>
@@ -93,10 +93,12 @@ import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
 import { Location, Phone, Message, Clock } from '@element-plus/icons-vue'
+import { submitContact } from '../api/forms'
 
 const { t, locale } = useI18n()
 
 const formRef = ref()
+const submitting = ref(false)
 const form = reactive({ name: '', email: '', phone: '', message: '' })
 
 // 区号表(51 国,同码国家各自独立条目)与国旗 URL 按需加载表
@@ -165,22 +167,17 @@ const rules = {
 const submit = () => {
   formRef.value.validate(async (valid) => {
     if (!valid) return
+    submitting.value = true
     try {
-      // Netlify Forms 提交:POST 到站点根路径,form-name 指向 index.html 中的影子表单
-      // 电话提交合并值(区号 + 号码),如 "+86 13800138000"
+      // 电话提交合并值(区号 + 号码),如 "+86 13800138000";提交链路见 src/api/forms.js
       const fullPhone = form.phone.trim() ? `${normalizedDial.value} ${form.phone.trim()}` : ''
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'contact',
-          name: form.name,
-          email: form.email,
-          phone: fullPhone,
-          message: form.message,
-        }),
+      const ok = await submitContact({
+        name: form.name,
+        email: form.email,
+        phone: fullPhone,
+        message: form.message,
       })
-      if (!res.ok) throw new Error(`status ${res.status}`)
+      if (!ok) throw new Error('submit failed')
       ElMessage.success(t('contact.form.success'))
       form.name = ''
       form.email = ''
@@ -189,6 +186,8 @@ const submit = () => {
       form.message = ''
     } catch {
       ElMessage.error(t('contact.form.fail'))
+    } finally {
+      submitting.value = false
     }
   })
 }

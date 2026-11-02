@@ -4,6 +4,15 @@
 
 ## 错误条目
 
+### ERR-021 Git Bash 下 `VITE_BASE=/` 被 MSYS 路径转换,构建产物资源路径全变 `/Git/assets/`
+- **错误现象**: 为 VPS 根路径部署执行 `VITE_BASE=/ npm run build`,dist/index.html 资源引用变成 `/Git/assets/...`,部署后必然白屏
+- **发生上下文**: 整站 VPS 部署适配任务,本机 Windows Git Bash 构建验证(2026-11-02)
+- **根本原因**: Git Bash(MSYS2)会把以 `/` 开头、形似 POSIX 路径的命令行参数与环境变量值自动转换为 Windows 路径,`/` 被转成 MSYS 根目录 `D:/Git/`(实测 `VITE_BASE=/ node -e` 打印 `"D:/Git/"`),Vite 再归一化为 `/Git/`。Linux 服务器上不会发生,属 Windows 本地构建专属坑
+- **解决方式**: 放弃用路径值传参,改为枚举 token:`VITE_DEPLOY=vps` → vite.config.js 取 base `/`;update-server.sh、deploy/README 同步改写。备选:`MSYS_NO_PATHCONV=1 VITE_BASE=/ ...` 可关闭转换,但易被遗忘,不采用
+- **验证结果**: `VITE_DEPLOY=vps npm run build` → index.html 资源为 `/assets/...`;默认 `npm run build` 仍为 `/yinkaish/assets/...`(GitHub Pages 不受影响);两次 build 均通过
+- **教训**: Git Bash 里传给 node 的环境变量/参数不要使用以 `/` 开头的路径形态值;部署开关一律用枚举 token 而非路径字面量;构建产物必须检查 index.html 的资源前缀,不能只看 build 成功
+- **状态**: 🟢 已解决(2026-11-02)
+
 ### ERR-020 首页伙伴墙 20 个 logo 全部裂图(静态兜底图片引用键失配)
 - **错误现象**: 首页「服务与合作伙伴」20 个 logo 格全部显示裂图+alt 文字(用户截图反馈)
 - **发生上下文**: 本地 dev(后端/MySQL 已停,走静态兜底)与线上静态部署均复现(2026-11-02)
@@ -90,3 +99,5 @@
 13. **国旗一律用 SVG 图片(flag-icons),禁用 emoji 旗帜**(见 ERR-007):Windows 无旗帜字形,只会显示字母对
 14. **数据库/后端仅存中文,API 返回 `{zh}`**:新增内容表列不再建 `_en`;前端取双语字段统一走 `pick()`(缺 en 自动回退 zh),禁止直接 `field.en`
 15. **wangEditor 富文本**:Editor 根节点内联 height:100%,定高要放在父容器(RichEditor 根)上;新增 v-html 渲染富文本时逐项核对全局 reset 影响并 `:deep()` 恢复(见 ERR-011);工具栏保持排除图片/视频上传(图片走素材文件名机制)
+16. **Git Bash 传给 node 的环境变量值禁用 `/` 开头的路径形态**(见 ERR-021):MSYS 会转成 Windows 路径;部署开关用枚举 token(`VITE_DEPLOY=vps`),构建后核对 index.html 资源前缀
+17. **后端位于 Nginx 反代之后**:`server/src/index.js` 的 `app.set('trust proxy', 1)` 不得移除(限速器按真实 IP 计,express-rate-limit 否则抛 ERR_ERL_UNEXPECTED_X_FORWARDED_FOR);multer 接收用户文件名须 `defParamCharset: 'utf8'`(busboy 默认 latin1,中文名乱码)

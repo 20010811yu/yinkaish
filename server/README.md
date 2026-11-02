@@ -23,6 +23,14 @@ Express + mysql2 只读内容接口，为官网提供新闻/职位/产品/荣誉
 | GET | /api/products | 产品分类→产品→参数（嵌套；image 为素材文件名） |
 | GET | /api/honors | 公司荣誉 |
 | GET | /api/partners | 合作伙伴 |
+| POST | /api/contact | 联系表单(JSON:name/email/phone/message)→ SMTP 邮件通知;每 IP 15 分钟 10 次 |
+| POST | /api/apply | 职位申请(multipart:position/name/phone/email/message + resume 附件 pdf/doc/docx ≤10MB)→ 邮件附件;简历不落盘 |
+
+表单接口依赖 `.env` 的 `SMTP_*` / `MAIL_TO`,未配置时返回 503(前端自动回退 Netlify Forms,见 `src/api/forms.js`)。
+
+## 生产部署
+
+整站 VPS(Nginx + pm2 + MySQL)流程见 [deploy/README.md](../deploy/README.md);pm2 进程定义 `ecosystem.config.cjs`(在本目录执行 `pm2 start ecosystem.config.cjs`)。服务位于 Nginx 反代之后,`index.js` 已设 `trust proxy`,限速按真实访客 IP 计。
 
 ## 前端对接
 
