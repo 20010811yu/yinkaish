@@ -1,6 +1,9 @@
 // 合作伙伴 logo(官网首页合作伙伴区)——文件名映射表见 ./assets
 import { partnerLogos, ol2iGallery } from './assets'
-const partnerImgs = partnerLogos
+// partnerLogos 的键是完整文件名(p1.png,供数据库文件名解析用);下方种子按短键(pN)引用,在此还原键形态
+const partnerImgs = Object.fromEntries(
+  Object.entries(partnerLogos).map(([f, url]) => [f.replace(/\.png$/, ''), url])
+)
 
 // 动态内容数据(新闻/职位/产品/荣誉/伙伴)导出为 reactive:src/api/data.js 启动时
 // 尝试从后端拉取并原位替换内容,失败时保持这里的静态数据兜底
